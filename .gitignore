@@ -40,6 +40,9 @@ bld/
 # Visual Studio 2017 auto generated files
 Generated\ Files/
 
+# Visual Studio debug launch settings
+YAPR-CLI/Properties/launchSettings.json
+
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
@@ -403,4 +406,4 @@ venv
 
 # Built python package
 dist/
-am2r_yams.egg-info/
+planets_yapr.egg-info/
