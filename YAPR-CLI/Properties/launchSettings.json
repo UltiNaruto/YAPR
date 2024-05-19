@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "YAPR-CLI": {
-      "commandName": "Project",
-      "commandLineArgs": "\"D:\\Jeux\\Metroid Planets\\data_orig.win\" \"D:\\Jeux\\Metroid Planets\\Randovania\\Planets Zebeth Randomizer - Zoomer Menu Hi-Jump\\data.win\" \"D:\\Jeux\\Metroid Planets\\Randovania\\Planets Zebeth Randomizer - Zoomer Menu Hi-Jump.json\""
-    }
-  }
-}
