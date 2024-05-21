@@ -384,8 +384,16 @@ namespace YAPR_LIB.Patches.QoL
             var world_load_code = gmData.Code.ByName("gml_Script_World_Load");
             var world_load = Decompiler.Decompile(world_load_code, decompileContext);
 
-            var insertIndex = world_load.IndexOf("            NET_Apply_Shared_Data()\n        return;")
-                                           + "            NET_Apply_Shared_Data()\n".Length;
+            var insertIndex = world_load.IndexOf(
+                """
+                        if (obj_NETWORK.Connection_Pos > -1)
+                            NET_Apply_Shared_Data()
+                """.ReplaceLineEndings("\n")
+            ) + """
+                        if (obj_NETWORK.Connection_Pos > -1)
+                            NET_Apply_Shared_Data()
+                """.ReplaceLineEndings("\n").Length + 1;
+            
 
             var newCode = $$"""
                                     global.CURRENT_ROOM = scr_Current_Room_Name(Screen_X, Screen_Y)
