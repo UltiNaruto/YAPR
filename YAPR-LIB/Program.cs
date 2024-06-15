@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
 using System.Globalization;
 using System.Reflection;
+using System.Text.Json;
 using UndertaleModLib;
 using UndertaleModLib.Decompiler;
 
@@ -29,7 +29,13 @@ public class Patcher
         var outputDir = Directory.GetParent(outputPath);
         if (outputDir == null)
             throw new DirectoryNotFoundException("Couldn't find the parent folder of output path!");
-        var randomizerConfig = JObject.Parse(json).ToObject<RandomizerConfig>();
+        RandomizerConfig? randomizerConfig = JsonSerializer.Deserialize<RandomizerConfig>(
+            json,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            }
+        );
 
         var gmData = new UndertaleData();
 

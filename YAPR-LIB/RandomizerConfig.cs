@@ -1,107 +1,118 @@
-﻿using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace YAPR_LIB
 {
-    [Serializable]
     public class RandomizerConfig
     {
-        [JsonProperty("seed")]
+        [JsonInclude]
+        [JsonPropertyName("seed")]
         public int Seed;
 
-        [JsonProperty("game_config")]
+        [JsonInclude]
+        [JsonPropertyName("game_config")]
         public GameConfig? GameConfig;
 
-        [JsonProperty("preferences")]
+        [JsonInclude]
+        [JsonPropertyName("preferences")]
         public Preferences? Preferences;
 
-        [JsonProperty("level_data")]
+        [JsonInclude]
+        [JsonPropertyName("level_data")]
         public LevelData? LevelData;
     }
 
-    [Serializable]
     public class GameConfig
     {
-        [JsonProperty("starting_room")]
+        [JsonInclude]
+        [JsonPropertyName("starting_room")]
         public StartingLocation? StartingRoom;
 
-        [JsonProperty("seed_identifier")]
+        [JsonInclude]
+        [JsonPropertyName("seed_identifier")]
         public SeedIdentifier? SeedIdentifier;
 
-        [JsonProperty("starting_items")]
+        [JsonInclude]
+        [JsonPropertyName("starting_items")]
         public Dictionary<string, int>? StartingItems;
 
-        [JsonProperty("starting_memo")]
+        [JsonInclude]
+        [JsonPropertyName("starting_memo")]
         public string? StartingMemo;
 
-        [JsonProperty("warp_to_start")]
+        [JsonInclude]
+        [JsonPropertyName("warp_to_start")]
         public bool WarpToStart;
 
-        [JsonProperty("open_missile_doors_with_one_missile")]
+        [JsonInclude]
+        [JsonPropertyName("open_missile_doors_with_one_missile")]
         public bool OpenMissileDoorsWithOneMissile;
 
-        [JsonProperty("credits_string")]
+        [JsonInclude]
+        [JsonPropertyName("credits_string")]
         public List<CreditEntry>? CreditsString;
-
-        // TODO: implement logic for those
-        /*[JsonProperty("allow_downward_shots")]
-        public bool AllowDownwardShots;
-
-        [JsonProperty("allow_wall_jump")]
-        public bool AllowWallJump;*/
     }
 
-    [Serializable]
     public class StartingLocation
     {
-        [JsonProperty("x")]
+        [JsonInclude]
+        [JsonPropertyName("x")]
         public int X;
 
-        [JsonProperty("y")]
+        [JsonInclude]
+        [JsonPropertyName("y")]
         public int Y;
     }
 
-    [Serializable]
     public class SeedIdentifier
     {
-        [JsonProperty("word_hash")]
+        [JsonInclude]
+        [JsonPropertyName("word_hash")]
         public string? WordHash;
 
-        [JsonProperty("hash")]
+        [JsonInclude]
+        [JsonPropertyName("hash")]
         public string? Hash;
 
-        [JsonProperty("session_uuid")]
+        [JsonInclude]
+        [JsonPropertyName("session_uuid")]
         public string? SessionUUID;
     }
 
-    [Serializable]
     public class CreditEntry
     {
-        [JsonProperty("text")]
+        [JsonInclude]
+        [JsonPropertyName("text")]
         public string? Text;
 
-        [JsonProperty("sub_texts")]
+        [JsonInclude]
+        [JsonPropertyName("sub_texts")]
         public List<string>? SubTexts;
 
-        [JsonProperty("spacer")]
+        [JsonInclude]
+        [JsonPropertyName("spacer")]
         public bool Spacer;
     }
 
-    [Serializable]
     public class Preferences
     {
-        [JsonProperty("show_unexplored_map")]
+        [JsonInclude]
+        [JsonPropertyName("show_unexplored_map")]
         public bool ShowUnexploredMap;
 
-        [JsonProperty("room_name_on_hud")]
+        [JsonInclude]
+        [JsonPropertyName("room_name_on_hud")]
         public RoomGuiType RoomNameOnHUD;
 
-        [JsonProperty("disable_low_health_beeping")]
+        [JsonInclude]
+        [JsonPropertyName("disable_low_health_beeping")]
         public bool DisableLowHealthBeeping;
 
-        [JsonProperty("use_sm_boss_theme")]
+        [JsonInclude]
+        [JsonPropertyName("use_sm_boss_theme")]
         public bool UseSMBossTheme;
 
-        [JsonProperty("use_alternative_escape_theme")]
+        [JsonInclude]
+        [JsonPropertyName("use_alternative_escape_theme")]
         public bool UseAlternativeMusicTheme;
     }
 
@@ -112,48 +123,56 @@ namespace YAPR_LIB
         ALWAYS
     }
 
-    [Serializable]
     public class LevelData
     {
-        [JsonProperty("room")]
+        [JsonInclude]
+        [JsonPropertyName("room")]
         public string? Room;
 
-        [JsonProperty("pickups")]
+        [JsonInclude]
+        [JsonPropertyName("pickups")]
         public Dictionary<int, Pickup>? Pickups;
 
-        [JsonProperty("doors")]
+        [JsonInclude]
+        [JsonPropertyName("doors")]
         public Dictionary<string, DoorType>? Doors;
 
-        [JsonProperty("elevators")]
+        [JsonInclude]
+        [JsonPropertyName("elevators")]
         public Dictionary<int, Elevator>? Elevators;
     }
 
-    [Serializable]
     public class Pickup
     {
-        [JsonProperty("index")]
-        public int? Index;
+        [JsonInclude]
+        [JsonPropertyName("index")]
+        public int Index;
 
-        [JsonProperty("model")]
+        [JsonInclude]
+        [JsonPropertyName("model")]
         public string? Model;
 
-        [JsonProperty("type")]
+        [JsonInclude]
+        [JsonPropertyName("type")]
         public string? Type;
 
-        [JsonProperty("quantity")]
-        public int? Quantity;
+        [JsonInclude]
+        [JsonPropertyName("quantity")]
+        public int Quantity;
 
-        [JsonProperty("text")]
+        [JsonInclude]
+        [JsonPropertyName("text")]
         public PickupText? Text;
     }
 
-    [Serializable]
     public class PickupText
     {
-        [JsonProperty("header")]
+        [JsonInclude]
+        [JsonPropertyName("header")]
         public string? Header;
 
-        [JsonProperty("description")]
+        [JsonInclude]
+        [JsonPropertyName("description")]
         public string? Description;
     }
 
@@ -182,16 +201,18 @@ namespace YAPR_LIB
         LONG_EAST
     }
 
-    [Serializable]
     public class Elevator
     {
-        [JsonProperty("destination_x")]
-        public int? DestinationX;
+        [JsonInclude]
+        [JsonPropertyName("destination_x")]
+        public int DestinationX;
 
-        [JsonProperty("destination_y")]
-        public int? DestinationY;
+        [JsonInclude]
+        [JsonPropertyName("destination_y")]
+        public int DestinationY;
 
-        [JsonProperty("end_game")]
-        public bool? EndGame;
+        [JsonInclude]
+        [JsonPropertyName("end_game")]
+        public bool EndGame;
     }
 }
