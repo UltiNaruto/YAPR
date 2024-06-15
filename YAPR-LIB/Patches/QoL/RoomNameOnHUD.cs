@@ -238,7 +238,7 @@ namespace YAPR_LIB.Patches.QoL
                                                                           return "Path of Reflection"
                                                                       if (xx == 13 && yy >= 24 && yy <= 29)
                                                                           return "Tower of Doom"
-                                                                      if (xx >= 17 && xx <= 20 && yy == 24)
+                                                                      if (xx >= 17 && xx <= 20 && yy == 26)
                                                                           return "Green Bridge"
                                                                       if (xx == 21 && yy >= 26 && yy <= 28)
                                                                           return "Gambit Tower"
