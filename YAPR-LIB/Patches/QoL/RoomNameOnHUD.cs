@@ -142,7 +142,7 @@ namespace YAPR_LIB.Patches.QoL
                                                                           return "Upper Side Room Access"
                                                                       if (xx == 10 && yy >= 26 && yy <= 27)
                                                                           return "East Stairwell"
-                                                                      if (xx == 10 && yy == 27)
+                                                                      if (xx == 9 && yy == 27)
                                                                           return "Lower Side Room Access"
 
                                                                       // Norfair
