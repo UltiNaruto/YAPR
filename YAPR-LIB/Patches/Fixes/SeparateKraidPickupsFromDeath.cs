@@ -51,7 +51,7 @@ namespace YAPR_LIB.Patches.Fixes
                         Room_Transition_Timer -= 1
                         if (Room_Transition_Timer <= 0)
                         {
-                            if (obj_MAIN.Screen_X == 16 && obj_MAIN.Screen_Y == 28 && !instance_exists(obj_Boss_Kraid))
+                            if (obj_MAIN.Screen_X == 7 && obj_MAIN.Screen_Y == 28 && !instance_exists(obj_Boss_Kraid))
                             {
                                 with(par_Item)
                                 {
