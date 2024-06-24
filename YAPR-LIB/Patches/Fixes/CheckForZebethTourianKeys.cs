@@ -25,7 +25,7 @@ namespace YAPR_LIB.Patches.Fixes
                                 var layer = layer_tilemap_get_id("Tiles_Solid")
                                 for (var bridgeX = 52; bridgeX < 52 + obj_Samus.Upgrade[30]; bridgeX += 1)
                                     tilemap_set(layer, 0, bridgeX, 22)
-                                if (obj_Samus.Upgrade[30])
+                                if (obj_Samus.Upgrade[30] == 9)
                                     play_sfx(sfx_Notify_Boss_Defeated)
                             }
 
