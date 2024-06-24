@@ -70,6 +70,7 @@ public class Patcher
         Patches.EditMenu.Apply(gmData, decompileContext, planetName);
         Patches.MoveSavesToRandovaniaFolder.Apply(gmData, decompileContext, randomizerConfig);
         Patches.CustomMessageBox.Apply(gmData, decompileContext);
+        Patches.CustomElevatorHandling.Apply(gmData, decompileContext, randomizerConfig.LevelData.Elevators);
         Patches.CustomPickupHandling.Apply(gmData, decompileContext);
         Patches.Fixes.AddTourianKeysToHUD.Apply(gmData, decompileContext);
         Patches.Fixes.AddTourianKeysToSaveSlot.Apply(gmData, decompileContext);

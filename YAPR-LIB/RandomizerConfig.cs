@@ -214,5 +214,21 @@ namespace YAPR_LIB
         [JsonInclude]
         [JsonPropertyName("end_game")]
         public bool EndGame;
+
+        public Dictionary<string, int> ToDictionary()
+        {
+            return new Dictionary<String, int>()
+            {
+                {
+                    "destination_x", DestinationX
+                },
+                {
+                    "destination_y", DestinationY
+                },
+                {
+                    "end_game", EndGame ? 1 : 0
+                }
+            };
+        }
     }
 }

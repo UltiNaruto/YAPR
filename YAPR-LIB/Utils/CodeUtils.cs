@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Design;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using UndertaleModLib;
 using UndertaleModLib.Decompiler;
 using UndertaleModLib.Models;
@@ -8,52 +7,65 @@ namespace YAPR_LIB.Utils
 {
     public static class CodeUtils
     {
+        static void AddGlobalVariable(UndertaleData gmData, GlobalDecompileContext decompileContext, ref int variableID, UndertaleString variableString, object variableToAdd)
+        {
+            var title_screen_other_4_code = gmData.Code.ByName("gml_Object_obj_Title_Screen_Other_4");
+            var title_screen_other_4 = Decompiler.Decompile(title_screen_other_4_code, decompileContext);
+
+            gmData.Strings.Add(variableString);
+            gmData.Variables.Add(new UndertaleVariable()
+            {
+                NameStringID = gmData.Strings.IndexOf(variableString),
+                Name = variableString,
+                InstanceType = UndertaleInstruction.InstanceType.Global,
+                VarID = variableID++
+            });
+
+            if (variableToAdd is bool)
+                title_screen_other_4 = title_screen_other_4.Replace(
+                    "    global.MOBILE = 0",
+                  $$"""
+                            global.{{variableString.Content}} = {{((bool)variableToAdd ? 1 : 0)}}
+                            global.MOBILE = 0
+                        """.ReplaceLineEndings("\n")
+                );
+            else if (variableToAdd is string)
+                title_screen_other_4 = title_screen_other_4.Replace(
+                    "    global.MOBILE = 0",
+                  $$"""
+                            global.{{variableString.Content}} = "{{variableToAdd}}"
+                            global.MOBILE = 0
+                        """.ReplaceLineEndings("\n")
+                );
+            else if (variableToAdd.GetType().Name == "Dictionary`2")
+                title_screen_other_4 = title_screen_other_4.Replace(
+                    "    global.MOBILE = 0",
+                  $$"""
+                            {{variableToAdd.ToDictionary().ToGMLDictionary(variableString.Content, true)}}
+                            global.MOBILE = 0
+                        """.ReplaceLineEndings("\n")
+                );
+            else
+                title_screen_other_4 = title_screen_other_4.Replace(
+                    "    global.MOBILE = 0",
+                  $$"""
+                            global.{{variableString.Content}} = {{variableToAdd}}
+                            global.MOBILE = 0
+                        """.ReplaceLineEndings("\n")
+                );
+
+            title_screen_other_4_code.ReplaceGML(title_screen_other_4, gmData);
+        }
+
         public static void AddGlobalVariables(UndertaleData gmData, GlobalDecompileContext decompileContext, Dictionary<string, object> variablesToAdd)
         {
             var variableStrings = variablesToAdd.Keys.Select(v => new UndertaleString(v)).ToArray();
             var varID = gmData.Variables.Count;
-            var title_screen_other_4_code = gmData.Code.ByName("gml_Object_obj_Title_Screen_Other_4");
-            var title_screen_other_4 = Decompiler.Decompile(title_screen_other_4_code, decompileContext);
-            var default_value = string.Empty;
 
             foreach (var variableString in variableStrings)
             {
-                gmData.Strings.Add(variableString);
-                gmData.Variables.Add(new UndertaleVariable()
-                {
-                    NameStringID = gmData.Strings.IndexOf(variableString),
-                    Name = variableString,
-                    InstanceType = UndertaleInstruction.InstanceType.Global,
-                    VarID = varID++
-                });
-
-                if (variablesToAdd[variableString.Content] is bool)
-                    title_screen_other_4 = title_screen_other_4.Replace(
-                        "    global.MOBILE = 0",
-                      $$"""
-                            global.{{variableString.Content}} = {{((bool)variablesToAdd[variableString.Content] ? 1 : 0)}}
-                            global.MOBILE = 0
-                        """.ReplaceLineEndings("\n")
-                    );
-                else if (variablesToAdd[variableString.Content] is string)
-                    title_screen_other_4 = title_screen_other_4.Replace(
-                        "    global.MOBILE = 0",
-                      $$"""
-                            global.{{variableString.Content}} = "{{variablesToAdd[variableString.Content]}}"
-                            global.MOBILE = 0
-                        """.ReplaceLineEndings("\n")
-                    );
-                else
-                    title_screen_other_4 = title_screen_other_4.Replace(
-                        "    global.MOBILE = 0",
-                      $$"""
-                            global.{{variableString.Content}} = {{variablesToAdd[variableString.Content]}}
-                            global.MOBILE = 0
-                        """.ReplaceLineEndings("\n")
-                    );
+                AddGlobalVariable(gmData, decompileContext, ref varID, variableString, variablesToAdd[variableString.Content]);
             }
-
-            title_screen_other_4_code.ReplaceGML(title_screen_other_4, gmData);
         }
 
         public static void CreateFunction(UndertaleData gmData, string name, string code)
