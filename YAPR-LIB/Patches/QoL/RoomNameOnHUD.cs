@@ -420,11 +420,11 @@ namespace YAPR_LIB.Patches.QoL
 
             obj_Elevator_Step_0 = obj_Elevator_Step_0.Replace(
                 "            stop = 1\n",
-                $$"""
+              $$"""
                         {
                             stop = 1
-                            var screen_x = floor((x / global.GAME_SCREEN_W))
-                            var screen_y = floor((y / global.GAME_SCREEN_H))
+                            var screen_x = floor((obj_Samus.x / global.GAME_SCREEN_W))
+                            var screen_y = floor((obj_Samus.y / global.GAME_SCREEN_H))
                             global.CURRENT_ROOM = scr_Current_Room_Name(screen_x, screen_y)
                             global.ROOM_NAME_REMAINING_DISPLAY_TIME = global.ROOM_NAME_TIME_TO_DISPLAY
                         }
