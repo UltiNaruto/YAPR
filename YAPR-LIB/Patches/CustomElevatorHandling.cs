@@ -8,7 +8,7 @@ namespace YAPR_LIB.Patches
     {
         public static void Apply(UndertaleData gmData, GlobalDecompileContext decompileContext, Dictionary<int, Elevator> Elevators)
         {
-            if (Elevators.Count == 0)
+            if (Elevators == null || Elevators.Count == 0)
                 return;
 
             var global_ELEVATORS = new Dictionary<int, Dictionary<string, int>>();
