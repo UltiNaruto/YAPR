@@ -8,6 +8,9 @@ namespace YAPR_LIB;
 
 public class Patcher
 {
+    private static string? _ExecutableDir;
+    public static string? ExecutableDir => _ExecutableDir = _ExecutableDir ?? Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
     private static string CreateVersionString()
     {
         Version? assembly = Assembly.GetExecutingAssembly().GetName().Version;

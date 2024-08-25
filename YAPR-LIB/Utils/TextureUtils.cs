@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+﻿using ImageMagick;
 using UndertaleModLib;
 using UndertaleModLib.Models;
 
@@ -10,7 +10,7 @@ namespace YAPR_LIB.Utils
         static readonly int TextureMinY = 1092;
         static readonly int TextureMaxX = 1024;
         static readonly int TextureMaxY = 2048;
-        public static UndertaleSprite CreateSprite(UndertaleData gmData, string spriteName, ref int srcX, ref int srcY, int targetW, int targetH, params Image[] images)
+        public static UndertaleSprite CreateSprite(UndertaleData gmData, string spriteName, ref int srcX, ref int srcY, int targetW, int targetH, params MagickImage[] images)
         {
             if (images == null || images.Length == 0)
                 throw new Exception($"Cannot create sprite {spriteName} with no image!");
