@@ -58,8 +58,8 @@ namespace YAPR_LIB.Patches
                 Item_Type = {{PickupUtils.GetItemTypeFromName(pickup.Type)}}
                 Item_Quantity = {{pickup.Quantity}}
                 Item_Acquired_Sound = {{PickupUtils.GetAcquiredSfxFromName(pickup.Type)}}
-                Item_Text_Header = "{{pickup.Text.Header.ToUpper()}}"
-                Item_Text_Description = "{{pickup.Text.Description}}"
+                Item_Text_Header = "{{(pickup.Text?.Header ?? string.Empty).ToUpper()}}"
+                Item_Text_Description = "{{String.Join("\n", pickup.Text?.Description ?? new List<string>())}}"
                 sprite_index = {{pickup.Model}}
 
                 """;

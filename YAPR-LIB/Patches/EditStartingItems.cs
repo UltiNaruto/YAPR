@@ -5,7 +5,7 @@ namespace YAPR_LIB.Patches
 {
     public static class EditStartingItems
     {
-        public static void Apply(UndertaleData gmData, GlobalDecompileContext decompileContext, string room, Dictionary<string, int> startingItems, string startingMemo)
+        public static void Apply(UndertaleData gmData, GlobalDecompileContext decompileContext, string room, Dictionary<string, int> startingItems, Text startingMemo)
         {
             var newCode = new List<String>();
 
@@ -136,7 +136,7 @@ namespace YAPR_LIB.Patches
             insertIndex = world_load.IndexOf("            NET_Apply_Shared_Data()\n        return;")
                                            + "            NET_Apply_Shared_Data()\n".Length;
 
-            if (startingMemo != null && startingMemo != string.Empty)
+            if (startingMemo != null)
             {
                 newCode.AddRange(
                   $$"""
@@ -145,8 +145,8 @@ namespace YAPR_LIB.Patches
                                 obj_MAIN.Current_Event = (1 << 0)
                                 obj_MAIN.Current_Event_Timer = 120
                                 obj_MAIN.Item_Message = 1
-                                obj_MAIN.Item_Message_Header = "EXTRA STARTING ITEMS"
-                                obj_MAIN.Item_Message_Description = "{{startingMemo}}"
+                                obj_MAIN.Item_Message_Header = "{{startingMemo.Header}}"
+                                obj_MAIN.Item_Message_Description = "{{String.Join("\n", startingMemo.Description ?? new List<string>())}}"
                                 obj_MAIN.Item_Event_Type = 0
                             }
                     """.Split("\r\n")

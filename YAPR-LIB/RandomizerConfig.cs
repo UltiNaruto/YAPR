@@ -37,7 +37,7 @@ namespace YAPR_LIB
 
         [JsonInclude]
         [JsonPropertyName("starting_memo")]
-        public string? StartingMemo;
+        public Text? StartingMemo;
 
         [JsonInclude]
         [JsonPropertyName("warp_to_start")]
@@ -49,7 +49,7 @@ namespace YAPR_LIB
 
         [JsonInclude]
         [JsonPropertyName("credits_string")]
-        public List<CreditEntry>? CreditsString;
+        public List<Text>? CreditsString;
     }
 
     public class StartingLocation
@@ -76,21 +76,6 @@ namespace YAPR_LIB
         [JsonInclude]
         [JsonPropertyName("session_uuid")]
         public string? SessionUUID;
-    }
-
-    public class CreditEntry
-    {
-        [JsonInclude]
-        [JsonPropertyName("text")]
-        public string? Text;
-
-        [JsonInclude]
-        [JsonPropertyName("sub_texts")]
-        public List<string>? SubTexts;
-
-        [JsonInclude]
-        [JsonPropertyName("spacer")]
-        public bool Spacer;
     }
 
     public class Preferences
@@ -162,18 +147,7 @@ namespace YAPR_LIB
 
         [JsonInclude]
         [JsonPropertyName("text")]
-        public PickupText? Text;
-    }
-
-    public class PickupText
-    {
-        [JsonInclude]
-        [JsonPropertyName("header")]
-        public string? Header;
-
-        [JsonInclude]
-        [JsonPropertyName("description")]
-        public string? Description;
+        public Text? Text;
     }
 
     public enum DoorType
@@ -214,5 +188,16 @@ namespace YAPR_LIB
         [JsonInclude]
         [JsonPropertyName("end_game")]
         public bool EndGame;
+    }
+
+    public class Text
+    {
+        [JsonInclude]
+        [JsonPropertyName("header")]
+        public string? Header;
+
+        [JsonInclude]
+        [JsonPropertyName("description")]
+        public List<string>? Description;
     }
 }

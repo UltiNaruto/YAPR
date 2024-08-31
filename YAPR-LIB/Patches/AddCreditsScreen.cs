@@ -6,7 +6,7 @@ namespace YAPR_LIB.Patches
 {
     public static class AddCreditsScreen
     {
-        public static void Apply(UndertaleData gmData, GlobalDecompileContext decompileContext, String planetName, List<CreditEntry>? creditsString)
+        public static void Apply(UndertaleData gmData, GlobalDecompileContext decompileContext, String planetName, List<Text>? creditsString)
         {
             if (planetName == "novus")
                 throw new NotImplementedException();
@@ -32,39 +32,42 @@ namespace YAPR_LIB.Patches
             var obj_End_Screen_Create_0_code = gmData.Code.ByName("gml_Object_obj_End_Screen_Create_0");
             var obj_End_Screen_Create_0 = Decompiler.Decompile(obj_End_Screen_Create_0_code, decompileContext);
             var init_credits = "Credits = [\n";
-            foreach (var entry in creditsString)
+            if (creditsString != null)
             {
-                init_credits += $$"""
-                                      [
-                                          "{{entry.Text}}"
-                                  """;
-                if (entry.SubTexts.Count > 0)
+                foreach (var entry in creditsString)
                 {
-                    init_credits += """
+                    init_credits += $$"""
+                                      [
+                                          "{{entry.Header}}"
+                                  """;
+                    if (entry.Description?.Count > 0)
+                    {
+                        init_credits += """
                                     ,
                                             [
 
                                     """;
-                    foreach (var subText in entry.SubTexts)
-                    {
-                        init_credits += $$"""
-                                                      "{{subText}}",
+                        foreach (var desc in entry.Description)
+                        {
+                            init_credits += $$"""
+                                                      "{{desc}}",
                                           
                                           """;
-                    }
-                    init_credits = init_credits.Substring(0, init_credits.LastIndexOf(',')) + "\n";
-                    init_credits += """
+                        }
+                        init_credits = init_credits.Substring(0, init_credits.LastIndexOf(',')) + "\n";
+                        init_credits += """
                                             ]
 
                                     """;
-                }
+                    }
 
-                init_credits += """
+                    init_credits += """
                                     ],
                                 
                                 """;
+                }
+                init_credits = init_credits.Substring(0, init_credits.LastIndexOf(',')) + "\n";
             }
-            init_credits = init_credits.Substring(0, init_credits.LastIndexOf(',')) + "\n";
             init_credits += """
                             ]
                                 
