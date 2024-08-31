@@ -48,7 +48,8 @@ namespace YAPR_LIB.Patches
                 """
                 var game = ds_map_create()
                 ds_map_add(game, "Tourian Keys", obj_Samus.Upgrade[30])
-                """
+
+                """.ReplaceLineEndings("\n")
             );
 
             scr_Save_Data_Init_code.ReplaceGML(scr_Save_Data_Init, gmData);
@@ -61,6 +62,7 @@ namespace YAPR_LIB.Patches
                 """
                 var game = ds_map_find_value(save_map, "GAME DATA")
                 ds_map_set(game, "Tourian Keys", obj_Samus.Upgrade[30])
+
                 """.ReplaceLineEndings("\n")
             );
             scr_Save_Data_Full = scr_Save_Data_Full.Replace(
