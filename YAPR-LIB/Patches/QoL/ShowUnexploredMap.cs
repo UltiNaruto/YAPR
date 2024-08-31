@@ -16,15 +16,15 @@ namespace YAPR_LIB.Patches.QoL
             var ts_setup_menu_code = gmData.Code.ByName("gml_Script_scr_TS_Setup_Menu");
             var ts_setup_menu = Decompiler.Decompile(ts_setup_menu_code, decompileContext);
 
-            ts_setup_menu = ts_setup_menu.Replace("scr_TS_Build_Option(9, (xx + 80), (yy + (sep * 7)), 70, 14, \"SM BOSS THEME\", \"OFF-ON-\", 8, 4, -1, 7, 8, -1, -1)", "scr_TS_Build_Option(9, (xx + 80), (yy + (sep * 7)), 70, 14, \"SM BOSS THEME\", \"OFF-ON-\", 8, 4, -1, 7, 8, 11, -1)");
+            ts_setup_menu = ts_setup_menu.Replace("scr_TS_Build_Option(9, (xx + 80), (yy + sep * 7), 70, 14, \"SM BOSS THEME\", \"OFF-ON-\", 8, 4, -1, 7, 8, -1, -1)", "scr_TS_Build_Option(9, (xx + 80), (yy + sep * 7), 70, 14, \"SM BOSS THEME\", \"OFF-ON-\", 8, 4, -1, 7, 8, 11, -1)");
 
             ts_setup_menu = ts_setup_menu.Replace(
                 """
-                    scr_TS_Build_Option(10, (xx - 80), (yy + (sep * 8.5)), 70, 14, "ALT ESCAPE THEME", "OFF-ON-", 9, 4, -1, 8, -1, -1, -1)
+                    scr_TS_Build_Option(10, (xx - 80), (yy + sep * 8.5), 70, 14, "ALT ESCAPE THEME", "OFF-ON-", 9, 4, -1, 8, -1, -1, -1)
                 """.ReplaceLineEndings("\n"),
                 """
-                    scr_TS_Build_Option(10, (xx - 80), (yy + (sep * 8.5)), 70, 14, "ALT ESCAPE THEME", "OFF-ON-", 9, 4, 11, 8, -1, -1, -1)
-                    scr_TS_Build_Option(11, (xx + 80), (yy + (sep * 8.5)), 70, 14, "SHOW UNEXPLORED MAP", "OFF-ON-", 10, 4, -1, 9, 10, -1, -1)
+                    scr_TS_Build_Option(10, (xx - 80), (yy + sep * 8.5), 70, 14, "ALT ESCAPE THEME", "OFF-ON-", 9, 4, 11, 8, -1, -1, -1)
+                    scr_TS_Build_Option(11, (xx + 80), (yy + sep * 8.5), 70, 14, "SHOW UNEXPLORED MAP", "OFF-ON-", 10, 4, -1, 9, 10, -1, -1)
                 """.ReplaceLineEndings("\n")
             );
 

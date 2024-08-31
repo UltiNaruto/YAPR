@@ -16,15 +16,15 @@ namespace YAPR_LIB.Patches.QoL
             var ts_setup_menu_code = gmData.Code.ByName("gml_Script_scr_TS_Setup_Menu");
             var ts_setup_menu = Decompiler.Decompile(ts_setup_menu_code, decompileContext);
 
-            ts_setup_menu = ts_setup_menu.Replace("scr_TS_Build_Option(6, (xx - 80), (yy + (sep * 5.5)), 70, 14, \"BGM VOLUME\", \"\", 5, 7, 7, 3, -1, -1, -1)", "scr_TS_Build_Option(6, (xx - 80), (yy + (sep * 5.5)), 70, 14, \"BGM VOLUME\", \"\", 5, 7, 7, 3, -1, 8, -1)");
+            ts_setup_menu = ts_setup_menu.Replace("scr_TS_Build_Option(6, (xx - 80), (yy + sep * 5.5), 70, 14, \"BGM VOLUME\", \"\", 5, 7, 7, 3, -1, -1, -1)", "scr_TS_Build_Option(6, (xx - 80), (yy + sep * 5.5), 70, 14, \"BGM VOLUME\", \"\", 5, 7, 7, 3, -1, 8, -1)");
 
             ts_setup_menu = ts_setup_menu.Replace(
                 """
-                        scr_TS_Build_Option(7, (xx + 80), (yy + (sep * 5.5)), 70, 14, "SFX VOLUME", "", 6, 7, -1, 4, 6, -1, -1)
+                        scr_TS_Build_Option(7, (xx + 80), (yy + sep * 5.5), 70, 14, "SFX VOLUME", "", 6, 7, -1, 4, 6, -1, -1)
                 """.ReplaceLineEndings("\n"),
                 """
-                        scr_TS_Build_Option(7, (xx + 80), (yy + (sep * 5.5)), 70, 14, "SFX VOLUME", "", 6, 7, -1, 4, 6, -1, -1)
-                        scr_TS_Build_Option(8, (xx - 80), (yy + (sep * 7)), 70, 14, "LOW HP BEEP", "OFF-ON-", 7, 4, -1, 6, -1, -1, -1)
+                        scr_TS_Build_Option(7, (xx + 80), (yy + sep * 5.5), 70, 14, "SFX VOLUME", "", 6, 7, -1, 4, 6, -1, -1)
+                        scr_TS_Build_Option(8, (xx - 80), (yy + sep * 7), 70, 14, "LOW HP BEEP", "OFF-ON-", 7, 4, -1, 6, -1, -1, -1)
                 """.ReplaceLineEndings("\n")
             );
 
