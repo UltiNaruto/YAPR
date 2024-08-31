@@ -62,15 +62,12 @@ namespace YAPR_LIB.Patches
                 Item_Text_Description = "{{String.Join("\n", pickup.Text?.Description ?? new List<string>())}}"
                 sprite_index = {{pickup.Model}}
 
-                """;
+                """.ReplaceLineEndings("\n");
             if (obj_id >= 100083 && obj_id <= 100086)
                 code += "Active = 0";
             code += "\n";
 
-            obj_randomizerItem__Create_0_code.ReplaceGML(
-                code.ReplaceLineEndings("\n")
-                , gmData
-            );
+            obj_randomizerItem__Create_0_code.ReplaceGML(code, gmData);
             gmData.Code.Add(obj_randomizerItem__Create_0_code);
 
             var obj_randomizerItem__PreCreate_0_code_str = new UndertaleString($"gml_Object_obj_RandomizerItem_{idx}_PreCreate_0");

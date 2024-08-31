@@ -131,7 +131,7 @@ namespace YAPR_LIB
     {
         [JsonInclude]
         [JsonPropertyName("index")]
-        public int Index;
+        public int? Index;
 
         [JsonInclude]
         [JsonPropertyName("model")]
