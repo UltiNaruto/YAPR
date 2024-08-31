@@ -49,7 +49,7 @@ class Wrapper:
             input_data_win_path.parent.joinpath("yapr-data.json")
         )
         with open(json_file, "w+") as f:
-            f.write(json.dumps(patch_data, indent=2))
+            f.write(json.dumps(patch_data, indent=2).replace('\r\n', '\n'))
 
         # Patch data.win
         progress_update("Patching data file...", 0.6)
