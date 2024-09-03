@@ -1,4 +1,5 @@
-﻿using ImageMagick;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
 using UndertaleModLib;
 using UndertaleModLib.Models;
 
@@ -10,7 +11,7 @@ namespace YAPR_LIB.Utils
         static readonly int TextureMinY = 1092;
         static readonly int TextureMaxX = 1024;
         static readonly int TextureMaxY = 2048;
-        public static UndertaleSprite CreateSprite(UndertaleData gmData, string spriteName, ref int srcX, ref int srcY, int targetW, int targetH, params MagickImage[] images)
+        public static UndertaleSprite CreateSprite(UndertaleData gmData, string spriteName, ref int srcX, ref int srcY, int targetW, int targetH, params Image[] images)
         {
             if (images == null || images.Length == 0)
                 throw new Exception($"Cannot create sprite {spriteName} with no image!");
@@ -70,6 +71,7 @@ namespace YAPR_LIB.Utils
 
             return spr;
         }
+
         public static UndertaleSprite GetSprite(UndertaleData gmData, string spriteName, int targetW, int targetH, params Rectangle[] src)
         {
             if (src == null || src.Length == 0)
@@ -118,6 +120,31 @@ namespace YAPR_LIB.Utils
             spr.GMS2PlaybackSpeed = 10;
 
             return spr;
+        }
+
+        public static void ReplaceTexture(this UndertaleTexturePageItem __instance, Image replaceImage, bool disposeImage = true)
+        {
+            Image finalImage = replaceImage.Clone(x => x.Resize(__instance.SourceWidth, __instance.SourceHeight, KnownResamplers.Lanczos3));
+
+            // Apply the image to the TexturePage.
+            lock (__instance.TexturePage.TextureData)
+            {
+                var texturePageImg = Image.Load(__instance.TexturePage.TextureData.TextureBlob);
+                texturePageImg.Mutate(x => x.DrawImage(finalImage, new Point(__instance.SourceX, __instance.SourceY), 1.0f));
+                using (var ms = new MemoryStream())
+                {
+                    texturePageImg.SaveAsPng(ms);
+                    __instance.TexturePage.TextureData.TextureBlob = ms.ToArray();
+                }
+            }
+
+            __instance.TargetWidth = (ushort)replaceImage.Width;
+            __instance.TargetHeight = (ushort)replaceImage.Height;
+
+            // Cleanup.
+            finalImage.Dispose();
+            if (disposeImage)
+                replaceImage.Dispose();
         }
     }
 }
