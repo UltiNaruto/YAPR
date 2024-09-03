@@ -17,11 +17,10 @@ namespace YAPR_LIB.Patches
                                                                              var sub_texts = []
                                                                              for (var i = 0; i < array_length_2d(credits, 0); i++)
                                                                              {
-                                                                                 len += 30
+                                                                                 len += 50
                                                                                  sub_texts = credits[0, i]
                                                                                  for (var j = 0; j < array_length_1d(sub_texts); j++)
                                                                                      len += 20
-                                                                                 len += 40
                                                                              }
                                                                              if (len == 50)
                                                                                 return 0;
