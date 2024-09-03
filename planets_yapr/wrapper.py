@@ -34,6 +34,7 @@ class Wrapper:
         # Copy to input dir to temp dir first to do operations there
         progress_update("Copying to temporary path...", 0)
         tempdir = tempfile.TemporaryDirectory()
+        tempdir_path = Path(tempdir.name)
         shutil.copytree(input_path, tempdir.name, dirs_exist_ok=True)
 
         # Get data.win path. Both of these *need* to be strings, as otherwise patcher won't accept them.
@@ -54,6 +55,15 @@ class Wrapper:
         # Patch data.win
         progress_update("Patching data file...", 0.6)
         self.csharp_patcher.Main(input_data_win, output_data_win, json_file)
+
+        # Rename executable to corresponding planet
+        result_exe_name = "ERROR???"
+        match patch_data["level_data"]["room"]:
+            case "rm_Zebeth":
+                result_exe_name = "Planets_Zebeth.exe"
+            case "rm_Novus":
+                result_exe_name = "Planets_Novus.exe"
+        os.replace(tempdir_path.joinpath("Metroid Planets v1.27g.exe"), tempdir_path.joinpath(result_exe_name))
 
         # Move temp dir to output dir and get rid of it. Also delete original data.win
         # Also delete the json if we're on a race seed.
