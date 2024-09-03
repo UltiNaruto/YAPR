@@ -25,6 +25,12 @@ public class Patcher
     {
         int pickup_idx = 0;
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        var trimmed_json = json.Trim('\r', '\n', ' ');
+
+        // if json is passed as file path rather than json
+        if (trimmed_json.First() != '{' && trimmed_json.First() != '[' &&
+            trimmed_json.Last() != '}' && trimmed_json.Last() != ']')
+            json = File.ReadAllText(json);
 
         var inputDir = Directory.GetParent(inputPath);
         if (inputDir == null)
