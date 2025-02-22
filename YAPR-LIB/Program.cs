@@ -85,6 +85,7 @@ public class Patcher
         Patches.CustomPickups.Replay.CustomItemsReplaySupport.Apply(gmData, decompileContext, planetName);
         Patches.Fixes.FixRipperDamageVulnerabilities.Apply(gmData, decompileContext);
         Patches.AddCreditsScreen.Apply(gmData, decompileContext, planetName, randomizerConfig.GameConfig.CreditsString);
+        Patches.Fixes.RequiredLauncherChange.Apply(gmData, decompileContext);
 #if DEBUG
         Patches.Debug.AddSavingGameSaveAsJSON.Apply(gmData, decompileContext);
         Patches.Debug.DrawScreenCoords.Apply(gmData, decompileContext);

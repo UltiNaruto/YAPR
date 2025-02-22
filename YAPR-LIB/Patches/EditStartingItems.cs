@@ -24,6 +24,13 @@ namespace YAPR_LIB.Patches
                                                  if (room == rm_Novus)
                                                                  Current_Area = (1 << 0)
                                                  """.ReplaceLineEndings("\n").Length;
+
+            if (hasMissiles)
+                newCode.Add("            obj_Samus.Upgrade[16] = 1");
+
+            if (hasSuperMissiles)
+                newCode.Add("            obj_Samus.Upgrade[17] = 1");
+
             if (startingItems != null && startingItems.Count > 0)
             {
                 foreach (var (itemName, count) in startingItems)
@@ -83,16 +90,14 @@ namespace YAPR_LIB.Patches
                         newCode.Add("            obj_Samus.Upgrade[14] = 1");
                     }
 
-                    if (hasMissiles && itemName == "Missiles")
+                    if (itemName == "Missiles")
                     {
-                        newCode.Add($"            obj_Samus.Upgrade[16] = 1");
                         newCode.Add($"            obj_Samus.Ammo_Cap[1] = {Math.Clamp(count, 0, 999)}");
                         newCode.Add($"            obj_Samus.Ammo[1] = {Math.Clamp(count, 0, 999)}");
                     }
 
-                    if (hasSuperMissiles && itemName == "Super Missiles" && room == "rm_Novus")
+                    if (itemName == "Super Missiles" && room == "rm_Novus")
                     {
-                        newCode.Add($"            obj_Samus.Upgrade[17] = 1");
                         newCode.Add($"            obj_Samus.Ammo_Cap[2] = {Math.Clamp(count, 0, 999)}");
                         newCode.Add($"            obj_Samus.Ammo[2] = {Math.Clamp(count, 0, 999)}");
                     }
