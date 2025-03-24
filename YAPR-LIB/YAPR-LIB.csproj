@@ -34,30 +34,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Sprites\Planets\spr_ITEM_Big_Missile\spr_ITEM_Big_Missile_0.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </None>
-    <None Update="Sprites\Planets\spr_ITEM_Big_Missile\spr_ITEM_Big_Missile_1.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </None>
-    <None Update="Sprites\Planets\spr_ITEM_Big_Missile\spr_ITEM_Big_Missile_2.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </None>
-    <None Update="Sprites\Planets\spr_ITEM_Big_Missile\spr_ITEM_Big_Missile_3.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </None>
-    <None Update="Sprites\Planets\spr_ITEM_Tourian_Key\spr_ITEM_Tourian_Key_0.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </None>
-    <None Update="Sprites\Planets\spr_ITEM_Tourian_Key\spr_ITEM_Tourian_Key_1.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </None>
+	<Content Include="Sprites\**">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</Content>
   </ItemGroup>
 
 </Project>
