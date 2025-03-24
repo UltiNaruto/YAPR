@@ -11,6 +11,9 @@ namespace YAPR_LIB.Patches
             if (room == Room.rm_Novus)
                 throw new NotImplementedException();
 
+            if (creditsString is null)
+                return;
+
             CodeUtils.CreateFunction(gmData, "scr_calculate_credits_length", """
                                                                              var credits = argument0;
                                                                              var len = 50
@@ -31,42 +34,39 @@ namespace YAPR_LIB.Patches
             var obj_End_Screen_Create_0_code = gmData.Code.ByName("gml_Object_obj_End_Screen_Create_0");
             var obj_End_Screen_Create_0 = Decompiler.Decompile(obj_End_Screen_Create_0_code, decompileContext);
             var init_credits = "Credits = [\n";
-            if (creditsString != null)
+            foreach (var entry in creditsString)
             {
-                foreach (var entry in creditsString)
+                init_credits += $$"""
+                                    [
+                                        "{{entry.Header}}"
+                                """;
+                if (entry.Description?.Count > 0)
                 {
-                    init_credits += $$"""
-                                      [
-                                          "{{entry.Header}}"
-                                  """;
-                    if (entry.Description?.Count > 0)
-                    {
-                        init_credits += """
-                                    ,
-                                            [
-
-                                    """;
-                        foreach (var desc in entry.Description)
-                        {
-                            init_credits += $$"""
-                                                      "{{desc}}",
-                                          
-                                          """;
-                        }
-                        init_credits = init_credits.Substring(0, init_credits.LastIndexOf(',')) + "\n";
-                        init_credits += """
-                                            ]
-
-                                    """;
-                    }
-
                     init_credits += """
-                                    ],
-                                
+                                ,
+                                        [
+
+                                """;
+                    foreach (var desc in entry.Description)
+                    {
+                        init_credits += $$"""
+                                                    "{{desc}}",
+                                          
+                                        """;
+                    }
+                    init_credits = init_credits.Substring(0, init_credits.LastIndexOf(',')) + "\n";
+                    init_credits += """
+                                        ]
+
                                 """;
                 }
-                init_credits = init_credits.Substring(0, init_credits.LastIndexOf(',')) + "\n";
+
+                init_credits += """
+                                ],
+                                
+                            """;
             }
+            init_credits = init_credits.Substring(0, init_credits.LastIndexOf(',')) + "\n";
             init_credits += """
                             ]
                                 

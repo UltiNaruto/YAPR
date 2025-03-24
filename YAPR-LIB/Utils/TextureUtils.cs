@@ -13,7 +13,7 @@ namespace YAPR_LIB.Utils
         static readonly int TextureMaxY = 2048;
         public static UndertaleSprite CreateSprite(UndertaleData gmData, string spriteName, ref int srcX, ref int srcY, int targetW, int targetH, params Image[] images)
         {
-            if (images == null || images.Length == 0)
+            if (images is null || images.Length == 0)
                 throw new Exception($"Cannot create sprite {spriteName} with no image!");
             var tex_str = default(UndertaleString);
             var tex = default(UndertaleTexturePageItem);
@@ -74,7 +74,7 @@ namespace YAPR_LIB.Utils
 
         public static UndertaleSprite GetSprite(UndertaleData gmData, string spriteName, int targetW, int targetH, params Rectangle[] src)
         {
-            if (src == null || src.Length == 0)
+            if (src is null || src.Length == 0)
                 throw new Exception($"Cannot get sprite {spriteName} with no source coordinates!");
             var tex_str = default(UndertaleString);
             var tex = default(UndertaleTexturePageItem);

@@ -5,16 +5,16 @@ namespace YAPR_LIB.Patches
 {
     public static class EditStartingItems
     {
-        public static void Apply(UndertaleData gmData, GlobalDecompileContext decompileContext, Room room, Dictionary<string, int> startingItems, Text startingMemo)
+        public static void Apply(UndertaleData gmData, GlobalDecompileContext decompileContext, Room room, Dictionary<string, int>? startingItems, Text? startingMemo)
         {
             var newCode = new List<String>();
 
             var world_load_code = gmData.Code.ByName("gml_Script_World_Load");
             var world_load = Decompiler.Decompile(world_load_code, decompileContext);
 
-            var hasMissiles = startingItems.ContainsKey("Missile Launcher");
-            var hasSuperMissiles = room == Room.rm_Novus && startingItems.ContainsKey("Super Missile Launcher");
-            var hasWaveBeam = startingItems.ContainsKey("Wave Beam");
+            var hasMissiles = startingItems?.ContainsKey("Missile Launcher") ?? false;
+            var hasSuperMissiles = room == Room.rm_Novus && (startingItems?.ContainsKey("Super Missile Launcher") ?? false);
+            var hasWaveBeam = startingItems?.ContainsKey("Wave Beam") ?? false;
 
             var insertIndex = world_load.IndexOf("""
                                                  if (room == rm_Novus)
@@ -31,7 +31,7 @@ namespace YAPR_LIB.Patches
             if (hasSuperMissiles)
                 newCode.Add("            obj_Samus.Upgrade[17] = 1");
 
-            if (startingItems != null && startingItems.Count > 0)
+            if (startingItems is not null && startingItems.Count > 0)
             {
                 foreach (var (itemName, count) in startingItems)
                 {
@@ -141,7 +141,7 @@ namespace YAPR_LIB.Patches
             insertIndex = world_load.IndexOf("            NET_Apply_Shared_Data()\n        return;")
                                            + "            NET_Apply_Shared_Data()\n".Length;
 
-            if (startingMemo != null)
+            if (startingMemo is not null)
             {
                 newCode.AddRange(
                   $$"""

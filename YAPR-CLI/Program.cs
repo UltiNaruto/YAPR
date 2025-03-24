@@ -26,8 +26,18 @@ public class Program
             Patcher.Main(inputPath, outputPath, jsonPath);
 
             var randomizerConfig = JsonSerializer.Deserialize<RandomizerConfig>(File.ReadAllText(jsonPath));
+            if (randomizerConfig is null)
+                throw new Exception("Invalid config detected!");
+            if (randomizerConfig.LevelData is null)
+                throw new Exception("Invalid config detected!");
+            if (randomizerConfig.GameConfig is null)
+                throw new Exception("Invalid config detected!");
             var inputDir = Directory.GetParent(inputPath);
+            if (inputDir is null)
+                throw new DirectoryNotFoundException("Couldn't find the parent folder of input path!");
             var outputDir = Directory.GetParent(outputPath);
+            if (outputDir is null)
+                throw new DirectoryNotFoundException("Couldn't find the parent folder of output path!");
 
             // Copy original files to randomized game
             var filesToCopy = new string[] {

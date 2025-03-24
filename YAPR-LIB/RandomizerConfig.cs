@@ -65,9 +65,9 @@ namespace YAPR_LIB
 
         public void OnDeserialized()
         {
-            if (GameConfig == null)
+            if (GameConfig is null)
                 throw new Exception("game_config is missing!");
-            if (LevelData == null)
+            if (LevelData is null)
                 throw new Exception("level_data is missing!");
         }
     }

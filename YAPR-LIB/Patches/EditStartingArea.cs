@@ -29,7 +29,7 @@ namespace YAPR_LIB.Patches
 
             var samus = gmData.Rooms[(int)room].GameObjects.Select(obj => obj).Where(obj => obj.InstanceID == instance_id(room)).FirstOrDefault();
 
-            if (samus == null)
+            if (samus is null)
                 throw new Exception("Cannot randomize this planet!");
 
             samus.X = location.X;

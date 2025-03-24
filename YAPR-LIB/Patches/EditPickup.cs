@@ -24,25 +24,25 @@ namespace YAPR_LIB.Patches
 
         public static void Apply(UndertaleData gmData, Room room, int obj_id, Pickup pickup)
         {
-            var idx = pickup.Index != null ? pickup.Index : GetIndexFromObjectIndex(room, obj_id);
+            var idx = pickup.Index is not null ? pickup.Index : GetIndexFromObjectIndex(room, obj_id);
             var pickup_obj = gmData.Rooms[(int)room]
                                    .GameObjects
                                    .Select(obj => obj)
                                    .FirstOrDefault(obj => obj.InstanceID == obj_id);
-            if (pickup_obj == null) return;
+            if (pickup_obj is null) return;
 
             var new_pickup_obj_type = gmData.GameObjects
                                             .Select(obj => obj)
                                             .FirstOrDefault(obj => obj.Name.Content == PickupUtils.GetObjectFromName(pickup.Type))
                                             .Clone();
 
-            if (new_pickup_obj_type == null) return;
+            if (new_pickup_obj_type is null) return;
 
             var new_pickup_obj_sprite = gmData.Sprites
                                               .Select(spr => spr)
                                               .FirstOrDefault(spr => spr.Name.Content == pickup.Model);
 
-            if (new_pickup_obj_sprite == null) return;
+            if (new_pickup_obj_sprite is null) return;
 
             // Events
 
