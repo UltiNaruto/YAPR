@@ -45,7 +45,7 @@ namespace YAPR_LIB
     #endregion
 
     #region Structs
-    public class RandomizerConfig
+    public class RandomizerConfig : IJsonOnDeserialized
     {
         [JsonInclude]
         [JsonPropertyName("seed")]
@@ -62,6 +62,14 @@ namespace YAPR_LIB
         [JsonInclude]
         [JsonPropertyName("level_data")]
         public LevelData? LevelData;
+
+        public void OnDeserialized()
+        {
+            if (GameConfig == null)
+                throw new Exception("game_config is missing!");
+            if (LevelData == null)
+                throw new Exception("level_data is missing!");
+        }
     }
 
     public class GameConfig
