@@ -7,7 +7,7 @@ namespace YAPR_LIB.Patches
 {
     public static class MoveSavesToRandovaniaFolder
     {
-        public static void Apply(UndertaleData gmData, GlobalDecompileContext decompileContext, RandomizerConfig randomizerConfig)
+        public static void Apply(UndertaleData gmData, GlobalDecompileContext decompileContext, Room room, string wordHash)
         {
             var code = default(UndertaleCode);
             var code_str = string.Empty;
@@ -19,20 +19,20 @@ namespace YAPR_LIB.Patches
                 "gml_Script_World_Load"
             };
 
-            var newZebethFilePath = $"Randovania/{randomizerConfig.GameConfig.SeedIdentifier.WordHash}/Zebeth-";
-            var newNovusFilePath = $"Randovania/{randomizerConfig.GameConfig.SeedIdentifier.WordHash}/Novus-";
+            var newZebethFilePath = $"Randovania/{wordHash}/Zebeth-";
+            var newNovusFilePath = $"Randovania/{wordHash}/Novus-";
 
             foreach(var script in SCRIPTS)
             {
                 code = gmData.Code.ByName(script);
                 code_str = Decompiler.Decompile(code, decompileContext);
                 // prevent using vanilla saves
-                if (randomizerConfig.LevelData.Room == "rm_Zebeth")
+                if (room == Room.rm_Zebeth)
                 {
                     code_str = code_str.Replace("world[1] = \"Zebeth-\"", $"world[1] = \"{newZebethFilePath}\"");
                     code_str = code_str.Replace("world[(1 << 0)] = \"Zebeth-\"", $"world[1] = \"{newZebethFilePath}\"");
                 }
-                if (randomizerConfig.LevelData.Room == "rm_Novus")
+                if (room == Room.rm_Novus)
                 {
                     code_str = code_str.Replace("world[2] = \"Novus-\"", $"world[2] = \"{newNovusFilePath}\"");
                     code_str = code_str.Replace("world[(2 << 0)] = \"Novus-\"", $"world[2] = \"{newNovusFilePath}\"");

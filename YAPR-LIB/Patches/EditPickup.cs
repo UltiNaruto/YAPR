@@ -7,9 +7,9 @@ namespace YAPR_LIB.Patches
 {
     public static class EditPickup
     {
-        static int GetIndexFromObjectIndex(int room_id, int obj_id)
+        static int GetIndexFromObjectIndex(Room room, int obj_id)
         {
-            if (room_id != 5)
+            if (room != Room.rm_Zebeth)
                 throw new NotImplementedException();
 
             if (obj_id == 100018)
@@ -22,10 +22,10 @@ namespace YAPR_LIB.Patches
             throw new NotImplementedException();
         }
 
-        public static void Apply(UndertaleData gmData, int room_id, int obj_id, Pickup pickup)
+        public static void Apply(UndertaleData gmData, Room room, int obj_id, Pickup pickup)
         {
-            var idx = pickup.Index != null ? pickup.Index : GetIndexFromObjectIndex(room_id, obj_id);
-            var pickup_obj = gmData.Rooms[room_id]
+            var idx = pickup.Index != null ? pickup.Index : GetIndexFromObjectIndex(room, obj_id);
+            var pickup_obj = gmData.Rooms[(int)room]
                                    .GameObjects
                                    .Select(obj => obj)
                                    .FirstOrDefault(obj => obj.InstanceID == obj_id);

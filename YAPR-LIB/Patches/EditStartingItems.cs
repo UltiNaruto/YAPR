@@ -5,7 +5,7 @@ namespace YAPR_LIB.Patches
 {
     public static class EditStartingItems
     {
-        public static void Apply(UndertaleData gmData, GlobalDecompileContext decompileContext, string room, Dictionary<string, int> startingItems, Text startingMemo)
+        public static void Apply(UndertaleData gmData, GlobalDecompileContext decompileContext, Room room, Dictionary<string, int> startingItems, Text startingMemo)
         {
             var newCode = new List<String>();
 
@@ -13,7 +13,7 @@ namespace YAPR_LIB.Patches
             var world_load = Decompiler.Decompile(world_load_code, decompileContext);
 
             var hasMissiles = startingItems.ContainsKey("Missile Launcher");
-            var hasSuperMissiles = room == "rm_Novus" && startingItems.ContainsKey("Super Missile Launcher");
+            var hasSuperMissiles = room == Room.rm_Novus && startingItems.ContainsKey("Super Missile Launcher");
             var hasWaveBeam = startingItems.ContainsKey("Wave Beam");
 
             var insertIndex = world_load.IndexOf("""
@@ -46,7 +46,7 @@ namespace YAPR_LIB.Patches
 
                     if (itemName == "Ice Beam")
                     {
-                        if (hasWaveBeam && room == "rm_Zebeth")
+                        if (hasWaveBeam && room == Room.rm_Zebeth)
                             newCode.Add("            obj_Samus.Upgrade[3] = 0.5");
                         else
                             newCode.Add("            obj_Samus.Upgrade[3] = 1");
@@ -57,7 +57,7 @@ namespace YAPR_LIB.Patches
                         newCode.Add("            obj_Samus.Upgrade[4] = 1");
                     }
 
-                    if (itemName == "Spazer Beam" && room == "rm_Novus")
+                    if (itemName == "Spazer Beam" && room == Room.rm_Novus)
                     {
                         newCode.Add("            obj_Samus.Upgrade[5] = 1");
                     }
@@ -80,7 +80,7 @@ namespace YAPR_LIB.Patches
                         newCode.Add("            obj_Samus.Upgrade[10] = 1");
                     }
 
-                    if (itemName == "Spring Ball" && room == "rm_Novus")
+                    if (itemName == "Spring Ball" && room == Room.rm_Novus)
                     {
                         newCode.Add("            obj_Samus.Upgrade[11] = 1");
                     }
@@ -96,7 +96,7 @@ namespace YAPR_LIB.Patches
                         newCode.Add($"            obj_Samus.Ammo[1] = {Math.Clamp(count, 0, 999)}");
                     }
 
-                    if (itemName == "Super Missiles" && room == "rm_Novus")
+                    if (itemName == "Super Missiles" && room == Room.rm_Novus)
                     {
                         newCode.Add($"            obj_Samus.Ammo_Cap[2] = {Math.Clamp(count, 0, 999)}");
                         newCode.Add($"            obj_Samus.Ammo[2] = {Math.Clamp(count, 0, 999)}");
@@ -107,7 +107,7 @@ namespace YAPR_LIB.Patches
                         newCode.Add("            obj_Samus.Upgrade[18] = 1");
                     }
 
-                    if (itemName == "Speed Booster" && room == "rm_Novus")
+                    if (itemName == "Speed Booster" && room == Room.rm_Novus)
                     {
                         newCode.Add("            obj_Samus.Upgrade[20] = 1");
                     }
@@ -117,7 +117,7 @@ namespace YAPR_LIB.Patches
                         newCode.Add("            obj_Samus.Upgrade[21] = 1");
                     }
 
-                    if (itemName == "Sensor Visor" && room == "rm_Novus")
+                    if (itemName == "Sensor Visor" && room == Room.rm_Novus)
                     {
                         newCode.Add("            obj_Samus.Upgrade[22] = 1");
                     }

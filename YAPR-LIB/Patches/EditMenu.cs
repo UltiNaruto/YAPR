@@ -5,17 +5,17 @@ namespace YAPR_LIB.Patches
 {
     public static class EditMenu
     {
-        public static void Apply(UndertaleData gmData, GlobalDecompileContext decompileContext, String planetName)
+        public static void Apply(UndertaleData gmData, GlobalDecompileContext decompileContext, Room room)
         {
             var ts_setup_menu_code = gmData.Code.ByName("gml_Script_scr_TS_Setup_Menu");
             var ts_setup_menu = Decompiler.Decompile(ts_setup_menu_code, decompileContext);
 
             // patching the menu so you get only the planet you're playing
-            if (planetName == "zebeth")
+            if (room == Room.rm_Zebeth)
                 ts_setup_menu = ts_setup_menu.Replace("        scr_TS_Build_Option(0, xx, (yy + sep * 1), 65, 9, \"PLANET ZEBETH\", \"\", 0, 1, -1, -1, -1, 1, -1)\n", "        scr_TS_Build_Option(0, xx, (yy + sep * 1), 65, 9, \"RANDOVANIA\", \"\", 0, 1, -1, -1, -1, 4, -1)\n");
             else
                 ts_setup_menu = ts_setup_menu.Replace("        scr_TS_Build_Option(0, xx, (yy + sep * 1), 65, 9, \"PLANET ZEBETH\", \"\", 0, 1, -1, -1, -1, 1, -1)\n", "");
-            if (planetName == "novus")
+            if (room == Room.rm_Novus)
                 ts_setup_menu = ts_setup_menu.Replace("        scr_TS_Build_Option(1, xx, (yy + sep * 2), 65, 9, \"PLANET NOVUS\", \"\", 1, 1, -1, 0, -1, 2, -1)\n", "        scr_TS_Build_Option(0, xx, (yy + sep * 1), 65, 9, \"RANDOVANIA\", \"\", 1, 1, -1, -1, -1, 4, -1)\n");
             else
                 ts_setup_menu = ts_setup_menu.Replace("        scr_TS_Build_Option(1, xx, (yy + sep * 2), 65, 9, \"PLANET NOVUS\", \"\", 1, 1, -1, 0, -1, 2, -1)\n", "");
@@ -69,7 +69,7 @@ namespace YAPR_LIB.Patches
             var menu_info_panel = Decompiler.Decompile(menu_info_panel_code, decompileContext);
 
             // tells which planet we're playing
-            if (planetName == "zebeth")
+            if (room == Room.rm_Zebeth)
                 menu_info_panel = menu_info_panel.Replace(
                     """
                     if (index == 0)
@@ -80,7 +80,7 @@ namespace YAPR_LIB.Patches
                         text = "Planet Zebeth"
                     """.ReplaceLineEndings("\n")
                 );
-            if (planetName == "novus")
+            if (room == Room.rm_Novus)
                 menu_info_panel = menu_info_panel.Replace(
                     """
                     if (index == 0)

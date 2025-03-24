@@ -5,9 +5,9 @@ namespace YAPR_LIB.Patches.CustomPickups.Replay
 {
     public static class CustomItemsReplaySupport
     {
-        public static void Apply(UndertaleData gmData, GlobalDecompileContext decompileContext, string planetName)
+        public static void Apply(UndertaleData gmData, GlobalDecompileContext decompileContext, Room room)
         {
-            if (planetName == "novus")
+            if (room == Room.rm_Novus)
                 throw new NotImplementedException();
 
             // Fix replay icon

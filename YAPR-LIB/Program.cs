@@ -59,9 +59,6 @@ public class Patcher
 
         var decompileContext = new GlobalDecompileContext(gmData, false);
 
-        var planetName = randomizerConfig.LevelData.Room == "rm_Zebeth" ? "zebeth" : "novus";
-        var room_id = planetName == "zebeth" ? 5 : 6;
-
         // Import custom sprites into the game
         Patches.CustomSprites.Apply(gmData);
 
@@ -74,29 +71,29 @@ public class Patcher
         Patches.CustomPickups.CreateTourianKeyPickup.Apply(gmData, decompileContext);
 
         // Do patches
-        Patches.RemoveChozoStatueSpheres.Apply(gmData, room_id);
-        Patches.DisplaySeedHash.Apply(gmData, decompileContext, randomizerConfig);
-        Patches.EditMenu.Apply(gmData, decompileContext, planetName);
-        Patches.MoveSavesToRandovaniaFolder.Apply(gmData, decompileContext, randomizerConfig);
+        Patches.RemoveChozoStatueSpheres.Apply(gmData, randomizerConfig.LevelData.Room);
+        Patches.DisplaySeedHash.Apply(gmData, decompileContext, randomizerConfig.LevelData.Room, randomizerConfig.GameConfig.SeedIdentifier.WordHash);
+        Patches.EditMenu.Apply(gmData, decompileContext, randomizerConfig.LevelData.Room);
+        Patches.MoveSavesToRandovaniaFolder.Apply(gmData, decompileContext, randomizerConfig.LevelData.Room, randomizerConfig.GameConfig.SeedIdentifier.WordHash);
         Patches.CustomMessageBox.Apply(gmData, decompileContext);
         Patches.CustomPickupHandling.Apply(gmData, decompileContext);
         Patches.Fixes.AddTourianKeysToHUD.Apply(gmData, decompileContext);
         Patches.Fixes.AddTourianKeysToSaveSlot.Apply(gmData, decompileContext);
-        Patches.CustomPickups.Replay.CustomItemsReplaySupport.Apply(gmData, decompileContext, planetName);
+        Patches.CustomPickups.Replay.CustomItemsReplaySupport.Apply(gmData, decompileContext, randomizerConfig.LevelData.Room);
         Patches.Fixes.FixRipperDamageVulnerabilities.Apply(gmData, decompileContext);
-        Patches.AddCreditsScreen.Apply(gmData, decompileContext, planetName, randomizerConfig.GameConfig.CreditsString);
+        Patches.AddCreditsScreen.Apply(gmData, decompileContext, randomizerConfig.LevelData.Room, randomizerConfig.GameConfig.CreditsString);
         Patches.Fixes.RequiredLauncherChange.Apply(gmData, decompileContext);
 #if DEBUG
         Patches.Debug.AddSavingGameSaveAsJSON.Apply(gmData, decompileContext);
         Patches.Debug.DrawScreenCoords.Apply(gmData, decompileContext);
 #endif
 
-        Patches.EditStartingArea.Apply(gmData, decompileContext, planetName, randomizerConfig.GameConfig.StartingRoom);
-        Patches.EditStartingItems.Apply(gmData, decompileContext, planetName, randomizerConfig.GameConfig.StartingItems, randomizerConfig.GameConfig.StartingMemo);
+        Patches.EditStartingArea.Apply(gmData, decompileContext, randomizerConfig.LevelData.Room, randomizerConfig.GameConfig.StartingRoom);
+        Patches.EditStartingItems.Apply(gmData, decompileContext, randomizerConfig.LevelData.Room, randomizerConfig.GameConfig.StartingItems, randomizerConfig.GameConfig.StartingMemo);
 
         if (randomizerConfig.LevelData != null)
         {
-            if (room_id == 5)
+            if (randomizerConfig.LevelData.Room == Room.rm_Zebeth)
             {
                 // Fixes minor inconsistencies in the minimap
                 Patches.Fixes.FixZebethMinimap.Apply(gmData, decompileContext);
@@ -126,10 +123,10 @@ public class Patcher
                 var pickups = randomizerConfig.LevelData.Pickups.OrderBy(kvp => kvp.Key).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
                 foreach ((int pickup_obj_id, Pickup pickup) in pickups)
                 {
-                    if (gmData.Rooms[room_id].GameObjects.Any(obj => obj.InstanceID == pickup_obj_id))
+                    if (gmData.Rooms[(int)randomizerConfig.LevelData.Room].GameObjects.Any(obj => obj.InstanceID == pickup_obj_id))
                     {
                         Patches.EditPickup.Apply(gmData,
-                                                 room_id,
+                                                 randomizerConfig.LevelData.Room,
                                                  pickup_obj_id,
                                                  pickup);
                     }

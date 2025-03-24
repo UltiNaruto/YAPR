@@ -45,10 +45,18 @@ public class Program
                     {
                         if (file == "Metroid Planets v1.27g.exe")
                         {
-                            if (randomizerConfig.LevelData.Room == "rm_Zebeth")
-                                File.Copy(Path.Combine(inputDir.FullName, file), Path.Combine(outputDir.FullName, "Planets_Zebeth.exe"), true);
-                            if (randomizerConfig.LevelData.Room == "rm_Novus")
-                                File.Copy(Path.Combine(inputDir.FullName, file), Path.Combine(outputDir.FullName, "Planets_Novus.exe"), true);
+                            switch (randomizerConfig.LevelData.Room)
+                            {
+                                case Room.rm_Zebeth:
+                                    File.Copy(Path.Combine(inputDir.FullName, file), Path.Combine(outputDir.FullName, "Planets_Zebeth.exe"), true);
+                                    break;
+                                case Room.rm_Novus:
+                                    File.Copy(Path.Combine(inputDir.FullName, file), Path.Combine(outputDir.FullName, "Planets_Novus.exe"), true);
+                                    break;
+                                default:
+                                    File.Copy(Path.Combine(inputDir.FullName, file), Path.Combine(outputDir.FullName, "Planets.exe"), true);
+                                    break;
+                        }
                         }
                         else
                             File.Copy(Path.Combine(inputDir.FullName, file), Path.Combine(outputDir.FullName, file), true);

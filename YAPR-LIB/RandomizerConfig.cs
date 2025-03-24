@@ -2,6 +2,49 @@ using System.Text.Json.Serialization;
 
 namespace YAPR_LIB
 {
+    #region Enums
+    public enum DoorType
+    {
+        NONE,
+        BLUE_WEST = 21,
+        BLUE_EAST,
+        MISSILE_WEST,
+        MISSILE_EAST,
+        TEN_MISSILES_WEST,
+        TEN_MISSILES_EAST,
+        LOCKED_DOOR_WEST,
+        LOCKED_DOOR_EAST,
+        SUPER_MISSILE_WEST,
+        SUPER_MISSILE_EAST,
+        BOMB_WEST,
+        BOMB_EAST,
+        SCREW_ATTACK_WEST,
+        SCREW_ATTACK_EAST,
+        ICE_WEST,
+        ICE_EAST,
+        WAVE_WEST,
+        WAVE_EAST,
+        LONG_WEST,
+        LONG_EAST
+    }
+
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public enum Room
+    {
+        rm_Zebeth = 5,
+        rm_Novus
+    }
+
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public enum RoomGuiType
+    {
+        NONE,
+        WITH_FADE,
+        ALWAYS
+    }
+    #endregion
+
+    #region Structs
     public class RandomizerConfig
     {
         [JsonInclude]
@@ -85,7 +128,7 @@ namespace YAPR_LIB
         public bool ShowUnexploredMap;
 
         [JsonInclude]
-        [JsonPropertyName("room_name_on_hud")]
+        [JsonPropertyName("room_names_on_hud")]
         public RoomGuiType RoomNameOnHUD;
 
         [JsonInclude]
@@ -101,18 +144,11 @@ namespace YAPR_LIB
         public bool UseAlternativeMusicTheme;
     }
 
-    public enum RoomGuiType
-    {
-        NONE,
-        WITH_FADE,
-        ALWAYS
-    }
-
     public class LevelData
     {
         [JsonInclude]
         [JsonPropertyName("room")]
-        public string? Room;
+        public Room Room;
 
         [JsonInclude]
         [JsonPropertyName("pickups")]
@@ -159,31 +195,6 @@ namespace YAPR_LIB
         public bool IsLauncher;
     }
 
-    public enum DoorType
-    {
-        NONE,
-        BLUE_WEST = 21,
-        BLUE_EAST,
-        MISSILE_WEST,
-        MISSILE_EAST,
-        TEN_MISSILES_WEST,
-        TEN_MISSILES_EAST,
-        LOCKED_DOOR_WEST,
-        LOCKED_DOOR_EAST,
-        SUPER_MISSILE_WEST,
-        SUPER_MISSILE_EAST,
-        BOMB_WEST,
-        BOMB_EAST,
-        SCREW_ATTACK_WEST,
-        SCREW_ATTACK_EAST,
-        ICE_WEST,
-        ICE_EAST,
-        WAVE_WEST,
-        WAVE_EAST,
-        LONG_WEST,
-        LONG_EAST
-    }
-
     public class Elevator
     {
         [JsonInclude]
@@ -209,4 +220,5 @@ namespace YAPR_LIB
         [JsonPropertyName("description")]
         public List<string>? Description;
     }
+    #endregion
 }

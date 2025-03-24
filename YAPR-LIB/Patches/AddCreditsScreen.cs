@@ -6,9 +6,9 @@ namespace YAPR_LIB.Patches
 {
     public static class AddCreditsScreen
     {
-        public static void Apply(UndertaleData gmData, GlobalDecompileContext decompileContext, String planetName, List<Text>? creditsString)
+        public static void Apply(UndertaleData gmData, GlobalDecompileContext decompileContext, Room room, List<Text>? creditsString)
         {
-            if (planetName == "novus")
+            if (room == Room.rm_Novus)
                 throw new NotImplementedException();
 
             CodeUtils.CreateFunction(gmData, "scr_calculate_credits_length", """
@@ -93,7 +93,7 @@ namespace YAPR_LIB.Patches
             var obj_End_Screen_Step_0_code = gmData.Code.ByName("gml_Object_obj_End_Screen_Step_0");
             var obj_End_Screen_Step_0 = Decompiler.Decompile(obj_End_Screen_Step_0_code, decompileContext);
 
-            if (planetName == "zebeth")
+            if (room == Room.rm_Zebeth)
             {
                 obj_End_Screen_Step_0 = obj_End_Screen_Step_0.Replace(
                     """
@@ -122,7 +122,7 @@ namespace YAPR_LIB.Patches
             var obj_End_Screen_Draw_0_code = gmData.Code.ByName("gml_Object_obj_End_Screen_Draw_0");
             var obj_End_Screen_Draw_0 = Decompiler.Decompile(obj_End_Screen_Draw_0_code, decompileContext);
 
-            if (planetName == "zebeth")
+            if (room == Room.rm_Zebeth)
             {
                 obj_End_Screen_Draw_0 = obj_End_Screen_Draw_0.Replace(
                     """
