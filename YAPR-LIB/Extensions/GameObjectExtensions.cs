@@ -1,4 +1,4 @@
-﻿using UndertaleModLib.Models;
+using UndertaleModLib.Models;
 
 namespace YAPR_LIB.Extensions
 {

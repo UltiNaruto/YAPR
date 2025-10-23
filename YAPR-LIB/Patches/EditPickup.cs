@@ -1,4 +1,4 @@
-﻿using UndertaleModLib;
+using UndertaleModLib;
 using UndertaleModLib.Models;
 using YAPR_LIB.Extensions;
 using YAPR_LIB.Utils;

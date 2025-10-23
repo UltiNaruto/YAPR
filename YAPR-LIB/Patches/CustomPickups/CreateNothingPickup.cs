@@ -1,4 +1,4 @@
-﻿using UndertaleModLib;
+using UndertaleModLib;
 using UndertaleModLib.Decompiler;
 using UndertaleModLib.Models;
 

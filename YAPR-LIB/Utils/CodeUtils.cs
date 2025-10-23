@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.Design;
+using System.ComponentModel.Design;
 using System.Text.RegularExpressions;
 using UndertaleModLib;
 using UndertaleModLib.Decompiler;

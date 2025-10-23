@@ -1,4 +1,5 @@
-﻿using UndertaleModLib;
+using UndertaleModLib;
+using YAPR_LIB.Utils;
 
 namespace YAPR_LIB.Patches
 {

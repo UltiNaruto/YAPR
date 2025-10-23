@@ -1,4 +1,4 @@
-﻿namespace YAPR_LIB.Utils
+namespace YAPR_LIB.Utils
 {
     public static class PickupUtils
     {

@@ -1,4 +1,4 @@
-﻿using UndertaleModLib.Decompiler;
+using UndertaleModLib.Decompiler;
 using UndertaleModLib;
 
 namespace YAPR_LIB.Patches.QoL

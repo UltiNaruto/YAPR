@@ -1,5 +1,6 @@
-﻿using UndertaleModLib.Decompiler;
+using UndertaleModLib.Decompiler;
 using UndertaleModLib;
+using YAPR_LIB.Utils;
 
 namespace YAPR_LIB.Patches.CustomPickups.Replay
 {
