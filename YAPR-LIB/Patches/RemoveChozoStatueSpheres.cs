@@ -7,26 +7,41 @@ namespace YAPR_LIB.Patches
     {
         public static void Apply(UndertaleData gmData, Room room)
         {
-            // Patching only Zebeth planet
-            if (room != Room.rm_Zebeth)
-                return;
+            var tiles_to_patch = default((int, int)[]);
 
-            // Brinstar - Long Beam room
-            gmData.Rooms[(int)room].Layers[2].TilesData.TileData[63][103] = 0;
-            // Brinstar - Varia Suit room
-            gmData.Rooms[(int)room].Layers[2].TilesData.TileData[18][231] = 0;
-            // Brinstar - Ice Beam room
-            gmData.Rooms[(int)room].Layers[2].TilesData.TileData[123][295] = 0;
-            // Brinstar - Bomb room
-            gmData.Rooms[(int)room].Layers[2].TilesData.TileData[63][391] = 0;
-            // Norfair - Ice Beam room
-            gmData.Rooms[(int)room].Layers[2].TilesData.TileData[168][407] = 0;
-            // Norfair - Hi-Jump room
-            gmData.Rooms[(int)room].Layers[2].TilesData.TileData[243][423] = 0;
-            // Norfair - Screw Attack room
-            gmData.Rooms[(int)room].Layers[2].TilesData.TileData[228][231] = 0;
-            // Norfair - Wave Beam room
-            gmData.Rooms[(int)room].Layers[2].TilesData.TileData[303][279] = 0;
+            switch (room)
+            {
+                case Room.rm_Zebeth:
+                    tiles_to_patch = new (int, int)[]
+                    {
+                        // Brinstar - Long Beam room
+                        (103, 63),
+                        // Brinstar - Varia Suit room
+                        (231, 18),
+                        // Brinstar - Ice Beam room
+                        (295, 123),
+                        // Brinstar - Bomb room
+                        (391, 63),
+                        // Norfair - Ice Beam room
+                        (407, 168),
+                        // Norfair - Hi-Jump room
+                        (423, 243),
+                        // Norfair - Screw Attack room
+                        (231, 228),
+                        // Norfair - Wave Beam room
+                        (279, 303),
+                    };
+                    break;
+                case Room.rm_Novus:
+                    throw new NotImplementedException("Cannot remove Chozo Statue spheres for Novus yet!");
+            }
+
+            if (tiles_to_patch is not null)
+                foreach (var (x, y) in tiles_to_patch)
+                    gmData.Rooms[(int)room]
+                          .Layers[(int)Layer.Tiles_Solid]
+                          .TilesData
+                          .TileData[y][x] = 0;
         }
     }
 }
