@@ -12,8 +12,8 @@ namespace YAPR_LIB.Patches.QoL
 
             scr_Draw_Pause_Screen = scr_Draw_Pause_Screen.Replace(
                 """
-                xx = ((center_x - global.CAMERA_W) - Pause_Menu_X)
-                yy = (center_y + 25)
+                xx = center_x - global.CAMERA_W - Pause_Menu_X
+                yy = center_y + 25
                 c = c_black
                 if (Pause_Cursor == 1 && Pause_Menu_Select == 1)
                     c = make_color_rgb(25, 75, 150)
@@ -64,6 +64,9 @@ namespace YAPR_LIB.Patches.QoL
                                 Pause_Trans = -1
                                 Screen_Cover_Alpha = 1
                                 Screen_Cover_Dir = -1
+                                obj_Samus.Riding = 0
+                                if (audio_is_playing(sfx_Elevator_Hum) == 1)
+                                    stop_sfx(0)
                                 obj_Samus.x = global.START_LOCATION_X
                                 obj_Samus.y = global.START_LOCATION_Y
                                 obj_Samus.Energy = (99 + (100 * obj_Samus.Upgrade[7]))
