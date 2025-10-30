@@ -22,15 +22,9 @@ public class Patcher
 
     public static string Version = CreateVersionString();
 
-    public static void Main(string inputPath, string outputPath, string json)
+    public static void Main(string inputPath, string outputPath, string jsonPath)
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        var trimmed_json = json.Trim('\r', '\n', ' ');
-
-        // if json is passed as file path rather than json
-        if (trimmed_json.First() != '{' && trimmed_json.First() != '[' &&
-            trimmed_json.Last() != '}' && trimmed_json.Last() != ']')
-            json = File.ReadAllText(json);
 
         var inputDir = Directory.GetParent(inputPath);
         if (inputDir is null)
@@ -39,7 +33,7 @@ public class Patcher
         if (outputDir is null)
             throw new DirectoryNotFoundException("Couldn't find the parent folder of output path!");
         RandomizerConfig? randomizerConfig = JsonSerializer.Deserialize<RandomizerConfig>(
-            json,
+            File.ReadAllText(jsonPath),
             new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
