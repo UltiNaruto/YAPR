@@ -89,9 +89,6 @@ public class Patcher
         Patches.Debug.DrawScreenCoords.Apply(gmData, decompileContext);
 #endif
 
-        Patches.EditStartingArea.Apply(gmData, decompileContext, randomizerConfig.LevelData.Room, randomizerConfig.GameConfig?.StartingRoom ?? new StartingLocation() { X = 648, Y = 3296 });
-        Patches.EditStartingItems.Apply(gmData,decompileContext,randomizerConfig.LevelData.Room,randomizerConfig.GameConfig?.StartingItems, randomizerConfig.GameConfig?.StartingMemo);
-
         if (randomizerConfig.LevelData.Room == Room.rm_Zebeth)
         {
             // Fixes minor inconsistencies in the minimap
@@ -150,6 +147,10 @@ public class Patcher
         Patches.QoL.UseAlternativeEscapeTheme.Apply(gmData, decompileContext, randomizerConfig.Preferences?.UseAlternativeMusicTheme ?? false);
         Patches.QoL.ShowUnexploredMap.Apply(gmData, decompileContext, randomizerConfig.Preferences?.ShowUnexploredMap ?? false);
         Patches.QoL.RoomNameOnHUD.Apply(gmData, decompileContext, randomizerConfig.Preferences?.RoomNameOnHUD ?? RoomGuiType.NONE);
+
+        // Starting condition patches
+        Patches.EditStartingArea.Apply(gmData, decompileContext, randomizerConfig.LevelData.Room, randomizerConfig.GameConfig?.StartingRoom ?? new StartingLocation() { X = 648, Y = 3296 });
+        Patches.EditStartingItems.Apply(gmData, decompileContext, randomizerConfig.LevelData.Room, randomizerConfig.GameConfig?.StartingItems, randomizerConfig.GameConfig?.StartingMemo);
 
         if (!Directory.Exists(outputDir.FullName))
             Directory.CreateDirectory(outputDir.FullName);

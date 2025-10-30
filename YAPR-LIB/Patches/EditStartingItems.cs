@@ -17,14 +17,11 @@ namespace YAPR_LIB.Patches
             var hasSuperMissiles = room == Room.rm_Novus && (startingItems?.ContainsKey("Super Missile Launcher") ?? false);
             var hasWaveBeam = startingItems?.ContainsKey("Wave Beam") ?? false;
 
-            var insertIndex = world_load.IndexOf("""
-                                                 if (room == rm_Novus)
-                                                                 Current_Area = (1 << 0)
-                                                 """.ReplaceLineEndings("\n"))
-                                               + """
-                                                 if (room == rm_Novus)
-                                                                 Current_Area = (1 << 0)
-                                                 """.ReplaceLineEndings("\n").Length;
+            var stringPrecedingInsert = """
+                                        if (room == rm_Novus)
+                                                        Current_Area = (1 << 0)
+                                        """.ReplaceLineEndings("\n");
+            var insertIndex = world_load.IndexOf(stringPrecedingInsert) + stringPrecedingInsert.Length + 1;
 
             if (hasMissiles)
                 newCode.Add("            obj_Samus.Upgrade[16] = 1");
@@ -133,14 +130,17 @@ namespace YAPR_LIB.Patches
             if (newCode.Count > 0)
             {
                 // prepends a newline
-                newCode.Insert(0, "");
                 world_load = world_load.Insert(insertIndex, String.Join("\n", newCode));
 
                 newCode.Clear();
             }
 
-            insertIndex = world_load.IndexOf("            NET_Apply_Shared_Data()\n        return;")
-                                           + "            NET_Apply_Shared_Data()\n".Length;
+
+            stringPrecedingInsert = """
+                                            if (obj_NETWORK.Connection_Pos > -1)
+                                                NET_Apply_Shared_Data()
+                                    """.ReplaceLineEndings("\n");
+            insertIndex = world_load.IndexOf(stringPrecedingInsert) + stringPrecedingInsert.Length + 1;
 
             if (startingMemo is not null)
             {
