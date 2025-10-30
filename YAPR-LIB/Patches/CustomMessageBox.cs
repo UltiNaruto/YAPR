@@ -40,7 +40,7 @@ namespace YAPR_LIB.Patches
                 text2 = obj_MAIN.Item_Message_Description
                 if (Item_Event_Type == 0)
                 {
-                    var h = string_count("\n", obj_MAIN.Item_Message_Description) * 12
+                    var h = string_count("\n", obj_MAIN.Item_Message_Description) * 14
                 """.ReplaceLineEndings("\n")
             );
 
