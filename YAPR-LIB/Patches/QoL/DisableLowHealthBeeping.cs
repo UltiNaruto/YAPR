@@ -16,12 +16,12 @@ namespace YAPR_LIB.Patches.QoL
             var ts_setup_menu_code = gmData.Code.ByName("gml_Script_scr_TS_Setup_Menu");
             var ts_setup_menu = Decompiler.Decompile(ts_setup_menu_code, decompileContext);
 
-            ts_setup_menu = ts_setup_menu.UnixReplace(
+            ts_setup_menu = ts_setup_menu.Replace(
                 "scr_TS_Build_Option(6, (xx - 80), (yy + sep * 5.5), 70, 14, \"BGM VOLUME\", \"\", 5, 7, 7, 3, -1, -1, -1)",
                 "scr_TS_Build_Option(6, (xx - 80), (yy + sep * 5.5), 70, 14, \"BGM VOLUME\", \"\", 5, 7, 7, 3, -1, 8, -1)"
             );
 
-            ts_setup_menu = ts_setup_menu.UnixReplace(
+            ts_setup_menu = ts_setup_menu.Replace(
                 """
                         scr_TS_Build_Option(7, (xx + 80), (yy + sep * 5.5), 70, 14, "SFX VOLUME", "", 6, 7, -1, 4, 6, -1, -1)
                 """,
@@ -36,7 +36,7 @@ namespace YAPR_LIB.Patches.QoL
             var ts_option_actions_code = gmData.Code.ByName("gml_Script_scr_TS_Option_Actions");
             var ts_option_actions = Decompiler.Decompile(ts_option_actions_code, decompileContext);
 
-            ts_option_actions = ts_option_actions.UnixReplace(
+            ts_option_actions = ts_option_actions.Replace(
                 """
                     if (action == 6)
                         Range_Edit = 1
@@ -54,7 +54,7 @@ namespace YAPR_LIB.Patches.QoL
             var ts_update_option_code = gmData.Code.ByName("gml_Script_scr_TS_Update_Option");
             var ts_update_option = Decompiler.Decompile(ts_update_option_code, decompileContext);
 
-            ts_update_option = ts_update_option.UnixReplace(
+            ts_update_option = ts_update_option.Replace(
                 """
                 }
                 if (menu == 5)
@@ -79,7 +79,7 @@ namespace YAPR_LIB.Patches.QoL
             var obj_Samus_Step_0_code = gmData.Code.ByName("gml_Object_obj_Samus_Step_0");
             var obj_Samus_Step_0 = Decompiler.Decompile(obj_Samus_Step_0_code, decompileContext);
 
-            obj_Samus_Step_0 = obj_Samus_Step_0.UnixReplace(
+            obj_Samus_Step_0 = obj_Samus_Step_0.Replace(
                 "if (sfx_active(22) == 0)",
                 "if (sfx_active(22) == 0 && global.LOW_HP_BEEP == 1)"
             );
@@ -89,7 +89,7 @@ namespace YAPR_LIB.Patches.QoL
             var scr_Save_Options_code = gmData.Code.ByName("gml_Script_scr_Save_Options");
             var scr_Save_Options = Decompiler.Decompile(scr_Save_Options_code, decompileContext);
 
-            scr_Save_Options = scr_Save_Options.UnixReplace(
+            scr_Save_Options = scr_Save_Options.Replace(
                 """
                 ini_write_real("GAME OPTIONS", "Aspect Ratio", global.ASPECT_RATIO)
                 """,
@@ -104,7 +104,7 @@ namespace YAPR_LIB.Patches.QoL
             var scr_Load_Options_code = gmData.Code.ByName("gml_Script_scr_Load_Options");
             var scr_Load_Options = Decompiler.Decompile(scr_Load_Options_code, decompileContext);
 
-            scr_Load_Options = scr_Load_Options.UnixReplace(
+            scr_Load_Options = scr_Load_Options.Replace(
                 """
                     global.ASPECT_RATIO = 3
                 """,

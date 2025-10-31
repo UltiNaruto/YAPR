@@ -9,7 +9,7 @@ namespace YAPR_LIB.Patches.Fixes
         {
             var scr_Handle_Door_Transition_code = gmData.Code.ByName("gml_Script_scr_Handle_Door_Transition");
             var scr_Handle_Door_Transition = Decompiler.Decompile(scr_Handle_Door_Transition_code, decompileContext);
-            scr_Handle_Door_Transition = scr_Handle_Door_Transition.UnixReplace(
+            scr_Handle_Door_Transition = scr_Handle_Door_Transition.Replace(
                 """
                         Room_Transition_Timer -= 1
                         if (Room_Transition_Timer <= 0)
@@ -53,20 +53,30 @@ namespace YAPR_LIB.Patches.Fixes
                 bridge_part.ScaleX = bridge_part.ScaleY = 0;
 
             var obj_bridge = gmData.GameObjects.FirstOrDefault(obj => obj.Name.Content == "obj_Bridge");
-            obj_bridge.Visible = false;
-            foreach (var ev in obj_bridge.Events)
-                ev.Clear();
+
+            if (obj_bridge is not null)
+            {
+                obj_bridge.Visible = false;
+                foreach (var ev in obj_bridge.Events)
+                    ev.Clear();
+            }
 
             // Remove Kraid statue since we don't use it anymore
             var kraid_statue = gmData.Rooms[5].GameObjects.FirstOrDefault(obj => obj.ObjectDefinition.Name.Content == "obj_Statue_Kraid");
-            kraid_statue.ScaleX = kraid_statue.ScaleY = 0;
-            kraid_statue.ObjectDefinition.Visible = false;
+            if (kraid_statue is not null)
+            {
+                kraid_statue.ScaleX = kraid_statue.ScaleY = 0;
+                kraid_statue.ObjectDefinition.Visible = false;
+            }
             gmData.Rooms[5].Layers[2].TilesData.TileData[21][56] = 86;
 
             // Remove Ridley statue since we don't use it anymore
             var ridley_statue = gmData.Rooms[5].GameObjects.FirstOrDefault(obj => obj.ObjectDefinition.Name.Content == "obj_Statue_Ridley");
-            ridley_statue.ScaleX = ridley_statue.ScaleY = 0;
-            ridley_statue.ObjectDefinition.Visible = false;
+            if (ridley_statue is not null)
+            {
+                ridley_statue.ScaleX = ridley_statue.ScaleY = 0;
+                ridley_statue.ObjectDefinition.Visible = false;
+            }
             gmData.Rooms[5].Layers[2].TilesData.TileData[19][54] = 86;
 
             // Another pillar?

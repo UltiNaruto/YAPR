@@ -8,7 +8,7 @@ namespace YAPR_LIB.Utils
     public static class TextureUtils
     {
         static readonly int TextureMinX = 42;
-        static readonly int TextureMinY = 1092;
+        //static readonly int TextureMinY = 1092;
         static readonly int TextureMaxX = 1024;
         static readonly int TextureMaxY = 2048;
         public static UndertaleSprite CreateSprite(UndertaleData gmData, string spriteName, ref int srcX, ref int srcY, int targetW, int targetH, params Image[] images)

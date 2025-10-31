@@ -10,7 +10,7 @@ namespace YAPR_LIB.Patches.Fixes
             var scr_Draw_Map_Screen_code = gmData.Code.ByName("gml_Script_scr_Draw_Map_Screen");
             var scr_Draw_Map_Screen = Decompiler.Decompile(scr_Draw_Map_Screen_code, decompileContext);
 
-            scr_Draw_Map_Screen = scr_Draw_Map_Screen.UnixReplace(
+            scr_Draw_Map_Screen = scr_Draw_Map_Screen.Replace(
                 """
 
                 var draw_base = 1

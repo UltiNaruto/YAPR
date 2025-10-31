@@ -10,7 +10,7 @@ namespace YAPR_LIB.Patches.Fixes
             var scr_Enemy_Build_code = gmData.Code.ByName("gml_Script_scr_Enemy_Build");
             var scr_Enemy_Build = Decompiler.Decompile(scr_Enemy_Build_code, decompileContext);
 
-            scr_Enemy_Build = scr_Enemy_Build.UnixReplace(
+            scr_Enemy_Build = scr_Enemy_Build.Replace(
                 """
                     if (enemy_type == (12 << 0))
                     {
@@ -51,7 +51,7 @@ namespace YAPR_LIB.Patches.Fixes
                 """
             );
 
-            scr_Enemy_Build = scr_Enemy_Build.UnixReplace(
+            scr_Enemy_Build = scr_Enemy_Build.Replace(
                 """
                     if (enemy_type == (18 << 0))
                     {

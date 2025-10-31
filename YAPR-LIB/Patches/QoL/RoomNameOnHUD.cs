@@ -281,12 +281,12 @@ namespace YAPR_LIB.Patches.QoL
             var ts_setup_menu_code = gmData.Code.ByName("gml_Script_scr_TS_Setup_Menu");
             var ts_setup_menu = Decompiler.Decompile(ts_setup_menu_code, decompileContext);
 
-            ts_setup_menu = ts_setup_menu.UnixReplace(
+            ts_setup_menu = ts_setup_menu.Replace(
                 "scr_TS_Build_Option(10, (xx - 80), (yy + (sep * 8.5)), 70, 14, \"ALT ESCAPE THEME\", \"OFF-ON-\", 9, 4, 11, 8, -1, -1, -1)",
                 "scr_TS_Build_Option(10, (xx - 80), (yy + (sep * 8.5)), 70, 14, \"ALT ESCAPE THEME\", \"OFF-ON-\", 9, 4, 11, 8, -1, 12, -1)"
             );
 
-            ts_setup_menu = ts_setup_menu.UnixReplace(
+            ts_setup_menu = ts_setup_menu.Replace(
                 """
                     scr_TS_Build_Option(11, (xx + 80), (yy + (sep * 8.5)), 70, 14, "SHOW UNEXPLORED MAP", "OFF-ON-", 10, 4, -1, 9, 10, -1, -1)
                 """,
@@ -301,7 +301,7 @@ namespace YAPR_LIB.Patches.QoL
             var ts_option_actions_code = gmData.Code.ByName("gml_Script_scr_TS_Option_Actions");
             var ts_option_actions = Decompiler.Decompile(ts_option_actions_code, decompileContext);
 
-            ts_option_actions = ts_option_actions.UnixReplace(
+            ts_option_actions = ts_option_actions.Replace(
                 """
                     if (action == 10)
                         global.SHOW_UNEXPLORED_MAP = wrap_val((global.SHOW_UNEXPLORED_MAP + 1), 0, 2)
@@ -319,7 +319,7 @@ namespace YAPR_LIB.Patches.QoL
             var ts_update_option_code = gmData.Code.ByName("gml_Script_scr_TS_Update_Option");
             var ts_update_option = Decompiler.Decompile(ts_update_option_code, decompileContext);
 
-            ts_update_option = ts_update_option.UnixReplace(
+            ts_update_option = ts_update_option.Replace(
                 """
                 }
                 if (menu == 5)
@@ -347,7 +347,7 @@ namespace YAPR_LIB.Patches.QoL
             var scr_Handle_Door_Transition_code = gmData.Code.ByName("gml_Script_scr_Handle_Door_Transition");
             var scr_Handle_Door_Transition = Decompiler.Decompile(scr_Handle_Door_Transition_code, decompileContext);
 
-            scr_Handle_Door_Transition = scr_Handle_Door_Transition.UnixReplace(
+            scr_Handle_Door_Transition = scr_Handle_Door_Transition.Replace(
                 """
                     if (Door_Transition == 3)
                     {
@@ -364,7 +364,7 @@ namespace YAPR_LIB.Patches.QoL
                 """
             );
 
-            scr_Handle_Door_Transition = scr_Handle_Door_Transition.UnixReplace(
+            scr_Handle_Door_Transition = scr_Handle_Door_Transition.Replace(
                 """
                         Room_Transition_Timer -= 1
                         if (Room_Transition_Timer <= 0)
@@ -387,22 +387,18 @@ namespace YAPR_LIB.Patches.QoL
             var world_load_code = gmData.Code.ByName("gml_Script_World_Load");
             var world_load = Decompiler.Decompile(world_load_code, decompileContext);
 
-            var stringPrecedingInsert = StringUtils.MakeUnixString(
-                """
-                        if (obj_NETWORK.Connection_Pos > -1)
-                            NET_Apply_Shared_Data()
-                """
-            );
+            var stringPrecedingInsert = """
+                                                if (obj_NETWORK.Connection_Pos > -1)
+                                                    NET_Apply_Shared_Data()
+                                        """;
             var insertIndex = world_load.IndexOf(stringPrecedingInsert) + stringPrecedingInsert.Length + 1;
             
 
-            var newCode = StringUtils.MakeUnixString(
-              $$"""
-                        global.CURRENT_ROOM = scr_Current_Room_Name(Screen_X, Screen_Y)
-                        global.ROOM_NAME_REMAINING_DISPLAY_TIME = global.ROOM_NAME_TIME_TO_DISPLAY
+            var newCode = $$"""
+                            global.CURRENT_ROOM = scr_Current_Room_Name(Screen_X, Screen_Y)
+                            global.ROOM_NAME_REMAINING_DISPLAY_TIME = global.ROOM_NAME_TIME_TO_DISPLAY
 
-                """
-            );
+                            """;
 
             world_load = world_load.Insert(insertIndex, newCode);
 
@@ -414,16 +410,14 @@ namespace YAPR_LIB.Patches.QoL
 
             insertIndex = obj_Elevator_Step_0.IndexOf("    if (obj_Samus.Dead > 0)\n");
 
-            newCode = StringUtils.MakeUnixString(
-              $$"""
-                    global.CURRENT_ROOM = ""
+            newCode = $$"""
+                        global.CURRENT_ROOM = ""
 
-                """
-            );
+                        """;
 
             obj_Elevator_Step_0 = obj_Elevator_Step_0.Insert(insertIndex, newCode);
 
-            obj_Elevator_Step_0 = obj_Elevator_Step_0.UnixReplace(
+            obj_Elevator_Step_0 = obj_Elevator_Step_0.Replace(
                 """
                             stop = 1
 
@@ -446,7 +440,7 @@ namespace YAPR_LIB.Patches.QoL
             var scr_Handle_Pause_Menu_code = gmData.Code.ByName("gml_Script_scr_Handle_Pause_Menu");
             var scr_Handle_Pause_Menu = Decompiler.Decompile(scr_Handle_Pause_Menu_code, decompileContext);
 
-            scr_Handle_Pause_Menu = scr_Handle_Pause_Menu.UnixReplace(
+            scr_Handle_Pause_Menu = scr_Handle_Pause_Menu.Replace(
                 """
                                 play_bgm(bgm_Samus_Entrance, 0)
 
@@ -466,7 +460,7 @@ namespace YAPR_LIB.Patches.QoL
             var scr_Draw_HUD_code = gmData.Code.ByName("gml_Script_scr_Draw_HUD");
             var scr_Draw_HUD = Decompiler.Decompile(scr_Draw_HUD_code, decompileContext);
 
-            scr_Draw_HUD = scr_Draw_HUD.UnixReplace(
+            scr_Draw_HUD = scr_Draw_HUD.Replace(
                 "    scr_Draw_Text_Outline(xx, yy, text, c_lime, c_black, font_Mago2)",
                 """
                     scr_Draw_Text_Outline(xx, yy, text, c_lime, c_black, font_Mago2)
@@ -503,7 +497,7 @@ namespace YAPR_LIB.Patches.QoL
             var scr_Save_Options_code = gmData.Code.ByName("gml_Script_scr_Save_Options");
             var scr_Save_Options = Decompiler.Decompile(scr_Save_Options_code, decompileContext);
 
-            scr_Save_Options = scr_Save_Options.UnixReplace(
+            scr_Save_Options = scr_Save_Options.Replace(
                 """
                 ini_write_real("GAME OPTIONS", "Show Unexplored Map", global.SHOW_UNEXPLORED_MAP)
                 """,
@@ -518,7 +512,7 @@ namespace YAPR_LIB.Patches.QoL
             var scr_Load_Options_code = gmData.Code.ByName("gml_Script_scr_Load_Options");
             var scr_Load_Options = Decompiler.Decompile(scr_Load_Options_code, decompileContext);
 
-            scr_Load_Options = scr_Load_Options.UnixReplace(
+            scr_Load_Options = scr_Load_Options.Replace(
                 """
                 global.SHOW_UNEXPLORED_MAP = ini_read_real("GAME OPTIONS", "Show Unexplored Map", 0)
                 """,

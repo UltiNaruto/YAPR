@@ -25,7 +25,7 @@ namespace YAPR_LIB.Patches
                 throw new Exception($"Can't edit menu for unknown planet {(int)room}");
 
             // patching the menu so you get only the planet you're playing
-            ts_setup_menu = ts_setup_menu.UnixReplace(
+            ts_setup_menu = ts_setup_menu.Replace(
                 """
                     if (global.MOBILE == 0)
                     {
@@ -62,7 +62,7 @@ namespace YAPR_LIB.Patches
             );
 
             // remove all of the options when starting game
-            ts_setup_menu = ts_setup_menu.UnixReplace(
+            ts_setup_menu = ts_setup_menu.Replace(
                 """
                     scr_TS_Build_Option(1, xx, (yy + 50), 110, 15, "DIFFICULTY", "NORMAL-HARD-", 2, 4, -1, 0, -1, 2, global.GAME_DIFFICULTY)
                     scr_TS_Build_Option(2, xx, (yy + 90), 110, 15, "RANDOMIZED MODE", "OFF-ON-", 3, 4, -1, 1, -1, 3, global.GAME_MODE)
@@ -73,7 +73,7 @@ namespace YAPR_LIB.Patches
             );
 
             // reorganize options menu
-            ts_setup_menu = ts_setup_menu.UnixReplace(
+            ts_setup_menu = ts_setup_menu.Replace(
                 """
                     yy = 50
                 """,
@@ -83,7 +83,7 @@ namespace YAPR_LIB.Patches
                 """
             );
 
-            ts_setup_menu = ts_setup_menu.UnixReplace(
+            ts_setup_menu = ts_setup_menu.Replace(
                 """
                         scr_TS_Build_Option(3, (xx - 80), (yy + sep * 4), 70, 14, "WINDOW SCALE", "x2-x3-MAX-", 2, 4, 6, 2, -1, 4, -1)
                         scr_TS_Build_Option(4, (xx - 80), (yy + sep * 5.5), 70, 14, "ASPECT RATIO", "16:9-4:3-", 3, 4, 7, 3, -1, -1, -1)
@@ -100,7 +100,7 @@ namespace YAPR_LIB.Patches
                 """
             );
 
-            ts_setup_menu = ts_setup_menu.UnixReplace(
+            ts_setup_menu = ts_setup_menu.Replace(
                 """
                 }
                 if (floor(menu) == 5)
@@ -120,7 +120,7 @@ namespace YAPR_LIB.Patches
 
             // tells which planet we're playing
             if (room == Room.rm_Zebeth)
-                menu_info_panel = menu_info_panel.UnixReplace(
+                menu_info_panel = menu_info_panel.Replace(
                     """
                     if (index == 0)
                         text = "The original Metroid,\njust better."
@@ -131,7 +131,7 @@ namespace YAPR_LIB.Patches
                     """
                 );
             if (room == Room.rm_Novus)
-                menu_info_panel = menu_info_panel.UnixReplace(
+                menu_info_panel = menu_info_panel.Replace(
                     """
                     if (index == 0)
                         text = "The original Metroid,\njust better."
@@ -148,7 +148,7 @@ namespace YAPR_LIB.Patches
             var NETWORK_Other_62_code = gmData.Code.ByName("gml_Object_obj_NETWORK_Other_62");
             var NETWORK_Other_62 = Decompiler.Decompile(NETWORK_Other_62_code, decompileContext);
 
-            NETWORK_Other_62 = NETWORK_Other_62.UnixReplace(
+            NETWORK_Other_62 = NETWORK_Other_62.Replace(
                 "if (_status == 0)",
                 "if (false)"
             );

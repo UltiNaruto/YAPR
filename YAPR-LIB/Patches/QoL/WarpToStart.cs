@@ -10,7 +10,7 @@ namespace YAPR_LIB.Patches.QoL
             var scr_Draw_Pause_Screen_code = gmData.Code.ByName("gml_Script_scr_Draw_Pause_Screen");
             var scr_Draw_Pause_Screen = Decompiler.Decompile(scr_Draw_Pause_Screen_code, decompileContext);
 
-            scr_Draw_Pause_Screen = scr_Draw_Pause_Screen.UnixReplace(
+            scr_Draw_Pause_Screen = scr_Draw_Pause_Screen.Replace(
                 """
                 xx = center_x - global.CAMERA_W - Pause_Menu_X
                 yy = center_y + 25
@@ -44,12 +44,12 @@ namespace YAPR_LIB.Patches.QoL
             var scr_Handle_Pause_Menu_code = gmData.Code.ByName("gml_Script_scr_Handle_Pause_Menu");
             var scr_Handle_Pause_Menu = Decompiler.Decompile(scr_Handle_Pause_Menu_code, decompileContext);
 
-            scr_Handle_Pause_Menu = scr_Handle_Pause_Menu.UnixReplace(
+            scr_Handle_Pause_Menu = scr_Handle_Pause_Menu.Replace(
                 "Pause_Cursor = clamp(Pause_Cursor, 0, 1)",
                 "Pause_Cursor = clamp(Pause_Cursor, 0, 2)"
             );
 
-            scr_Handle_Pause_Menu = scr_Handle_Pause_Menu.UnixReplace(
+            scr_Handle_Pause_Menu = scr_Handle_Pause_Menu.Replace(
                 """
                             if (Pause_Cursor == 1)
                                 scr_Return_To_Title()
@@ -107,7 +107,7 @@ namespace YAPR_LIB.Patches.QoL
             var Replay_Add_Event_code = gmData.Code.ByName("gml_Script_Replay_Add_Event");
             var Replay_Add_Event = Decompiler.Decompile(Replay_Add_Event_code, decompileContext);
 
-            Replay_Add_Event = Replay_Add_Event.UnixReplace(
+            Replay_Add_Event = Replay_Add_Event.Replace(
                 """
                     if (num == 6)
                     {

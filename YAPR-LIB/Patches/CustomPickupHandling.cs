@@ -11,12 +11,12 @@ namespace YAPR_LIB.Patches
             var scr_Collect_Item_code = gmData.Code.ByName("gml_Script_scr_Collect_Item");
             var scr_Collect_Item = Decompiler.Decompile(scr_Collect_Item_code, decompileContext);
 
-            scr_Collect_Item = scr_Collect_Item.UnixReplace(
+            scr_Collect_Item = scr_Collect_Item.Replace(
                 "var quantity = 1\n",
                 ""
             );
 
-            scr_Collect_Item = scr_Collect_Item.UnixReplace(
+            scr_Collect_Item = scr_Collect_Item.Replace(
                 "if (player.Upgrade[item] > 0)",
                 """
                 var quantity = i.Item_Quantity
@@ -24,17 +24,17 @@ namespace YAPR_LIB.Patches
                 """
             );
 
-            scr_Collect_Item = scr_Collect_Item.UnixReplace(
+            scr_Collect_Item = scr_Collect_Item.Replace(
                 "if (scene_type == 1)",
                 "if (i.Item_Acquired_Sound != bgm_Item_Get)"
             );
 
-            scr_Collect_Item = scr_Collect_Item.UnixReplace(
+            scr_Collect_Item = scr_Collect_Item.Replace(
                 "        play_bgm(bgm_Minor_Item_Get, 0)\n",
                 ""
             );
 
-            scr_Collect_Item = scr_Collect_Item.UnixReplace(
+            scr_Collect_Item = scr_Collect_Item.Replace(
                 """
                     else
                         play_bgm(bgm_Item_Get, 0)
@@ -49,7 +49,7 @@ namespace YAPR_LIB.Patches
             // then check if pick up was not launcher
             // then check if we ever picked up launcher
             // and decide if we display locked text or normal text
-            scr_Collect_Item = scr_Collect_Item.UnixReplace(
+            scr_Collect_Item = scr_Collect_Item.Replace(
                 """
                     obj_MAIN.Item_Message = item
 
@@ -71,12 +71,12 @@ namespace YAPR_LIB.Patches
                 """
             );
 
-            scr_Collect_Item = scr_Collect_Item.UnixReplace(
+            scr_Collect_Item = scr_Collect_Item.Replace(
                 "    obj_MAIN.Current_Event_Timer = 180",
                 "    obj_MAIN.Current_Event_Timer = 120"
             );
 
-            scr_Collect_Item = scr_Collect_Item.UnixReplace(
+            scr_Collect_Item = scr_Collect_Item.Replace(
                 """
                         obj_MAIN.Item_Event_Type = 1
 
@@ -84,7 +84,7 @@ namespace YAPR_LIB.Patches
                 ""
             );
 
-            scr_Collect_Item = scr_Collect_Item.UnixReplace(
+            scr_Collect_Item = scr_Collect_Item.Replace(
                 "player.Upgrade[item] += 1",
                 """
                 if (item == 7 || item == 30)

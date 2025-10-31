@@ -9,7 +9,7 @@ namespace YAPR_LIB.Patches.Fixes
         {
             var scr_Draw_HUD_code = gmData.Code.ByName("gml_Script_scr_Draw_HUD");
             var scr_Draw_HUD = Decompiler.Decompile(scr_Draw_HUD_code, decompileContext);
-            scr_Draw_HUD = scr_Draw_HUD.UnixReplace(
+            scr_Draw_HUD = scr_Draw_HUD.Replace(
                 """
                     start_x = min((cam_x + cam_w - 37), (cam_x + cam_w - border_w / 2 - floor(15)))
 

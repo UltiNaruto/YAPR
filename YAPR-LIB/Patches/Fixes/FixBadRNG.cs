@@ -10,7 +10,7 @@ namespace YAPR_LIB.Patches.Fixes
             var obj_Enemy_Spawner_Step_0_code = gmData.Code.ByName("gml_Object_obj_Enemy_Spawner_Step_0");
             var obj_Enemy_Spawner_Step_0 = Decompiler.Decompile(obj_Enemy_Spawner_Step_0_code, decompileContext);
 
-            obj_Enemy_Spawner_Step_0 = obj_Enemy_Spawner_Step_0.UnixReplace(
+            obj_Enemy_Spawner_Step_0 = obj_Enemy_Spawner_Step_0.Replace(
                 """
                         Spawn = scr_Enemy_Build(x, y, Spawn_Type, Spawn_Level, ID_Slot, Data_Map)
                 """,

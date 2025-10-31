@@ -28,7 +28,7 @@ namespace YAPR_LIB.Utils
                 });
 
                 if (variablesToAdd[variableString.Content] is bool)
-                    title_screen_other_4 = title_screen_other_4.UnixReplace(
+                    title_screen_other_4 = title_screen_other_4.Replace(
                         "    global.MOBILE = 0",
                       $$"""
                             global.{{variableString.Content}} = {{((bool)variablesToAdd[variableString.Content] ? 1 : 0)}}
@@ -36,7 +36,7 @@ namespace YAPR_LIB.Utils
                         """
                     );
                 else if (variablesToAdd[variableString.Content] is string)
-                    title_screen_other_4 = title_screen_other_4.UnixReplace(
+                    title_screen_other_4 = title_screen_other_4.Replace(
                         "    global.MOBILE = 0",
                       $$"""
                             global.{{variableString.Content}} = "{{variablesToAdd[variableString.Content]}}"
@@ -44,7 +44,7 @@ namespace YAPR_LIB.Utils
                         """
                     );
                 else
-                    title_screen_other_4 = title_screen_other_4.UnixReplace(
+                    title_screen_other_4 = title_screen_other_4.Replace(
                         "    global.MOBILE = 0",
                       $$"""
                             global.{{variableString.Content}} = {{variablesToAdd[variableString.Content]}}
@@ -63,12 +63,7 @@ namespace YAPR_LIB.Utils
 
             var func_code = new UndertaleCode();
             func_code.Name = func_code_str;
-            func_code.AppendGML(
-                StringUtils.MakeUnixString(
-                    code
-                ),
-                gmData
-            );
+            func_code.AppendGML(code, gmData);
 
             var code_locals = new UndertaleCodeLocals()
             {

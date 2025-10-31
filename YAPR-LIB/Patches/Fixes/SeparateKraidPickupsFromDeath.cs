@@ -13,7 +13,7 @@ namespace YAPR_LIB.Patches.Fixes
             // Activate items on boss death
             var scr_Boss_Remove_code = gmData.Code.ByName("gml_Script_scr_Boss_Remove");
             var scr_Boss_Remove = Decompiler.Decompile(scr_Boss_Remove_code, decompileContext);
-            scr_Boss_Remove = scr_Boss_Remove.UnixReplace(
+            scr_Boss_Remove = scr_Boss_Remove.Replace(
                 """
                             var missile = 75
 
@@ -40,7 +40,7 @@ namespace YAPR_LIB.Patches.Fixes
             // Reactivate items if save was reloaded
             var scr_Handle_Door_Transition_code = gmData.Code.ByName("gml_Script_scr_Handle_Door_Transition");
             var scr_Handle_Door_Transition = Decompiler.Decompile(scr_Handle_Door_Transition_code, decompileContext);
-            scr_Handle_Door_Transition = scr_Handle_Door_Transition.UnixReplace(
+            scr_Handle_Door_Transition = scr_Handle_Door_Transition.Replace(
                 """
                         Room_Transition_Timer -= 1
                         if (Room_Transition_Timer <= 0)
@@ -90,21 +90,19 @@ namespace YAPR_LIB.Patches.Fixes
 
             var obj_Item_Kraid_Key_Create_0_code = new UndertaleCode();
             obj_Item_Kraid_Key_Create_0_code.Name = obj_Item_Kraid_Key_Create_0_code_str;
-            var code = StringUtils.MakeUnixString(
-                """
-                event_inherited()
-                Active = 0
-                Item_Name = "Tourian Key"
-                Item_ID = 38
-                Item_Type = 30
-                Item_Quantity = 1
-                Item_Acquired_Sound = sfx_Notify_Boss_Defeated
-                Item_Text_Header = "TOURIAN KEY ACQUIRED"
-                Item_Text_Description = "Opens Tourian access when all of the keys are retrieved"
-                sprite_index = spr_ITEM_Tourian_Key
+            var code = """
+                       event_inherited()
+                       Active = 0
+                       Item_Name = "Tourian Key"
+                       Item_ID = 38
+                       Item_Type = 30
+                       Item_Quantity = 1
+                       Item_Acquired_Sound = sfx_Notify_Boss_Defeated
+                       Item_Text_Header = "TOURIAN KEY ACQUIRED"
+                       Item_Text_Description = "Opens Tourian access when all of the keys are retrieved"
+                       sprite_index = spr_ITEM_Tourian_Key
 
-                """
-            );
+                       """;
             obj_Item_Kraid_Key_Create_0_code.ReplaceGML(code, gmData);
             gmData.Code.Add(obj_Item_Kraid_Key_Create_0_code);
 
@@ -123,13 +121,11 @@ namespace YAPR_LIB.Patches.Fixes
             var obj_Item_Kraid_Key_Step_0_code = new UndertaleCode();
             obj_Item_Kraid_Key_Step_0_code.Name = obj_Item_Kraid_Key_Step_0_code_str;
             obj_Item_Kraid_Key_Step_0_code.ReplaceGML(
-                StringUtils.MakeUnixString(
-                    """
-                    Item_ID = 38
-                    event_inherited()
+                """
+                Item_ID = 38
+                event_inherited()
                 
-                    """
-                ),
+                """,
                 gmData
             );
             gmData.Code.Add(obj_Item_Kraid_Key_Step_0_code);
@@ -192,21 +188,19 @@ namespace YAPR_LIB.Patches.Fixes
 
             var obj_Item_Big_Missile_Create_0_code = new UndertaleCode();
             obj_Item_Big_Missile_Create_0_code.Name = obj_Item_Big_Missile_Create_0_code_str;
-            var code = StringUtils.MakeUnixString(
-                """
-                event_inherited()
-                Active = 0
-                Item_Name = "Tourian Key"
-                Item_ID = 39
-                Item_Type = 16
-                Item_Quantity = 75
-                Item_Acquired_Sound = bgm_Minor_Item_Get
-                Item_Text_Header = "BIG MISSILE TANK ACQUIRED"
-                Item_Text_Description = "Missile capacity increased by 75"
-                sprite_index = spr_ITEM_Big_Missile
+            var code = """
+                       event_inherited()
+                       Active = 0
+                       Item_Name = "Tourian Key"
+                       Item_ID = 39
+                       Item_Type = 16
+                       Item_Quantity = 75
+                       Item_Acquired_Sound = bgm_Minor_Item_Get
+                       Item_Text_Header = "BIG MISSILE TANK ACQUIRED"
+                       Item_Text_Description = "Missile capacity increased by 75"
+                       sprite_index = spr_ITEM_Big_Missile
 
-                """
-            );
+                       """;
             obj_Item_Big_Missile_Create_0_code.ReplaceGML(code, gmData);
             gmData.Code.Add(obj_Item_Big_Missile_Create_0_code);
 
@@ -225,13 +219,11 @@ namespace YAPR_LIB.Patches.Fixes
             var obj_Item_Big_Missile_Step_0_code = new UndertaleCode();
             obj_Item_Big_Missile_Step_0_code.Name = obj_Item_Big_Missile_Step_0_code_str;
             obj_Item_Big_Missile_Step_0_code.ReplaceGML(
-                StringUtils.MakeUnixString(
-                    """
-                    Item_ID = 39
-                    event_inherited()
+                """
+                Item_ID = 39
+                event_inherited()
                 
-                    """
-                ),
+                """,
                 gmData
             );
             gmData.Code.Add(obj_Item_Big_Missile_Step_0_code);

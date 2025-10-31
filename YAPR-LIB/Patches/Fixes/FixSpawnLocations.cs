@@ -10,7 +10,7 @@ namespace YAPR_LIB.Patches.Fixes
             var scr_Spawn_Setup_code = gmData.Code.ByName("gml_Script_scr_Spawn_Setup");
             var scr_Spawn_Setup = Decompiler.Decompile(scr_Spawn_Setup_code, decompileContext);
 
-            scr_Spawn_Setup = scr_Spawn_Setup.UnixReplace(
+            scr_Spawn_Setup = scr_Spawn_Setup.Replace(
                 """
                     if (room == rm_Zebeth)
                     {
@@ -55,7 +55,7 @@ namespace YAPR_LIB.Patches.Fixes
             var scr_Spawn_Location_Update_code = gmData.Code.ByName("gml_Script_scr_Spawn_Location_Update");
             var scr_Spawn_Location_Update = Decompiler.Decompile(scr_Spawn_Location_Update_code, decompileContext);
 
-            scr_Spawn_Location_Update = scr_Spawn_Location_Update.UnixReplace(
+            scr_Spawn_Location_Update = scr_Spawn_Location_Update.Replace(
                 """
                     if (room == rm_Zebeth)
                     {
@@ -114,7 +114,7 @@ namespace YAPR_LIB.Patches.Fixes
             var scr_TS_Area_Name_code = gmData.Code.ByName("gml_Script_scr_TS_Area_Name");
             var scr_TS_Area_Name = Decompiler.Decompile(scr_TS_Area_Name_code, decompileContext);
 
-            scr_TS_Area_Name = scr_TS_Area_Name.UnixReplace(
+            scr_TS_Area_Name = scr_TS_Area_Name.Replace(
                 """
                 if (world == (1 << 0))
                 {
@@ -163,7 +163,7 @@ namespace YAPR_LIB.Patches.Fixes
             var scr_Audio_Handle_code = gmData.Code.ByName("gml_Script_scr_Audio_Handle");
             var scr_Audio_Handle = Decompiler.Decompile(scr_Audio_Handle_code, decompileContext);
 
-            scr_Audio_Handle = scr_Audio_Handle.UnixReplace(
+            scr_Audio_Handle = scr_Audio_Handle.Replace(
                 "    var room_bgm = BGM_Grid[xx, yy]",
                 """
                     if (xx < 0 || yy < 0)
@@ -178,12 +178,10 @@ namespace YAPR_LIB.Patches.Fixes
             var scr_Current_Area_Update_code = gmData.Code.ByName("gml_Script_scr_Current_Area_Update");
             var scr_Current_Area_Update = Decompiler.Decompile(scr_Current_Area_Update_code, decompileContext);
 
-            scr_Current_Area_Update = scr_Current_Area_Update.UnixPrepend(
-                """
-                if (obj_MAIN.Screen_X < 0 || obj_MAIN.Screen_Y < 0)
-                    return -1;
-                """
-            );
+            scr_Current_Area_Update = """
+                                      if (obj_MAIN.Screen_X < 0 || obj_MAIN.Screen_Y < 0)
+                                          return -1;
+                                      """ + scr_Current_Area_Update;
 
             scr_Current_Area_Update_code.ReplaceGML(scr_Current_Area_Update, gmData);
         }

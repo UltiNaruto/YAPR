@@ -10,7 +10,7 @@ namespace YAPR_LIB.Patches.CustomPickups.Globals
             var int_Globals_References_code = gmData.Code.ByName("gml_Script_int_Globals_References");
             var int_Globals_References = Decompiler.Decompile(int_Globals_References_code, decompileContext);
 
-            int_Globals_References = int_Globals_References.UnixReplace(
+            int_Globals_References = int_Globals_References.Replace(
                 "global.Item_Sprite[(100 << 0)] = 139",
               $$"""
                 global.Item_Sprite[(27 << 0)] = {{gmData.Sprites.IndexOf(gmData.Sprites.Select(c => c).Where(c => c.Name.Content == "spr_ITEM_Nothing").First())}}
@@ -20,7 +20,7 @@ namespace YAPR_LIB.Patches.CustomPickups.Globals
                 """
             );
 
-            int_Globals_References = int_Globals_References.UnixReplace(
+            int_Globals_References = int_Globals_References.Replace(
                 "global.Item_Name[100] = \"IMPASSABLE\"",
                 """
                 global.Item_Name[(27 << 0)] = "NOTHING"

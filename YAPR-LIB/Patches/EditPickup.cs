@@ -33,8 +33,12 @@ namespace YAPR_LIB.Patches
 
             var new_pickup_obj_type = gmData.GameObjects
                                             .Select(obj => obj)
-                                            .FirstOrDefault(obj => obj.Name.Content == PickupUtils.GetObjectFromName(pickup.Type))
-                                            .Clone();
+                                            .FirstOrDefault(obj => obj.Name.Content == PickupUtils.GetObjectFromName(pickup.Type ?? "Nothing"));
+
+            if (new_pickup_obj_type is null)
+                return;
+
+            new_pickup_obj_type = new_pickup_obj_type.Clone();
 
             if (new_pickup_obj_type is null) return;
 
@@ -51,23 +55,21 @@ namespace YAPR_LIB.Patches
 
             var obj_randomizerItem__Create_0_code = new UndertaleCode();
             obj_randomizerItem__Create_0_code.Name = obj_randomizerItem__Create_0_code_str;
-            var code = StringUtils.MakeUnixString(
-              $$"""
-                event_inherited()
-                Item_Name = "{{pickup.Type}}"
-                Item_ID = {{idx}}
-                Item_Type = {{PickupUtils.GetItemTypeFromName(pickup.Type)}}
-                Item_Quantity = {{pickup.Quantity}}
-                Item_Acquired_Sound = {{PickupUtils.GetAcquiredSfxFromName(pickup.Type)}}
-                Item_Text_Header = "{{(pickup.Text?.Header ?? string.Empty).ToUpper()}}"
-                Item_Text_Description = "{{String.Join("\n", pickup.Text?.Description ?? new List<string>())}}"
-                Item_Text_Locked_Header = "{{(pickup.LockedText?.Header ?? string.Empty).ToUpper()}}"
-                Item_Text_Locked_Description = "{{String.Join("\n", pickup.LockedText?.Description ?? new List<string>())}}"
-                Item_Is_Launcher = {{(pickup.IsLauncher ? 1 : 0)}};
-                sprite_index = {{pickup.Model}}
+            var code = $$"""
+                         event_inherited()
+                         Item_Name = "{{pickup.Type}}"
+                         Item_ID = {{idx}}
+                         Item_Type = {{PickupUtils.GetItemTypeFromName(pickup.Type ?? "Nothing")}}
+                         Item_Quantity = {{pickup.Quantity}}
+                         Item_Acquired_Sound = {{PickupUtils.GetAcquiredSfxFromName(pickup.Type ?? "Nothing")}}
+                         Item_Text_Header = "{{(pickup.Text?.Header ?? string.Empty).ToUpper()}}"
+                         Item_Text_Description = "{{String.Join("\n", pickup.Text?.Description ?? new List<string>())}}"
+                         Item_Text_Locked_Header = "{{(pickup.LockedText?.Header ?? string.Empty).ToUpper()}}"
+                         Item_Text_Locked_Description = "{{String.Join("\n", pickup.LockedText?.Description ?? new List<string>())}}"
+                         Item_Is_Launcher = {{(pickup.IsLauncher ? 1 : 0)}};
+                         sprite_index = {{pickup.Model}}
 
-                """
-            );
+                         """;
             if (obj_id >= 100083 && obj_id <= 100086)
                 code += "Active = 0";
             code += "\n";
@@ -90,14 +92,12 @@ namespace YAPR_LIB.Patches
             var obj_randomizerItem__Step_0_code = new UndertaleCode();
             obj_randomizerItem__Step_0_code.Name = obj_randomizerItem__Step_0_code_str;
             obj_randomizerItem__Step_0_code.ReplaceGML(
-                StringUtils.MakeUnixString(
-                  $$"""
-                    Item_ID = {{idx}}
-                    sprite_index = {{pickup.Model}}
-                    event_inherited()
+              $$"""
+                Item_ID = {{idx}}
+                sprite_index = {{pickup.Model}}
+                event_inherited()
 
-                    """
-                ),
+                """,
                 gmData
             );
 

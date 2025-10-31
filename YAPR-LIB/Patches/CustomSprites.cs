@@ -14,15 +14,15 @@ namespace YAPR_LIB.Patches
 
             // Planets Big Missile Tank
             gmData.Sprites.Add(TextureUtils.CreateSprite(gmData, "spr_ITEM_Big_Missile", ref x, ref y, 16, 16,
-                Image.Load(Path.Combine(Patcher.ExecutableDir, "Sprites", "Planets", "spr_ITEM_Big_Missile", "spr_ITEM_Big_Missile_0.png")),
-                Image.Load(Path.Combine(Patcher.ExecutableDir, "Sprites", "Planets", "spr_ITEM_Big_Missile", "spr_ITEM_Big_Missile_1.png")),
-                Image.Load(Path.Combine(Patcher.ExecutableDir, "Sprites", "Planets", "spr_ITEM_Big_Missile", "spr_ITEM_Big_Missile_2.png")),
-                Image.Load(Path.Combine(Patcher.ExecutableDir, "Sprites", "Planets", "spr_ITEM_Big_Missile", "spr_ITEM_Big_Missile_3.png"))
+                Image.Load(Path.Combine(Patcher.ExecutableDir ?? ".", "Sprites", "Planets", "spr_ITEM_Big_Missile", "spr_ITEM_Big_Missile_0.png")),
+                Image.Load(Path.Combine(Patcher.ExecutableDir ?? ".", "Sprites", "Planets", "spr_ITEM_Big_Missile", "spr_ITEM_Big_Missile_1.png")),
+                Image.Load(Path.Combine(Patcher.ExecutableDir ?? ".", "Sprites", "Planets", "spr_ITEM_Big_Missile", "spr_ITEM_Big_Missile_2.png")),
+                Image.Load(Path.Combine(Patcher.ExecutableDir ?? ".", "Sprites", "Planets", "spr_ITEM_Big_Missile", "spr_ITEM_Big_Missile_3.png"))
             ));
             // Planets Boss Key
             gmData.Sprites.Add(TextureUtils.CreateSprite(gmData, "spr_ITEM_Tourian_Key", ref x, ref y, 16, 16,
-                Image.Load(Path.Combine(Patcher.ExecutableDir, "Sprites", "Planets", "spr_ITEM_Tourian_Key", "spr_ITEM_Tourian_Key_0.png")),
-                Image.Load(Path.Combine(Patcher.ExecutableDir, "Sprites", "Planets", "spr_ITEM_Tourian_Key", "spr_ITEM_Tourian_Key_1.png"))
+                Image.Load(Path.Combine(Patcher.ExecutableDir ?? ".", "Sprites", "Planets", "spr_ITEM_Tourian_Key", "spr_ITEM_Tourian_Key_0.png")),
+                Image.Load(Path.Combine(Patcher.ExecutableDir ?? ".", "Sprites", "Planets", "spr_ITEM_Tourian_Key", "spr_ITEM_Tourian_Key_1.png"))
             ));
             // Planets Nothing
             gmData.Sprites.Add(TextureUtils.GetSprite(gmData, "spr_ITEM_Nothing", 16, 16, new Rectangle(211, 110, 15, 15)));

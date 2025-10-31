@@ -13,7 +13,7 @@ namespace YAPR_LIB.Patches
 
             // tells which seed we're playing
             if (room == Room.rm_Zebeth)
-                menu_headers = menu_headers.UnixReplace(
+                menu_headers = menu_headers.Replace(
                     """
                     "PLANET ZEBETH"
                     """,
@@ -22,7 +22,7 @@ namespace YAPR_LIB.Patches
                     """
                 );
             if (room == Room.rm_Novus)
-                menu_headers = menu_headers.UnixReplace(
+                menu_headers = menu_headers.Replace(
                     """
                     "PLANET NOVUS"
                     """,

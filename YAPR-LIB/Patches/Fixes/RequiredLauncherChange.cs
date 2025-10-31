@@ -11,7 +11,7 @@ namespace YAPR_LIB.Patches.Fixes
             var scr_Draw_HUD = Decompiler.Decompile(scr_Draw_HUD_code, decompileContext);
 
             // requires now to have missile launcher
-            scr_Draw_HUD = scr_Draw_HUD.UnixReplace(
+            scr_Draw_HUD = scr_Draw_HUD.Replace(
                 "        draw_sprite_ext(spr_Missile, index, xx, yy, 1, 1, 90, c_white, 1)",
                 """
                         if (i.Upgrade[16] == 0)
@@ -24,13 +24,13 @@ namespace YAPR_LIB.Patches.Fixes
                         draw_sprite_ext(spr_Missile, index, xx, yy, 1, 1, 90, c_white, 1)
                 """
             );
-            scr_Draw_HUD = scr_Draw_HUD.UnixReplace(
+            scr_Draw_HUD = scr_Draw_HUD.Replace(
                 "if (i.Ammo[(1 << 0)] == i.Ammo_Cap[(1 << 0)])",
                 "if (i.Upgrade[16] == 1 && i.Ammo[1] == i.Ammo_Cap[1])"
             );
 
             // requires now to have super missile launcher
-            scr_Draw_HUD = scr_Draw_HUD.UnixReplace(
+            scr_Draw_HUD = scr_Draw_HUD.Replace(
                 "        draw_sprite_ext(spr_Super_Missile, index, xx, yy, 1, 1, 90, c_white, 1)",
                 """
                         if (i.Upgrade[17] == 0)
@@ -43,7 +43,7 @@ namespace YAPR_LIB.Patches.Fixes
                         draw_sprite_ext(spr_Super_Missile, index, xx, yy, 1, 1, 90, c_white, 1)
                 """
             );
-            scr_Draw_HUD = scr_Draw_HUD.UnixReplace(
+            scr_Draw_HUD = scr_Draw_HUD.Replace(
                 "if (i.Ammo[(2 << 0)] == i.Ammo_Cap[(2 << 0)])",
                 "if (i.Upgrade[17] == 1 && i.Ammo[2] == i.Ammo_Cap[2])"
             );
@@ -55,7 +55,7 @@ namespace YAPR_LIB.Patches.Fixes
 
             // requires now to have missile launcher or super missile launcher
             // to use their respective ammo
-            obj_Samus_Step_0 = obj_Samus_Step_0.UnixReplace(
+            obj_Samus_Step_0 = obj_Samus_Step_0.Replace(
                 """
                     Spinning += (1 / global.FPS)
 

@@ -15,7 +15,7 @@ namespace YAPR_LIB.Patches.CustomPickups.Replay
             var par_Item_Step_0_code = gmData.Code.ByName("gml_Object_par_Item_Step_0");
             var par_Item_Step_0 = Decompiler.Decompile(par_Item_Step_0_code, decompileContext);
 
-            par_Item_Step_0 = par_Item_Step_0.UnixReplace(
+            par_Item_Step_0 = par_Item_Step_0.Replace(
                 "        scr_Replay_Add_Stamp(1, Item_Type)",
                 """
                         if (Item_Name == "Nothing")
@@ -32,12 +32,12 @@ namespace YAPR_LIB.Patches.CustomPickups.Replay
             var Replay_Draw_Items_code = gmData.Code.ByName("gml_Script_Replay_Draw_Items");
             var Replay_Draw_Items = Decompiler.Decompile(Replay_Draw_Items_code, decompileContext);
 
-            Replay_Draw_Items = Replay_Draw_Items.UnixReplace(
+            Replay_Draw_Items = Replay_Draw_Items.Replace(
                 "repeat (30)",
                 "repeat (31)"
             );
 
-            Replay_Draw_Items = Replay_Draw_Items.UnixReplace(
+            Replay_Draw_Items = Replay_Draw_Items.Replace(
                 "draw_set_halign(fa_center)",
                 """
                 if (Replay_Items[(30 << 0)] > 0)
@@ -48,7 +48,7 @@ namespace YAPR_LIB.Patches.CustomPickups.Replay
                 """
             );
 
-            Replay_Draw_Items = Replay_Draw_Items.UnixReplace(
+            Replay_Draw_Items = Replay_Draw_Items.Replace(
                 """
 
                         sprite = spr_Energy"
@@ -63,7 +63,7 @@ namespace YAPR_LIB.Patches.CustomPickups.Replay
                 """
             );
 
-            Replay_Draw_Items = Replay_Draw_Items.UnixReplace(
+            Replay_Draw_Items = Replay_Draw_Items.Replace(
                 """
                         if (index == (16 << 0) || index == (7 << 0))
                 """,
@@ -76,7 +76,7 @@ namespace YAPR_LIB.Patches.CustomPickups.Replay
                 """
             );
 
-            Replay_Draw_Items = Replay_Draw_Items.UnixReplace(
+            Replay_Draw_Items = Replay_Draw_Items.Replace(
                 "if (index != (16 << 0) && index != (7 << 0))",
                 "if (index != (16 << 0) && index != (7 << 0) && index != (30 << 0) && index != (31 << 0))"
             );
@@ -86,7 +86,7 @@ namespace YAPR_LIB.Patches.CustomPickups.Replay
             var Replay_Add_Event_code = gmData.Code.ByName("gml_Script_Replay_Add_Event");
             var Replay_Add_Event = Decompiler.Decompile(Replay_Add_Event_code, decompileContext);
 
-            Replay_Add_Event = Replay_Add_Event.UnixReplace(
+            Replay_Add_Event = Replay_Add_Event.Replace(
                 """
                     if (obj_NETWORK.Connection_Pos == -1 || player == obj_NETWORK.Connection_Pos || obj_NETWORK.Share_Items == 1)
                 """,
@@ -105,7 +105,7 @@ namespace YAPR_LIB.Patches.CustomPickups.Replay
             var Replay_Load_State_code = gmData.Code.ByName("gml_Script_Replay_Load_State");
             var Replay_Load_State = Decompiler.Decompile(Replay_Load_State_code, decompileContext);
 
-            Replay_Load_State = Replay_Load_State.UnixReplace(
+            Replay_Load_State = Replay_Load_State.Replace(
                 "repeat (30)",
                 "repeat (31)"
             );
@@ -115,7 +115,7 @@ namespace YAPR_LIB.Patches.CustomPickups.Replay
             var Replay_Save_State_code = gmData.Code.ByName("gml_Script_Replay_Save_State");
             var Replay_Save_State = Decompiler.Decompile(Replay_Save_State_code, decompileContext);
 
-            Replay_Save_State = Replay_Save_State.UnixReplace(
+            Replay_Save_State = Replay_Save_State.Replace(
                 "repeat (30)",
                 "repeat (31)"
             );

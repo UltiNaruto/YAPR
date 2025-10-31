@@ -83,7 +83,7 @@ namespace YAPR_LIB.Patches
                             """;
 
             // patching the menu so you get only the planet you're playing            
-            obj_End_Screen_Create_0 = obj_End_Screen_Create_0.UnixReplace(
+            obj_End_Screen_Create_0 = obj_End_Screen_Create_0.Replace(
                 """
                 Go_To_Room = 1
                 """,
@@ -99,7 +99,7 @@ namespace YAPR_LIB.Patches
 
             if (room == Room.rm_Zebeth)
             {
-                obj_End_Screen_Step_0 = obj_End_Screen_Step_0.UnixReplace(
+                obj_End_Screen_Step_0 = obj_End_Screen_Step_0.Replace(
                     """
                         var lay = layer_get_id("Tiles_Ground")
                         layer_set_visible(lay, 1)
@@ -118,7 +118,7 @@ namespace YAPR_LIB.Patches
                     """
                 );
 
-                obj_End_Screen_Step_0 = obj_End_Screen_Step_0.UnixReplace(
+                obj_End_Screen_Step_0 = obj_End_Screen_Step_0.Replace(
                     "if (input == 1 && Timer > 600)",
                     "if (input == 1 && Timer > (Credits_Displayed_Time + 300))"
                 );
@@ -131,7 +131,7 @@ namespace YAPR_LIB.Patches
 
             if (room == Room.rm_Zebeth)
             {
-                obj_End_Screen_Draw_0 = obj_End_Screen_Draw_0.UnixReplace(
+                obj_End_Screen_Draw_0 = obj_End_Screen_Draw_0.Replace(
                     """
                         draw_set_color(c_white)
                         draw_set_font(font_Metroid)
@@ -208,7 +208,7 @@ namespace YAPR_LIB.Patches
                     """
                 );
 
-                obj_End_Screen_Draw_0 = obj_End_Screen_Draw_0.UnixReplace(
+                obj_End_Screen_Draw_0 = obj_End_Screen_Draw_0.Replace(
                     "var n = 300",
                     "var n = Credits_Displayed_Time + 200"
                 );

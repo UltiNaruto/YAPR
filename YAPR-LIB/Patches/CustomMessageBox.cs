@@ -11,7 +11,7 @@ namespace YAPR_LIB.Patches
             var obj_MAIN_Create_0_code = gmData.Code.ByName("gml_Object_obj_MAIN_Create_0");
             var obj_MAIN_Create_0 = Decompiler.Decompile(obj_MAIN_Create_0_code, decompileContext);
 
-            obj_MAIN_Create_0 = obj_MAIN_Create_0.UnixReplace(
+            obj_MAIN_Create_0 = obj_MAIN_Create_0.Replace(
                 """
                 Item_Message = 0
 
@@ -30,7 +30,7 @@ namespace YAPR_LIB.Patches
             var scr_draw_item_message_code = gmData.Code.ByName("gml_Script_scr_Draw_Item_Message");
             var scr_draw_item_message = Decompiler.Decompile(scr_draw_item_message_code, decompileContext);
 
-            scr_draw_item_message = scr_draw_item_message.UnixReplace(
+            scr_draw_item_message = scr_draw_item_message.Replace(
                 """
                 if (Item_Event_Type == 0)
                 {
@@ -44,7 +44,7 @@ namespace YAPR_LIB.Patches
                 """
             );
 
-            scr_draw_item_message = scr_draw_item_message.UnixReplace(
+            scr_draw_item_message = scr_draw_item_message.Replace(
                 """
                     draw_rectangle_color((xx - w), (yy - dis), (xx + w), (yy + dis), c, c, c, c, 0)
                     c = c_white
@@ -61,7 +61,7 @@ namespace YAPR_LIB.Patches
                 """
             );
 
-            scr_draw_item_message = scr_draw_item_message.UnixReplace(
+            scr_draw_item_message = scr_draw_item_message.Replace(
                 """
                         draw_text_color(xx, (yy - 10), text1, c, c, c, c, 1)
                         c = c_white
