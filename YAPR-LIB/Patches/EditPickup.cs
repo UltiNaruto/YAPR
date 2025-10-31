@@ -51,7 +51,8 @@ namespace YAPR_LIB.Patches
 
             var obj_randomizerItem__Create_0_code = new UndertaleCode();
             obj_randomizerItem__Create_0_code.Name = obj_randomizerItem__Create_0_code_str;
-            var code = $$"""
+            var code = StringUtils.MakeUnixString(
+              $$"""
                 event_inherited()
                 Item_Name = "{{pickup.Type}}"
                 Item_ID = {{idx}}
@@ -65,7 +66,8 @@ namespace YAPR_LIB.Patches
                 Item_Is_Launcher = {{(pickup.IsLauncher ? 1 : 0)}};
                 sprite_index = {{pickup.Model}}
 
-                """.ReplaceLineEndings("\n");
+                """
+            );
             if (obj_id >= 100083 && obj_id <= 100086)
                 code += "Active = 0";
             code += "\n";
@@ -88,13 +90,15 @@ namespace YAPR_LIB.Patches
             var obj_randomizerItem__Step_0_code = new UndertaleCode();
             obj_randomizerItem__Step_0_code.Name = obj_randomizerItem__Step_0_code_str;
             obj_randomizerItem__Step_0_code.ReplaceGML(
-                $$"""
-                Item_ID = {{idx}}
-                sprite_index = {{pickup.Model}}
-                event_inherited()
+                StringUtils.MakeUnixString(
+                  $$"""
+                    Item_ID = {{idx}}
+                    sprite_index = {{pickup.Model}}
+                    event_inherited()
 
-                """.ReplaceLineEndings("\n")
-                , gmData
+                    """
+                ),
+                gmData
             );
 
             gmData.Code.Add(obj_randomizerItem__Step_0_code);

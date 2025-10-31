@@ -1,4 +1,4 @@
-﻿using UndertaleModLib;
+using UndertaleModLib;
 using UndertaleModLib.Decompiler;
 using YAPR_LIB.Utils;
 
@@ -14,22 +14,26 @@ namespace YAPR_LIB.Patches
             if (creditsString is null)
                 return;
 
-            CodeUtils.CreateFunction(gmData, "scr_calculate_credits_length", """
-                                                                             var credits = argument0;
-                                                                             var len = 50
-                                                                             var sub_texts = []
-                                                                             for (var i = 0; i < array_length_2d(credits, 0); i++)
-                                                                             {
-                                                                                 len += 50
-                                                                                 sub_texts = credits[0, i]
-                                                                                 for (var j = 0; j < array_length_1d(sub_texts); j++)
-                                                                                     len += 20
-                                                                             }
-                                                                             if (len == 50)
-                                                                                return 0;
-                                                                             len += 20
-                                                                             return len
-                                                                             """.ReplaceLineEndings("\n"));
+            CodeUtils.CreateFunction(
+                gmData,
+                "scr_calculate_credits_length",
+                """
+                var credits = argument0;
+                var len = 50
+                var sub_texts = []
+                for (var i = 0; i < array_length_2d(credits, 0); i++)
+                {
+                    len += 50
+                    sub_texts = credits[0, i]
+                    for (var j = 0; j < array_length_1d(sub_texts); j++)
+                        len += 20
+                }
+                if (len == 50)
+                return 0;
+                len += 20
+                return len
+                """
+            );
 
             var obj_End_Screen_Create_0_code = gmData.Code.ByName("gml_Object_obj_End_Screen_Create_0");
             var obj_End_Screen_Create_0 = Decompiler.Decompile(obj_End_Screen_Create_0_code, decompileContext);
@@ -79,14 +83,14 @@ namespace YAPR_LIB.Patches
                             """;
 
             // patching the menu so you get only the planet you're playing            
-            obj_End_Screen_Create_0 = obj_End_Screen_Create_0.Replace(
+            obj_End_Screen_Create_0 = obj_End_Screen_Create_0.UnixReplace(
                 """
                 Go_To_Room = 1
-                """.ReplaceLineEndings("\n"),
+                """,
               $$"""
                 Go_To_Room = 1
                 {{init_credits}}
-                """.ReplaceLineEndings("\n")
+                """
             );
             obj_End_Screen_Create_0_code.ReplaceGML(obj_End_Screen_Create_0, gmData);
 
@@ -95,11 +99,11 @@ namespace YAPR_LIB.Patches
 
             if (room == Room.rm_Zebeth)
             {
-                obj_End_Screen_Step_0 = obj_End_Screen_Step_0.Replace(
+                obj_End_Screen_Step_0 = obj_End_Screen_Step_0.UnixReplace(
                     """
                         var lay = layer_get_id("Tiles_Ground")
                         layer_set_visible(lay, 1)
-                    """.ReplaceLineEndings("\n"),
+                    """,
                     """
                         var lay = layer_get_id("Tiles_Ground")
                         layer_set_visible(lay, 1)
@@ -111,10 +115,13 @@ namespace YAPR_LIB.Patches
                         }
                         obj_Samus_Ending.Active = Timer > Credits_Scroll_End_Time
                         obj_Samus_Ending.visible = Timer > Credits_Scroll_End_Time
-                    """.ReplaceLineEndings("\n")
+                    """
                 );
 
-                obj_End_Screen_Step_0 = obj_End_Screen_Step_0.Replace("if (input == 1 && Timer > 600)", "if (input == 1 && Timer > (Credits_Displayed_Time + 300))");
+                obj_End_Screen_Step_0 = obj_End_Screen_Step_0.UnixReplace(
+                    "if (input == 1 && Timer > 600)",
+                    "if (input == 1 && Timer > (Credits_Displayed_Time + 300))"
+                );
             }
 
             obj_End_Screen_Step_0_code.ReplaceGML(obj_End_Screen_Step_0, gmData);
@@ -124,7 +131,7 @@ namespace YAPR_LIB.Patches
 
             if (room == Room.rm_Zebeth)
             {
-                obj_End_Screen_Draw_0 = obj_End_Screen_Draw_0.Replace(
+                obj_End_Screen_Draw_0 = obj_End_Screen_Draw_0.UnixReplace(
                     """
                         draw_set_color(c_white)
                         draw_set_font(font_Metroid)
@@ -136,7 +143,7 @@ namespace YAPR_LIB.Patches
                         draw_text(56, 100, "THE OTHER METROID.")
                         draw_text(64, 115, "PRAY FOR A TRUE PEACE IN")
                         draw_text(56, 130, "SPACE!")
-                    """.ReplaceLineEndings("\n"),
+                    """,
                     """
                         if (Timer > Credits_Displayed_Time)
                         {
@@ -198,10 +205,13 @@ namespace YAPR_LIB.Patches
                                 draw_set_color(c_white)
                             }
                         }
-                    """.ReplaceLineEndings("\n")
+                    """
                 );
 
-                obj_End_Screen_Draw_0 = obj_End_Screen_Draw_0.Replace("var n = 300", "var n = Credits_Displayed_Time + 200");
+                obj_End_Screen_Draw_0 = obj_End_Screen_Draw_0.UnixReplace(
+                    "var n = 300",
+                    "var n = Credits_Displayed_Time + 200"
+                );
             }
 
             obj_End_Screen_Draw_0_code.ReplaceGML(obj_End_Screen_Draw_0, gmData);

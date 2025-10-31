@@ -276,21 +276,24 @@ namespace YAPR_LIB.Patches.QoL
                                                                           return "Escape Route"
 
                                                                       return "???"
-                                                                      """.ReplaceLineEndings("\n"));
+                                                                      """);
 
             var ts_setup_menu_code = gmData.Code.ByName("gml_Script_scr_TS_Setup_Menu");
             var ts_setup_menu = Decompiler.Decompile(ts_setup_menu_code, decompileContext);
 
-            ts_setup_menu = ts_setup_menu.Replace("scr_TS_Build_Option(10, (xx - 80), (yy + (sep * 8.5)), 70, 14, \"ALT ESCAPE THEME\", \"OFF-ON-\", 9, 4, 11, 8, -1, -1, -1)", "scr_TS_Build_Option(10, (xx - 80), (yy + (sep * 8.5)), 70, 14, \"ALT ESCAPE THEME\", \"OFF-ON-\", 9, 4, 11, 8, -1, 12, -1)");
+            ts_setup_menu = ts_setup_menu.UnixReplace(
+                "scr_TS_Build_Option(10, (xx - 80), (yy + (sep * 8.5)), 70, 14, \"ALT ESCAPE THEME\", \"OFF-ON-\", 9, 4, 11, 8, -1, -1, -1)",
+                "scr_TS_Build_Option(10, (xx - 80), (yy + (sep * 8.5)), 70, 14, \"ALT ESCAPE THEME\", \"OFF-ON-\", 9, 4, 11, 8, -1, 12, -1)"
+            );
 
-            ts_setup_menu = ts_setup_menu.Replace(
+            ts_setup_menu = ts_setup_menu.UnixReplace(
                 """
                     scr_TS_Build_Option(11, (xx + 80), (yy + (sep * 8.5)), 70, 14, "SHOW UNEXPLORED MAP", "OFF-ON-", 10, 4, -1, 9, 10, -1, -1)
-                """.ReplaceLineEndings("\n"),
+                """,
                 """
                     scr_TS_Build_Option(11, (xx + 80), (yy + (sep * 8.5)), 70, 14, "SHOW UNEXPLORED MAP", "OFF-ON-", 10, 4, -1, 9, 10, 12, -1)
                     scr_TS_Build_Option(12, xx, (yy + (sep * 10)), 110, 14, "ROOM NAME ON HUD", "NONE-WITH FADE-ALWAYS-", 11, 4, 11, -1, 10, -1, -1)
-                """.ReplaceLineEndings("\n")
+                """
             );
 
             ts_setup_menu_code.ReplaceGML(ts_setup_menu, gmData);
@@ -298,17 +301,17 @@ namespace YAPR_LIB.Patches.QoL
             var ts_option_actions_code = gmData.Code.ByName("gml_Script_scr_TS_Option_Actions");
             var ts_option_actions = Decompiler.Decompile(ts_option_actions_code, decompileContext);
 
-            ts_option_actions = ts_option_actions.Replace(
+            ts_option_actions = ts_option_actions.UnixReplace(
                 """
                     if (action == 10)
                         global.SHOW_UNEXPLORED_MAP = wrap_val((global.SHOW_UNEXPLORED_MAP + 1), 0, 2)
-                """.ReplaceLineEndings("\n"),
+                """,
                 """
                     if (action == 10)
                         global.SHOW_UNEXPLORED_MAP = wrap_val((global.SHOW_UNEXPLORED_MAP + 1), 0, 2)
                     if (action == 11)
                         global.ROOM_NAME_ON_HUD = wrap_val((global.ROOM_NAME_ON_HUD + 1), 0, 3)
-                """.ReplaceLineEndings("\n")
+                """
             );
 
             ts_option_actions_code.ReplaceGML(ts_option_actions, gmData);
@@ -316,12 +319,12 @@ namespace YAPR_LIB.Patches.QoL
             var ts_update_option_code = gmData.Code.ByName("gml_Script_scr_TS_Update_Option");
             var ts_update_option = Decompiler.Decompile(ts_update_option_code, decompileContext);
 
-            ts_update_option = ts_update_option.Replace(
+            ts_update_option = ts_update_option.UnixReplace(
                 """
                 }
                 if (menu == 5)
                 {
-                """.ReplaceLineEndings("\n"),
+                """,
                 """
                     if (name == "ROOM NAME ON HUD")
                     {
@@ -335,7 +338,7 @@ namespace YAPR_LIB.Patches.QoL
                 }
                 if (menu == 5)
                 {
-                """.ReplaceLineEndings("\n")
+                """
             );
 
             ts_update_option_code.ReplaceGML(ts_update_option, gmData);
@@ -344,13 +347,13 @@ namespace YAPR_LIB.Patches.QoL
             var scr_Handle_Door_Transition_code = gmData.Code.ByName("gml_Script_scr_Handle_Door_Transition");
             var scr_Handle_Door_Transition = Decompiler.Decompile(scr_Handle_Door_Transition_code, decompileContext);
 
-            scr_Handle_Door_Transition = scr_Handle_Door_Transition.Replace(
+            scr_Handle_Door_Transition = scr_Handle_Door_Transition.UnixReplace(
                 """
                     if (Door_Transition == 3)
                     {
                         var time = 40
 
-                """.ReplaceLineEndings("\n"),
+                """,
                 """
                     // Don't show the current room if transitioning
                     if (Door_Transition == 3)
@@ -358,16 +361,16 @@ namespace YAPR_LIB.Patches.QoL
                         global.CURRENT_ROOM = ""
                         var time = 40
 
-                """.ReplaceLineEndings("\n")
+                """
             );
 
-            scr_Handle_Door_Transition = scr_Handle_Door_Transition.Replace(
+            scr_Handle_Door_Transition = scr_Handle_Door_Transition.UnixReplace(
                 """
                         Room_Transition_Timer -= 1
                         if (Room_Transition_Timer <= 0)
                         {
 
-                """.ReplaceLineEndings("\n"),
+                """,
                 """
                         Room_Transition_Timer -= 1
                         if (Room_Transition_Timer <= 0)
@@ -375,7 +378,7 @@ namespace YAPR_LIB.Patches.QoL
                             global.CURRENT_ROOM = scr_Current_Room_Name(Screen_X, Screen_Y)
                             global.ROOM_NAME_REMAINING_DISPLAY_TIME = global.ROOM_NAME_TIME_TO_DISPLAY
 
-                """.ReplaceLineEndings("\n")
+                """
             );
 
             scr_Handle_Door_Transition_code.ReplaceGML(scr_Handle_Door_Transition, gmData);
@@ -384,22 +387,22 @@ namespace YAPR_LIB.Patches.QoL
             var world_load_code = gmData.Code.ByName("gml_Script_World_Load");
             var world_load = Decompiler.Decompile(world_load_code, decompileContext);
 
-            var insertIndex = world_load.IndexOf(
+            var stringPrecedingInsert = StringUtils.MakeUnixString(
                 """
                         if (obj_NETWORK.Connection_Pos > -1)
                             NET_Apply_Shared_Data()
-                """.ReplaceLineEndings("\n")
-            ) + """
-                        if (obj_NETWORK.Connection_Pos > -1)
-                            NET_Apply_Shared_Data()
-                """.ReplaceLineEndings("\n").Length + 1;
+                """
+            );
+            var insertIndex = world_load.IndexOf(stringPrecedingInsert) + stringPrecedingInsert.Length + 1;
             
 
-            var newCode = $$"""
-                                    global.CURRENT_ROOM = scr_Current_Room_Name(Screen_X, Screen_Y)
-                                    global.ROOM_NAME_REMAINING_DISPLAY_TIME = global.ROOM_NAME_TIME_TO_DISPLAY
+            var newCode = StringUtils.MakeUnixString(
+              $$"""
+                        global.CURRENT_ROOM = scr_Current_Room_Name(Screen_X, Screen_Y)
+                        global.ROOM_NAME_REMAINING_DISPLAY_TIME = global.ROOM_NAME_TIME_TO_DISPLAY
 
-                            """.ReplaceLineEndings("\n");
+                """
+            );
 
             world_load = world_load.Insert(insertIndex, newCode);
 
@@ -411,16 +414,21 @@ namespace YAPR_LIB.Patches.QoL
 
             insertIndex = obj_Elevator_Step_0.IndexOf("    if (obj_Samus.Dead > 0)\n");
 
-            newCode = $$"""
-                            global.CURRENT_ROOM = ""
+            newCode = StringUtils.MakeUnixString(
+              $$"""
+                    global.CURRENT_ROOM = ""
 
-                        """.ReplaceLineEndings("\n");
+                """
+            );
 
             obj_Elevator_Step_0 = obj_Elevator_Step_0.Insert(insertIndex, newCode);
 
-            obj_Elevator_Step_0 = obj_Elevator_Step_0.Replace(
-                "            stop = 1\n",
-                $$"""
+            obj_Elevator_Step_0 = obj_Elevator_Step_0.UnixReplace(
+                """
+                            stop = 1
+
+                """,
+              $$"""
                         {
                             stop = 1
                             var screen_x = floor((x / global.GAME_SCREEN_W))
@@ -429,7 +437,7 @@ namespace YAPR_LIB.Patches.QoL
                             global.ROOM_NAME_REMAINING_DISPLAY_TIME = global.ROOM_NAME_TIME_TO_DISPLAY
                         }
 
-                """.ReplaceLineEndings("\n")
+                """
             );
 
             obj_Elevator_Step_0_code.ReplaceGML(obj_Elevator_Step_0, gmData);
@@ -438,11 +446,11 @@ namespace YAPR_LIB.Patches.QoL
             var scr_Handle_Pause_Menu_code = gmData.Code.ByName("gml_Script_scr_Handle_Pause_Menu");
             var scr_Handle_Pause_Menu = Decompiler.Decompile(scr_Handle_Pause_Menu_code, decompileContext);
 
-            scr_Handle_Pause_Menu = scr_Handle_Pause_Menu.Replace(
+            scr_Handle_Pause_Menu = scr_Handle_Pause_Menu.UnixReplace(
                 """
                                 play_bgm(bgm_Samus_Entrance, 0)
 
-                """.ReplaceLineEndings("\n"),
+                """,
                 """
                                 play_bgm(bgm_Samus_Entrance, 0)
                                 var screen_x = floor((global.START_LOCATION_X / global.GAME_SCREEN_W))
@@ -450,7 +458,7 @@ namespace YAPR_LIB.Patches.QoL
                                 global.CURRENT_ROOM = scr_Current_Room_Name(screen_x, screen_y)
                                 global.ROOM_NAME_REMAINING_DISPLAY_TIME = global.ROOM_NAME_TIME_TO_DISPLAY
 
-                """.ReplaceLineEndings("\n")
+                """
             );
 
             scr_Handle_Pause_Menu_code.ReplaceGML(scr_Handle_Pause_Menu, gmData);
@@ -458,7 +466,7 @@ namespace YAPR_LIB.Patches.QoL
             var scr_Draw_HUD_code = gmData.Code.ByName("gml_Script_scr_Draw_HUD");
             var scr_Draw_HUD = Decompiler.Decompile(scr_Draw_HUD_code, decompileContext);
 
-            scr_Draw_HUD = scr_Draw_HUD.Replace(
+            scr_Draw_HUD = scr_Draw_HUD.UnixReplace(
                 "    scr_Draw_Text_Outline(xx, yy, text, c_lime, c_black, font_Mago2)",
                 """
                     scr_Draw_Text_Outline(xx, yy, text, c_lime, c_black, font_Mago2)
@@ -487,7 +495,7 @@ namespace YAPR_LIB.Patches.QoL
                         draw_set_valign(orig_valign)
                         draw_set_alpha(1)
                     }
-                """.ReplaceLineEndings("\n")
+                """
             );
 
             scr_Draw_HUD_code.ReplaceGML(scr_Draw_HUD, gmData);
@@ -495,14 +503,14 @@ namespace YAPR_LIB.Patches.QoL
             var scr_Save_Options_code = gmData.Code.ByName("gml_Script_scr_Save_Options");
             var scr_Save_Options = Decompiler.Decompile(scr_Save_Options_code, decompileContext);
 
-            scr_Save_Options = scr_Save_Options.Replace(
+            scr_Save_Options = scr_Save_Options.UnixReplace(
                 """
                 ini_write_real("GAME OPTIONS", "Show Unexplored Map", global.SHOW_UNEXPLORED_MAP)
-                """.ReplaceLineEndings("\n"),
+                """,
                 """
                 ini_write_real("GAME OPTIONS", "Show Unexplored Map", global.SHOW_UNEXPLORED_MAP)
                 ini_write_real("GAME OPTIONS", "Room Name on HUD", global.ROOM_NAME_ON_HUD)
-                """.ReplaceLineEndings("\n")
+                """
             );
 
             scr_Save_Options_code.ReplaceGML(scr_Save_Options, gmData);
@@ -510,15 +518,15 @@ namespace YAPR_LIB.Patches.QoL
             var scr_Load_Options_code = gmData.Code.ByName("gml_Script_scr_Load_Options");
             var scr_Load_Options = Decompiler.Decompile(scr_Load_Options_code, decompileContext);
 
-            scr_Load_Options = scr_Load_Options.Replace(
+            scr_Load_Options = scr_Load_Options.UnixReplace(
                 """
                 global.SHOW_UNEXPLORED_MAP = ini_read_real("GAME OPTIONS", "Show Unexplored Map", 0)
-                """.ReplaceLineEndings("\n"),
+                """,
                 """
                 global.SHOW_UNEXPLORED_MAP = ini_read_real("GAME OPTIONS", "Show Unexplored Map", 0)
                 global.ROOM_NAME_ON_HUD = ini_read_real("GAME OPTIONS", "Room Name on HUD", 0)
                 global.ROOM_NAME_ON_HUD = clamp(round(global.ROOM_NAME_ON_HUD), 0, 2)
-                """.ReplaceLineEndings("\n")
+                """
             );
 
             scr_Load_Options_code.ReplaceGML(scr_Load_Options, gmData);

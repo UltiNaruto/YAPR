@@ -13,9 +13,23 @@ namespace YAPR_LIB.Patches
 
             // tells which seed we're playing
             if (room == Room.rm_Zebeth)
-                menu_headers = menu_headers.Replace("\"PLANET ZEBETH\"", $"\"PLANET ZEBETH - {wordHash.ToUpper()}\"");
+                menu_headers = menu_headers.UnixReplace(
+                    """
+                    "PLANET ZEBETH"
+                    """,
+                   $"""
+                    "PLANET ZEBETH - {wordHash.ToUpper()}"
+                    """
+                );
             if (room == Room.rm_Novus)
-                menu_headers = menu_headers.Replace("\"PLANET NOVUS\"", $"\"PLANET NOVUS - ({wordHash.ToUpper()})\"");
+                menu_headers = menu_headers.UnixReplace(
+                    """
+                    "PLANET NOVUS"
+                    """,
+                   $"""
+                    "PLANET NOVUS - {wordHash.ToUpper()}"
+                    """
+                );
 
             menu_headers_code.ReplaceGML(menu_headers, gmData);
         }

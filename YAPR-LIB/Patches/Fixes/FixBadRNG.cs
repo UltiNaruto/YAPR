@@ -10,14 +10,10 @@ namespace YAPR_LIB.Patches.Fixes
             var obj_Enemy_Spawner_Step_0_code = gmData.Code.ByName("gml_Object_obj_Enemy_Spawner_Step_0");
             var obj_Enemy_Spawner_Step_0 = Decompiler.Decompile(obj_Enemy_Spawner_Step_0_code, decompileContext);
 
-            obj_Enemy_Spawner_Step_0 = """
-                              
-                              """.ReplaceLineEndings("\n") + obj_Enemy_Spawner_Step_0;
-
-            obj_Enemy_Spawner_Step_0 = obj_Enemy_Spawner_Step_0.Replace(
+            obj_Enemy_Spawner_Step_0 = obj_Enemy_Spawner_Step_0.UnixReplace(
                 """
                         Spawn = scr_Enemy_Build(x, y, Spawn_Type, Spawn_Level, ID_Slot, Data_Map)
-                """.ReplaceLineEndings("\n"),
+                """,
                 """
                         var screen_x = floor((x / global.GAME_SCREEN_W));
                         var screen_y = floor((y / global.GAME_SCREEN_H));     
@@ -43,7 +39,7 @@ namespace YAPR_LIB.Patches.Fixes
                                 Spawn_Type = 12
                         }
                         Spawn = scr_Enemy_Build(x, y, Spawn_Type, Spawn_Level, ID_Slot, Data_Map)
-                """.ReplaceLineEndings("\n")
+                """
             );
 
             obj_Enemy_Spawner_Step_0_code.ReplaceGML(obj_Enemy_Spawner_Step_0, gmData);

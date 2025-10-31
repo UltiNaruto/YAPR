@@ -10,7 +10,7 @@ namespace YAPR_LIB.Patches.QoL
             var scr_Draw_Pause_Screen_code = gmData.Code.ByName("gml_Script_scr_Draw_Pause_Screen");
             var scr_Draw_Pause_Screen = Decompiler.Decompile(scr_Draw_Pause_Screen_code, decompileContext);
 
-            scr_Draw_Pause_Screen = scr_Draw_Pause_Screen.Replace(
+            scr_Draw_Pause_Screen = scr_Draw_Pause_Screen.UnixReplace(
                 """
                 xx = center_x - global.CAMERA_W - Pause_Menu_X
                 yy = center_y + 25
@@ -20,7 +20,7 @@ namespace YAPR_LIB.Patches.QoL
                 scr_Draw_Text_Outline(xx, yy, "TITLE SCREEN", c_white, c, font_Metroid)
                 draw_set_halign(fa_left)
                 draw_set_alpha(1)
-                """.ReplaceLineEndings("\n"),
+                """,
                 """
                 xx = ((center_x - global.CAMERA_W) - Pause_Menu_X)
                 yy = center_y
@@ -36,7 +36,7 @@ namespace YAPR_LIB.Patches.QoL
                 scr_Draw_Text_Outline(xx, yy, "TITLE SCREEN", c_white, c, font_Metroid)
                 draw_set_halign(fa_left)
                 draw_set_alpha(1)
-                """.ReplaceLineEndings("\n")
+                """
             );
 
             scr_Draw_Pause_Screen_code.ReplaceGML(scr_Draw_Pause_Screen, gmData);
@@ -44,16 +44,16 @@ namespace YAPR_LIB.Patches.QoL
             var scr_Handle_Pause_Menu_code = gmData.Code.ByName("gml_Script_scr_Handle_Pause_Menu");
             var scr_Handle_Pause_Menu = Decompiler.Decompile(scr_Handle_Pause_Menu_code, decompileContext);
 
-            scr_Handle_Pause_Menu = scr_Handle_Pause_Menu.Replace(
+            scr_Handle_Pause_Menu = scr_Handle_Pause_Menu.UnixReplace(
                 "Pause_Cursor = clamp(Pause_Cursor, 0, 1)",
                 "Pause_Cursor = clamp(Pause_Cursor, 0, 2)"
             );
 
-            scr_Handle_Pause_Menu = scr_Handle_Pause_Menu.Replace(
+            scr_Handle_Pause_Menu = scr_Handle_Pause_Menu.UnixReplace(
                 """
                             if (Pause_Cursor == 1)
                                 scr_Return_To_Title()
-                """.ReplaceLineEndings("\n"),
+                """,
                 """
                             if (Pause_Cursor == 1 && Escaping == 0)
                             {
@@ -99,7 +99,7 @@ namespace YAPR_LIB.Patches.QoL
                             }
                             if (Pause_Cursor == 2)
                                 scr_Return_To_Title()
-                """.ReplaceLineEndings("\n")
+                """
             );
 
             scr_Handle_Pause_Menu_code.ReplaceGML(scr_Handle_Pause_Menu, gmData);
@@ -107,14 +107,14 @@ namespace YAPR_LIB.Patches.QoL
             var Replay_Add_Event_code = gmData.Code.ByName("gml_Script_Replay_Add_Event");
             var Replay_Add_Event = Decompiler.Decompile(Replay_Add_Event_code, decompileContext);
 
-            Replay_Add_Event = Replay_Add_Event.Replace(
+            Replay_Add_Event = Replay_Add_Event.UnixReplace(
                 """
                     if (num == 6)
                     {
                         event = "Saved"
                         Replay_Save_State()
                     }
-                """.ReplaceLineEndings("\n"),
+                """,
                 """
                     if (num == 6)
                     {
@@ -123,7 +123,7 @@ namespace YAPR_LIB.Patches.QoL
                     }
                     if (num == 7)
                         event = "Warped To Start"
-                """.ReplaceLineEndings("\n")
+                """
             );
 
             Replay_Add_Event_code.ReplaceGML(Replay_Add_Event, gmData);

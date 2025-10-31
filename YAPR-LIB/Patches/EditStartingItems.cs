@@ -17,10 +17,12 @@ namespace YAPR_LIB.Patches
             var hasSuperMissiles = room == Room.rm_Novus && (startingItems?.ContainsKey("Super Missile Launcher") ?? false);
             var hasWaveBeam = startingItems?.ContainsKey("Wave Beam") ?? false;
 
-            var stringPrecedingInsert = """
-                                        if (room == rm_Novus)
-                                                        Current_Area = (1 << 0)
-                                        """.ReplaceLineEndings("\n");
+            var stringPrecedingInsert = StringUtils.MakeUnixString(
+                """
+                if (room == rm_Novus)
+                                Current_Area = (1 << 0)
+                """
+            );
             var insertIndex = world_load.IndexOf(stringPrecedingInsert) + stringPrecedingInsert.Length + 1;
 
             if (hasMissiles)
@@ -136,10 +138,12 @@ namespace YAPR_LIB.Patches
             }
 
 
-            stringPrecedingInsert = """
-                                            if (obj_NETWORK.Connection_Pos > -1)
-                                                NET_Apply_Shared_Data()
-                                    """.ReplaceLineEndings("\n");
+            stringPrecedingInsert = StringUtils.MakeUnixString(
+                """
+                        if (obj_NETWORK.Connection_Pos > -1)
+                            NET_Apply_Shared_Data()
+                """
+            );
             insertIndex = world_load.IndexOf(stringPrecedingInsert) + stringPrecedingInsert.Length + 1;
 
             if (startingMemo is not null)

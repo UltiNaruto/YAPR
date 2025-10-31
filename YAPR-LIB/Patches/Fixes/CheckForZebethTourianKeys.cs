@@ -9,13 +9,13 @@ namespace YAPR_LIB.Patches.Fixes
         {
             var scr_Handle_Door_Transition_code = gmData.Code.ByName("gml_Script_scr_Handle_Door_Transition");
             var scr_Handle_Door_Transition = Decompiler.Decompile(scr_Handle_Door_Transition_code, decompileContext);
-            scr_Handle_Door_Transition = scr_Handle_Door_Transition.Replace(
+            scr_Handle_Door_Transition = scr_Handle_Door_Transition.UnixReplace(
                 """
                         Room_Transition_Timer -= 1
                         if (Room_Transition_Timer <= 0)
                         {
 
-                """.ReplaceLineEndings("\n"),
+                """,
                 """
                         Room_Transition_Timer -= 1
                         if (Room_Transition_Timer <= 0)
@@ -29,7 +29,7 @@ namespace YAPR_LIB.Patches.Fixes
                                     play_sfx(sfx_Notify_Boss_Defeated)
                             }
 
-                """.ReplaceLineEndings("\n")
+                """
             );
 
             scr_Handle_Door_Transition_code.ReplaceGML(scr_Handle_Door_Transition, gmData);

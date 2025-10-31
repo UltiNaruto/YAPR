@@ -10,7 +10,7 @@ namespace YAPR_LIB.Patches.Fixes
             var scr_Enemy_Build_code = gmData.Code.ByName("gml_Script_scr_Enemy_Build");
             var scr_Enemy_Build = Decompiler.Decompile(scr_Enemy_Build_code, decompileContext);
 
-            scr_Enemy_Build = scr_Enemy_Build.Replace(
+            scr_Enemy_Build = scr_Enemy_Build.UnixReplace(
                 """
                     if (enemy_type == (12 << 0))
                     {
@@ -28,7 +28,7 @@ namespace YAPR_LIB.Patches.Fixes
                         Vulnerable[(2 << 0)] = (-1 << 0)
                         Vulnerable[(6 << 0)] = (-1 << 0)
                     }
-                """.ReplaceLineEndings("\n"),
+                """,
                 """
                     if (enemy_type == (12 << 0))
                     {
@@ -48,10 +48,10 @@ namespace YAPR_LIB.Patches.Fixes
                         Vulnerable[(2 << 0)] = (-1 << 0)
                         Vulnerable[(6 << 0)] = (-1 << 0)
                     }
-                """.ReplaceLineEndings("\n")
+                """
             );
 
-            scr_Enemy_Build = scr_Enemy_Build.Replace(
+            scr_Enemy_Build = scr_Enemy_Build.UnixReplace(
                 """
                     if (enemy_type == (18 << 0))
                     {
@@ -76,7 +76,7 @@ namespace YAPR_LIB.Patches.Fixes
                         }
                         Speed = 1.5
                     }
-                """.ReplaceLineEndings("\n"),
+                """,
                 """
                     if (enemy_type == (18 << 0))
                     {
@@ -103,7 +103,7 @@ namespace YAPR_LIB.Patches.Fixes
                         }
                         Speed = 1.5
                     }
-                """.ReplaceLineEndings("\n")
+                """
             );
 
             scr_Enemy_Build_code.ReplaceGML(scr_Enemy_Build, gmData);

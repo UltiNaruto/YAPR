@@ -13,11 +13,11 @@ namespace YAPR_LIB.Patches.Fixes
             // Activate items on boss death
             var scr_Boss_Remove_code = gmData.Code.ByName("gml_Script_scr_Boss_Remove");
             var scr_Boss_Remove = Decompiler.Decompile(scr_Boss_Remove_code, decompileContext);
-            scr_Boss_Remove = scr_Boss_Remove.Replace(
+            scr_Boss_Remove = scr_Boss_Remove.UnixReplace(
                 """
                             missile = 75
 
-                """.ReplaceLineEndings("\n"),
+                """,
                 """
                             with(par_Item)
                             {
@@ -32,7 +32,7 @@ namespace YAPR_LIB.Patches.Fixes
                            }
                            return;
 
-              """.ReplaceLineEndings("\n")
+                """
             );
 
             scr_Boss_Remove_code.ReplaceGML(scr_Boss_Remove, gmData);
@@ -40,13 +40,13 @@ namespace YAPR_LIB.Patches.Fixes
             // Reactivate items if save was reloaded
             var scr_Handle_Door_Transition_code = gmData.Code.ByName("gml_Script_scr_Handle_Door_Transition");
             var scr_Handle_Door_Transition = Decompiler.Decompile(scr_Handle_Door_Transition_code, decompileContext);
-            scr_Handle_Door_Transition = scr_Handle_Door_Transition.Replace(
+            scr_Handle_Door_Transition = scr_Handle_Door_Transition.UnixReplace(
                 """
                         Room_Transition_Timer -= 1
                         if (Room_Transition_Timer <= 0)
                         {
 
-                """.ReplaceLineEndings("\n"),
+                """,
                 """
                         Room_Transition_Timer -= 1
                         if (Room_Transition_Timer <= 0)
@@ -65,7 +65,7 @@ namespace YAPR_LIB.Patches.Fixes
                                 }
                             }
 
-                """.ReplaceLineEndings("\n")
+                """
             );
 
             scr_Handle_Door_Transition_code.ReplaceGML(scr_Handle_Door_Transition, gmData);
@@ -77,8 +77,12 @@ namespace YAPR_LIB.Patches.Fixes
         static void AddTourianKeyToRoom(UndertaleData gmData)
         {
             var obj_Item_Tourian_Key = gmData.GameObjects
-                                             .FirstOrDefault(obj => obj.Name.Content == "obj_Item_Tourian_Key")
-                                             .Clone();
+                                             .FirstOrDefault(obj => obj.Name.Content == "obj_Item_Tourian_Key");
+
+            if (obj_Item_Tourian_Key is null)
+                throw new Exception("Shouldn't happen!");
+
+            obj_Item_Tourian_Key = obj_Item_Tourian_Key.Clone();
 
             // Events
             var obj_Item_Ridley_Key_Create_0_code_str = new UndertaleString("gml_Object_obj_Item_Ridley_Key_Create_0");
@@ -86,19 +90,21 @@ namespace YAPR_LIB.Patches.Fixes
 
             var obj_Item_Ridley_Key_Create_0_code = new UndertaleCode();
             obj_Item_Ridley_Key_Create_0_code.Name = obj_Item_Ridley_Key_Create_0_code_str;
-            var code = """
-                       event_inherited()
-                       Active = 0
-                       Item_Name = "Tourian Key"
-                       Item_ID = 40
-                       Item_Type = 30
-                       Item_Quantity = 1
-                       Item_Acquired_Sound = sfx_Notify_Boss_Defeated
-                       Item_Text_Header = "TOURIAN KEY ACQUIRED"
-                       Item_Text_Description = "Opens Tourian access when all of the keys are retrieved"
-                       sprite_index = spr_ITEM_Tourian_Key
+            var code = StringUtils.MakeUnixString(
+                """
+                event_inherited()
+                Active = 0
+                Item_Name = "Tourian Key"
+                Item_ID = 40
+                Item_Type = 30
+                Item_Quantity = 1
+                Item_Acquired_Sound = sfx_Notify_Boss_Defeated
+                Item_Text_Header = "TOURIAN KEY ACQUIRED"
+                Item_Text_Description = "Opens Tourian access when all of the keys are retrieved"
+                sprite_index = spr_ITEM_Tourian_Key
 
-                       """.ReplaceLineEndings("\n");
+                """
+            );
             obj_Item_Ridley_Key_Create_0_code.ReplaceGML(code, gmData);
             gmData.Code.Add(obj_Item_Ridley_Key_Create_0_code);
 
@@ -117,12 +123,14 @@ namespace YAPR_LIB.Patches.Fixes
             var obj_Item_Ridley_Key_Step_0_code = new UndertaleCode();
             obj_Item_Ridley_Key_Step_0_code.Name = obj_Item_Ridley_Key_Step_0_code_str;
             obj_Item_Ridley_Key_Step_0_code.ReplaceGML(
-                """
-                Item_ID = 40
-                event_inherited()
+                StringUtils.MakeUnixString(
+                    """
+                    Item_ID = 40
+                    event_inherited()
                 
-                """.ReplaceLineEndings("\n")
-                , gmData
+                    """
+                ),
+                gmData
             );
             gmData.Code.Add(obj_Item_Ridley_Key_Step_0_code);
 
@@ -171,8 +179,12 @@ namespace YAPR_LIB.Patches.Fixes
         static void AddBigMissileTankToRoom(UndertaleData gmData)
         {
             var obj_Item_Big_Missile_def = gmData.GameObjects
-                                                 .FirstOrDefault(obj => obj.Name.Content == "obj_Item_Big_Missile")
-                                                 .Clone();
+                                                 .FirstOrDefault(obj => obj.Name.Content == "obj_Item_Big_Missile");
+
+            if (obj_Item_Big_Missile_def is null)
+                throw new Exception("Shouldn't happen!");
+
+            obj_Item_Big_Missile_def = obj_Item_Big_Missile_def.Clone();
 
             // Events
             var obj_Item_Big_Missile_Create_0_code_str = new UndertaleString("gml_Object_obj_Item_Big_Missile_Create_0");
@@ -180,19 +192,21 @@ namespace YAPR_LIB.Patches.Fixes
 
             var obj_Item_Big_Missile_Create_0_code = new UndertaleCode();
             obj_Item_Big_Missile_Create_0_code.Name = obj_Item_Big_Missile_Create_0_code_str;
-            var code = """
-                       event_inherited()
-                       Active = 0
-                       Item_Name = "Tourian Key"
-                       Item_ID = 41
-                       Item_Type = 16
-                       Item_Quantity = 75
-                       Item_Acquired_Sound = bgm_Minor_Item_Get
-                       Item_Text_Header = "BIG MISSILE TANK ACQUIRED"
-                       Item_Text_Description = "Missile capacity increased by 75"
-                       sprite_index = spr_ITEM_Big_Missile
+            var code = StringUtils.MakeUnixString(
+                """
+                event_inherited()
+                Active = 0
+                Item_Name = "Tourian Key"
+                Item_ID = 41
+                Item_Type = 16
+                Item_Quantity = 75
+                Item_Acquired_Sound = bgm_Minor_Item_Get
+                Item_Text_Header = "BIG MISSILE TANK ACQUIRED"
+                Item_Text_Description = "Missile capacity increased by 75"
+                sprite_index = spr_ITEM_Big_Missile
 
-                       """.ReplaceLineEndings("\n");
+                """
+            );
             obj_Item_Big_Missile_Create_0_code.ReplaceGML(code, gmData);
             gmData.Code.Add(obj_Item_Big_Missile_Create_0_code);
 
@@ -211,12 +225,14 @@ namespace YAPR_LIB.Patches.Fixes
             var obj_Item_Big_Missile_Step_0_code = new UndertaleCode();
             obj_Item_Big_Missile_Step_0_code.Name = obj_Item_Big_Missile_Step_0_code_str;
             obj_Item_Big_Missile_Step_0_code.ReplaceGML(
-                """
-                Item_ID = 41
-                event_inherited()
+                StringUtils.MakeUnixString(
+                    """
+                    Item_ID = 41
+                    event_inherited()
                 
-                """.ReplaceLineEndings("\n")
-                , gmData
+                    """
+                ),
+                gmData
             );
             gmData.Code.Add(obj_Item_Big_Missile_Step_0_code);
 

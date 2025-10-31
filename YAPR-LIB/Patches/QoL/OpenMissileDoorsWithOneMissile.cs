@@ -10,7 +10,7 @@ namespace YAPR_LIB.Patches.QoL
             var obj_Door_Create_0_code = gmData.Code.ByName("gml_Object_obj_Door_Create_0");
             var obj_Door_Create_0 = Decompiler.Decompile(obj_Door_Create_0_code, decompileContext);
 
-            obj_Door_Create_0 = obj_Door_Create_0.Replace(
+            obj_Door_Create_0 = obj_Door_Create_0.UnixReplace(
                 "HP[(2 << 0)] = 5",
                 "HP[(2 << 0)] = 1"
             );

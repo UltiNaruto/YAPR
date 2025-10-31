@@ -28,28 +28,28 @@ namespace YAPR_LIB.Utils
                 });
 
                 if (variablesToAdd[variableString.Content] is bool)
-                    title_screen_other_4 = title_screen_other_4.Replace(
+                    title_screen_other_4 = title_screen_other_4.UnixReplace(
                         "    global.MOBILE = 0",
                       $$"""
                             global.{{variableString.Content}} = {{((bool)variablesToAdd[variableString.Content] ? 1 : 0)}}
                             global.MOBILE = 0
-                        """.ReplaceLineEndings("\n")
+                        """
                     );
                 else if (variablesToAdd[variableString.Content] is string)
-                    title_screen_other_4 = title_screen_other_4.Replace(
+                    title_screen_other_4 = title_screen_other_4.UnixReplace(
                         "    global.MOBILE = 0",
                       $$"""
                             global.{{variableString.Content}} = "{{variablesToAdd[variableString.Content]}}"
                             global.MOBILE = 0
-                        """.ReplaceLineEndings("\n")
+                        """
                     );
                 else
-                    title_screen_other_4 = title_screen_other_4.Replace(
+                    title_screen_other_4 = title_screen_other_4.UnixReplace(
                         "    global.MOBILE = 0",
                       $$"""
                             global.{{variableString.Content}} = {{variablesToAdd[variableString.Content]}}
                             global.MOBILE = 0
-                        """.ReplaceLineEndings("\n")
+                        """
                     );
             }
 
@@ -63,7 +63,12 @@ namespace YAPR_LIB.Utils
 
             var func_code = new UndertaleCode();
             func_code.Name = func_code_str;
-            func_code.AppendGML(code, gmData);
+            func_code.AppendGML(
+                StringUtils.MakeUnixString(
+                    code
+                ),
+                gmData
+            );
 
             var code_locals = new UndertaleCodeLocals()
             {
