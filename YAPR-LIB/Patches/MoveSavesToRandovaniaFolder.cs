@@ -22,7 +22,7 @@ namespace YAPR_LIB.Patches
             var newZebethFilePath = $"Randovania/{wordHash}/Zebeth-";
             var newNovusFilePath = $"Randovania/{wordHash}/Novus-";
 
-            foreach(var script in SCRIPTS)
+            foreach (var script in SCRIPTS)
             {
                 code = gmData.Code.ByName(script);
                 code_str = Decompiler.Decompile(code, decompileContext);

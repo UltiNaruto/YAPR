@@ -392,7 +392,7 @@ namespace YAPR_LIB.Patches.QoL
                                                     NET_Apply_Shared_Data()
                                         """;
             var insertIndex = world_load.IndexOf(stringPrecedingInsert) + stringPrecedingInsert.Length + 1;
-            
+
 
             var newCode = $$"""
                             global.CURRENT_ROOM = scr_Current_Room_Name(Screen_X, Screen_Y)
