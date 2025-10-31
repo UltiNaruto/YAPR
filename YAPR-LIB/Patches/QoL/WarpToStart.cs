@@ -64,11 +64,25 @@ namespace YAPR_LIB.Patches.QoL
                                 Pause_Trans = -1
                                 Screen_Cover_Alpha = 1
                                 Screen_Cover_Dir = -1
-                                obj_Samus.Riding = 0
-                                if (audio_is_playing(sfx_Elevator_Hum) == 1)
-                                    stop_sfx(0)
+                                if (obj_Samus.Riding == 1)
+                                {
+                                    with (obj_Elevator)
+                                    {
+                                        if (point_distance(obj_Samus.x, obj_Samus.y, x, y) < 25)
+                                        {
+                                            x = Starting_X
+                                            y = Starting_Y
+                                            Current_Distance = 0
+                                            Moving = 0
+                                        }
+                                    }
+                                    obj_Samus.Riding = 0
+                                    if (audio_is_playing(sfx_Elevator_Hum) == 1)
+                                        stop_sfx(0)
+                                }
                                 obj_Samus.x = global.START_LOCATION_X
                                 obj_Samus.y = global.START_LOCATION_Y
+                                obj_Samus.Grounded = 1
                                 obj_Samus.Energy = (99 + (100 * obj_Samus.Upgrade[7]))
                                 obj_Samus.Ammo[1] = obj_Samus.Ammo_Cap[1]
                                 obj_Samus.Ammo[2] = obj_Samus.Ammo_Cap[2]
