@@ -58,6 +58,10 @@ namespace YAPR_LIB
         public bool OpenMissileDoorsWithOneMissile;
 
         [JsonInclude]
+        [JsonPropertyName("allow_downward_shots")]
+        public bool AllowDownwardShots;
+
+        [JsonInclude]
         [JsonPropertyName("credits_string")]
         public List<Text>? CreditsString;
     }
