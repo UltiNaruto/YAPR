@@ -136,10 +136,10 @@ public class Patcher
         if (randomizerConfig.GameConfig?.OpenMissileDoorsWithOneMissile ?? false)
             Patches.QoL.OpenMissileDoorsWithOneMissile.Apply(gmData, decompileContext);
 
-        /*if (randomizerConfig.GameConfig.AllowDownwardShots)
+        if (randomizerConfig.GameConfig?.AllowDownwardShots ?? false)
             Patches.QoL.AllowDownwardShots.Apply(gmData, decompileContext);
 
-        if (randomizerConfig.GameConfig.AllowWallJump)
+        /*if (randomizerConfig.GameConfig.AllowWallJump)
             Patches.QoL.AllowWallJump.Apply(gmData, decompileContext);*/
 
         Patches.QoL.DisableLowHealthBeeping.Apply(gmData, decompileContext, !randomizerConfig.Preferences?.DisableLowHealthBeeping ?? false);
