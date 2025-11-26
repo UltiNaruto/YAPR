@@ -66,7 +66,7 @@ namespace YAPR_LIB.Patches
                          Item_Text_Description = "{{String.Join("\n", pickup.Text?.Description ?? new List<string>())}}"
                          Item_Text_Locked_Header = "{{(pickup.LockedText?.Header ?? string.Empty).ToUpper()}}"
                          Item_Text_Locked_Description = "{{String.Join("\n", pickup.LockedText?.Description ?? new List<string>())}}"
-                         Item_Is_Launcher = {{(pickup.IsLauncher ? 1 : 0)}};
+                         Item_Is_Launcher = {{(pickup.Type == "Missile Launcher" ? 1 : 0)}};
                          sprite_index = {{pickup.Model}}
 
                          """;

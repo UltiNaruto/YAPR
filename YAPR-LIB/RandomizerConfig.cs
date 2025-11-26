@@ -159,11 +159,6 @@ namespace YAPR_LIB
         [JsonInclude]
         [JsonPropertyName("locked_text")]
         public Text? LockedText;
-
-        // only used for Missile/Super Missile Launcher
-        [JsonInclude]
-        [JsonPropertyName("is_launcher")]
-        public bool IsLauncher;
     }
 
     public class Elevator
