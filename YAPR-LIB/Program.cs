@@ -117,14 +117,33 @@ public class Patcher
         if (randomizerConfig.LevelData.Pickups is not null)
         {
             var pickups = randomizerConfig.LevelData.Pickups.OrderBy(kvp => kvp.Key).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            var lockedText = new Text()
+            {
+                Header = String.Empty,
+                Description = new List<String>()
+            };
             foreach ((int pickup_obj_id, Pickup pickup) in pickups)
             {
                 if (gmData.Rooms[(int)randomizerConfig.LevelData.Room].GameObjects.Any(obj => obj.InstanceID == pickup_obj_id))
                 {
+                    if (randomizerConfig.GameConfig?.RequiredMessages is not null && randomizerConfig.GameConfig.RequiredMessages.ContainsKey(pickup.Model ?? "Nothing"))
+                    {
+                        lockedText.Header = randomizerConfig.GameConfig.RequiredMessages[pickup.Model ?? "Nothing"].Header;
+                        lockedText.Description.Clear();
+                        foreach(var desc in randomizerConfig.GameConfig.RequiredMessages[pickup.Model ?? "Nothing"].Description ?? new List<String>())
+                            lockedText.Description.Add(desc);
+                    }
+                    else
+                    {
+                        lockedText.Header = String.Empty;
+                        lockedText.Description.Clear();
+                    }
+
                     Patches.EditPickup.Apply(gmData,
-                                                randomizerConfig.LevelData.Room,
-                                                pickup_obj_id,
-                                                pickup);
+                                             lockedText,
+                                             randomizerConfig.LevelData.Room,
+                                             pickup_obj_id,
+                                             pickup);
                 }
             }
         }

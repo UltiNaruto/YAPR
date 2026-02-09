@@ -42,6 +42,10 @@ namespace YAPR_LIB
         public SeedIdentifier? SeedIdentifier;
 
         [JsonInclude]
+        [JsonPropertyName("required_messages")]
+        public Dictionary<String, Text>? RequiredMessages;
+
+        [JsonInclude]
         [JsonPropertyName("starting_items")]
         public Dictionary<string, int>? StartingItems;
 
@@ -155,10 +159,6 @@ namespace YAPR_LIB
         [JsonInclude]
         [JsonPropertyName("text")]
         public Text? Text;
-
-        [JsonInclude]
-        [JsonPropertyName("locked_text")]
-        public Text? LockedText;
     }
 
     public class Elevator

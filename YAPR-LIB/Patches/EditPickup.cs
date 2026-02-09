@@ -22,8 +22,11 @@ namespace YAPR_LIB.Patches
             throw new NotImplementedException();
         }
 
-        public static void Apply(UndertaleData gmData, Room room, int obj_id, Pickup pickup)
+        public static void Apply(UndertaleData gmData, Text lockedText, Room room, int obj_id, Pickup pickup)
         {
+            if (lockedText is null || lockedText.Header is null || lockedText.Description is null)
+                throw new ArgumentNullException();
+
             var idx = pickup.Index is not null ? pickup.Index : GetIndexFromObjectIndex(room, obj_id);
             var pickup_obj = gmData.Rooms[(int)room]
                                    .GameObjects
@@ -64,8 +67,8 @@ namespace YAPR_LIB.Patches
                          Item_Acquired_Sound = {{PickupUtils.GetAcquiredSfxFromName(pickup.Type ?? "Nothing")}}
                          Item_Text_Header = "{{(pickup.Text?.Header ?? string.Empty).ToUpper()}}"
                          Item_Text_Description = "{{String.Join("\n", pickup.Text?.Description ?? new List<string>())}}"
-                         Item_Text_Locked_Header = "{{(pickup.LockedText?.Header ?? string.Empty).ToUpper()}}"
-                         Item_Text_Locked_Description = "{{String.Join("\n", pickup.LockedText?.Description ?? new List<string>())}}"
+                         Item_Text_Locked_Header = "{{lockedText.Header.ToUpper()}}"
+                         Item_Text_Locked_Description = "{{String.Join("\n", lockedText.Description)}}"
                          Item_Is_Launcher = {{(pickup.Type == "Missile Launcher" ? 1 : 0)}};
                          sprite_index = {{pickup.Model}}
 
