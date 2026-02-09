@@ -36,7 +36,7 @@ namespace YAPR_LIB.Patches
 
             var new_pickup_obj_type = gmData.GameObjects
                                             .Select(obj => obj)
-                                            .FirstOrDefault(obj => obj.Name.Content == PickupUtils.GetObjectFromName(pickup.Type ?? "Nothing"));
+                                            .FirstOrDefault(obj => obj.Name.Content == PickupType.GetObjectFromName(pickup.Type));
 
             if (new_pickup_obj_type is null)
                 return;
@@ -62,9 +62,9 @@ namespace YAPR_LIB.Patches
                          event_inherited()
                          Item_Name = "{{pickup.Type}}"
                          Item_ID = {{idx}}
-                         Item_Type = {{PickupUtils.GetItemTypeFromName(pickup.Type ?? "Nothing")}}
+                         Item_Type = {{PickupType.GetItemTypeFromName(pickup.Type)}}
                          Item_Quantity = {{pickup.Quantity}}
-                         Item_Acquired_Sound = {{PickupUtils.GetAcquiredSfxFromName(pickup.Type ?? "Nothing")}}
+                         Item_Acquired_Sound = {{PickupType.GetAcquiredSfxFromName(pickup.Type)}}
                          Item_Text_Header = "{{(pickup.Text?.Header ?? string.Empty).ToUpper()}}"
                          Item_Text_Description = "{{String.Join("\n", pickup.Text?.Description ?? new List<string>())}}"
                          Item_Text_Locked_Header = "{{lockedText.Header.ToUpper()}}"
