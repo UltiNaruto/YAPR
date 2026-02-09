@@ -100,23 +100,30 @@ namespace YAPR_LIB.Utils
                                                                                  .Select(m => (PickupType)m)
                                                                                  .ToDictionary(k => k.DisplayName, k => k);
 
+        private static void CheckIfItemIsValid(String name)
+        {
+            if (!Values.ContainsKey(name))
+                throw new Exception("It's not a valid item.");
+
+            if (!Values[name].IsImplemented)
+                throw new Exception($"The item is not implemented yet.");
+
+            if (!Values[name].IsNestroidItem && !AllowNonNestroidItems)
+                throw new Exception($"The item is not allowed in Nestroid.");
+        }
+
         public static int GetItemTypeFromName(String? name)
         {
             if (name == null)
                 return Values["Nothing"].Type;
 
-            if (Values.ContainsKey(name))
-            {
-                if (!Values[name].IsImplemented)
-                    throw new Exception($"Cannot get item type from {name}. The item is not implemented yet.");
-
-                if (!Values[name].IsNestroidItem && !AllowNonNestroidItems)
-                    throw new Exception($"Cannot get item type from {name}. The item is not allowed in Nestroid.");
-
-                return Values[name].Type;
+            try {
+                CheckIfItemIsValid(name);
+            } catch (Exception ex) {
+                throw new Exception($"Cannot get item type from {name}. {ex.Message}");
             }
 
-            throw new Exception($"Cannot get item type from {name}. It's not a valid item.");
+            return Values[name].Type;
         }
 
         public static String GetObjectFromName(String? name)
@@ -124,18 +131,13 @@ namespace YAPR_LIB.Utils
             if (name == null)
                 return Values["Nothing"].ObjectName;
 
-            if (Values.ContainsKey(name))
-            {
-                if (!Values[name].IsImplemented)
-                    throw new Exception($"Cannot get item type from {name}. The item is not implemented yet.");
-
-                if (!Values[name].IsNestroidItem && !AllowNonNestroidItems)
-                    throw new Exception($"Cannot get item type from {name}. The item is not allowed in Nestroid.");
-
-                return Values[name].ObjectName;
+            try {
+                CheckIfItemIsValid(name);
+            } catch (Exception ex) {
+                throw new Exception($"Cannot get object from {name}. {ex.Message}");
             }
 
-            throw new Exception($"Cannot get object from {name}. It's not a valid item.");
+            return Values[name].ObjectName;
         }
 
         public static String GetAcquiredSfxFromName(String? name)
@@ -143,18 +145,13 @@ namespace YAPR_LIB.Utils
             if (name == null)
                 return Values["Nothing"].AcquiredSoundName;
 
-            if (Values.ContainsKey(name))
-            {
-                if (!Values[name].IsImplemented)
-                    throw new Exception($"Cannot get item type from {name}. The item is not implemented yet.");
-
-                if (!Values[name].IsNestroidItem && !AllowNonNestroidItems)
-                    throw new Exception($"Cannot get item type from {name}. The item is not allowed in Nestroid.");
-
-                return Values[name].AcquiredSoundName;
+            try {
+                CheckIfItemIsValid(name);
+            } catch (Exception ex) {
+                throw new Exception($"Cannot get acquired sfx from {name}. {ex.Message}");
             }
 
-            throw new Exception($"Cannot get acquired sfx from {name}. It's not a valid item.");
+            return Values[name].AcquiredSoundName;
         }
     }
     #endregion
