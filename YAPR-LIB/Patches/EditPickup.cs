@@ -27,6 +27,12 @@ namespace YAPR_LIB.Patches
             if (lockedText is null || lockedText.Header is null || lockedText.Description is null)
                 throw new ArgumentNullException();
 
+            var original_object = pickup.Type is null ? PickupType.GetObjectFromName("Nothing") : pickup.Type.ObjectName;
+            var display_name = pickup.Type is null ? "Nothing" : pickup.Type.DisplayName;
+            var item_type = pickup.Type is null ? 20 : pickup.Type.Type;
+            var acquired_message = pickup.Type is null ? PickupType.GetAcquiredSfxFromName("Nothing") : pickup.Type.AcquiredSoundName;
+            var sprite = pickup.Model is null ? "Nothing" : pickup.Model.SpriteName;
+
             var idx = pickup.Index is not null ? pickup.Index : GetIndexFromObjectIndex(room, obj_id);
             var pickup_obj = gmData.Rooms[(int)room]
                                    .GameObjects
@@ -36,7 +42,7 @@ namespace YAPR_LIB.Patches
 
             var new_pickup_obj_type = gmData.GameObjects
                                             .Select(obj => obj)
-                                            .FirstOrDefault(obj => obj.Name.Content == PickupType.GetObjectFromName(pickup.Type));
+                                            .FirstOrDefault(obj => obj.Name.Content == original_object);
 
             if (new_pickup_obj_type is null)
                 return;
@@ -47,7 +53,7 @@ namespace YAPR_LIB.Patches
 
             var new_pickup_obj_sprite = gmData.Sprites
                                               .Select(spr => spr)
-                                              .FirstOrDefault(spr => spr.Name.Content == pickup.Model);
+                                              .FirstOrDefault(spr => spr.Name.Content == sprite);
 
             if (new_pickup_obj_sprite is null) return;
 
@@ -62,15 +68,15 @@ namespace YAPR_LIB.Patches
                          event_inherited()
                          Item_Name = "{{pickup.Type}}"
                          Item_ID = {{idx}}
-                         Item_Type = {{PickupType.GetItemTypeFromName(pickup.Type)}}
+                         Item_Type = {{item_type}}
                          Item_Quantity = {{pickup.Quantity}}
-                         Item_Acquired_Sound = {{PickupType.GetAcquiredSfxFromName(pickup.Type)}}
+                         Item_Acquired_Sound = {{acquired_message}}
                          Item_Text_Header = "{{(pickup.Text?.Header ?? string.Empty).ToUpper()}}"
                          Item_Text_Description = "{{String.Join("\n", pickup.Text?.Description ?? new List<string>())}}"
                          Item_Text_Locked_Header = "{{lockedText.Header.ToUpper()}}"
                          Item_Text_Locked_Description = "{{String.Join("\n", lockedText.Description)}}"
-                         Item_Is_Launcher = {{(pickup.Type == "Missile Launcher" ? 1 : 0)}};
-                         sprite_index = {{pickup.Model}}
+                         Item_Is_Launcher = {{(display_name == "Missile Launcher" ? 1 : 0)}};
+                         sprite_index = {{sprite}}
 
                          """;
             if (obj_id >= 100083 && obj_id <= 100086)

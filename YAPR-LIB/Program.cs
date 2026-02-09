@@ -100,7 +100,7 @@ public class Patcher
             // Fixes the bad RNG
             Patches.Fixes.FixBadRNG.Apply(gmData, decompileContext);
 
-            var keyCount = randomizerConfig.LevelData.Pickups is not null ? (randomizerConfig.LevelData.Pickups.Count > 40 ? randomizerConfig.LevelData.Pickups.Count(kvp => kvp.Value.Type == "Tourian Key") : 2) : 2;
+            var keyCount = randomizerConfig.LevelData.Pickups is not null ? (randomizerConfig.LevelData.Pickups.Count > 40 ? randomizerConfig.LevelData.Pickups.Count(kvp => kvp.Value.Type is null ? false : kvp.Value.Type.DisplayName == "Tourian Key") : 2) : 2;
 
             // Switch to key locked bridge
             Patches.Fixes.CheckForZebethTourianKeys.Apply(gmData, decompileContext, keyCount);
@@ -122,15 +122,18 @@ public class Patcher
                 Header = String.Empty,
                 Description = new List<String>()
             };
+            var model = "Nothing";
             foreach ((int pickup_obj_id, Pickup pickup) in pickups)
             {
                 if (gmData.Rooms[(int)randomizerConfig.LevelData.Room].GameObjects.Any(obj => obj.InstanceID == pickup_obj_id))
                 {
-                    if (randomizerConfig.GameConfig?.RequiredMessages is not null && randomizerConfig.GameConfig.RequiredMessages.ContainsKey(pickup.Model ?? "Nothing"))
+                    model = pickup.Model is null ? "Nothing" : pickup.Model.DisplayName;
+
+                    if (randomizerConfig.GameConfig?.RequiredMessages is not null && randomizerConfig.GameConfig.RequiredMessages.ContainsKey(model))
                     {
-                        lockedText.Header = randomizerConfig.GameConfig.RequiredMessages[pickup.Model ?? "Nothing"].Header;
+                        lockedText.Header = randomizerConfig.GameConfig.RequiredMessages[model].Header;
                         lockedText.Description.Clear();
-                        foreach(var desc in randomizerConfig.GameConfig.RequiredMessages[pickup.Model ?? "Nothing"].Description ?? new List<String>())
+                        foreach(var desc in randomizerConfig.GameConfig.RequiredMessages[model].Description ?? new List<String>())
                             lockedText.Description.Add(desc);
                     }
                     else

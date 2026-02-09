@@ -146,11 +146,13 @@ namespace YAPR_LIB
 
         [JsonInclude]
         [JsonPropertyName("model")]
-        public string? Model;
+        [JsonConverter(typeof(PickupType.Converter))]
+        public PickupType? Model;
 
         [JsonInclude]
         [JsonPropertyName("type")]
-        public string? Type;
+        [JsonConverter(typeof(PickupType.Converter))]
+        public PickupType? Type;
 
         [JsonInclude]
         [JsonPropertyName("quantity")]

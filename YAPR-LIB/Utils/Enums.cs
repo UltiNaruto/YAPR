@@ -1,4 +1,6 @@
+using SixLabors.ImageSharp;
 using System.Reflection;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace YAPR_LIB.Utils
@@ -96,7 +98,7 @@ namespace YAPR_LIB.Utils
 
         public static Dictionary<String, PickupType> Values => typeof(PickupType).GetFields(BindingFlags.Static | BindingFlags.Public)
                                                                                  .Select(m => m.GetValue(null) ?? throw new ArgumentNullException())
-                                                                                 .Where(m => m is not null)
+                                                                                 .Where(m => m is not null && m.GetType() == typeof(PickupType))
                                                                                  .Select(m => (PickupType)m)
                                                                                  .ToDictionary(k => k.DisplayName, k => k);
 
@@ -152,6 +154,58 @@ namespace YAPR_LIB.Utils
             }
 
             return Values[name].AcquiredSoundName;
+        }
+
+        public override string ToString()
+        {
+            return DisplayName;
+        }
+
+        public class Converter : JsonConverterFactory
+        {
+            public override JsonConverter? CreateConverter(Type typeToConvert, JsonSerializerOptions options)
+            {
+                return (JsonConverter)Activator.CreateInstance(
+                    typeof(Inner),
+                    BindingFlags.Instance | BindingFlags.Public,
+                    binder: null,
+                    args: null,
+                    culture: null
+                )!;
+            }
+
+            public override bool CanConvert(Type typeToConvert)
+            {
+                return typeToConvert == typeof(PickupType);
+            }
+
+            private class Inner : JsonConverter<PickupType>
+            {
+                public Inner() { }
+
+                public override PickupType Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+                {
+                    if (reader.TokenType != JsonTokenType.String)
+                        throw new JsonException();
+
+                    var displayName = reader.GetString();
+                    var kvp = default(KeyValuePair<String, PickupType>);
+
+                    if (displayName is not null && displayName.Substring(0, 4) == "spr_")
+                    {
+                        kvp = Values.Where(p => p.Value.SpriteName == displayName).FirstOrDefault(kvp);
+                        if (!kvp.Equals(default(KeyValuePair<String, PickupType>)))
+                            displayName = kvp.Value.DisplayName;
+                    }
+
+                    return displayName is null ? Values["Nothing"] : Values[displayName];
+                }
+
+                public override void Write(Utf8JsonWriter writer, PickupType pickup, JsonSerializerOptions options)
+                {
+                    writer.WriteStringValue(pickup.DisplayName);
+                }
+            }
         }
     }
     #endregion
