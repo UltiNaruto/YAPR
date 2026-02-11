@@ -42,10 +42,8 @@ public class Patcher
 
         if (randomizerConfig is null)
             throw new Exception("Invalid config detected!");
-        if (randomizerConfig.LevelData is null)
-            throw new Exception("Invalid config detected!");
-        if (randomizerConfig.GameConfig is null)
-            throw new Exception("Invalid config detected!");
+        if (randomizerConfig.LevelData.Room == Room.rm_Invalid)
+            throw new Exception("Selected room is invalid!");
 
         var gmData = new UndertaleData();
 
@@ -73,16 +71,16 @@ public class Patcher
 
         // Do patches
         Patches.RemoveChozoStatueSpheres.Apply(gmData, randomizerConfig.LevelData.Room);
-        Patches.DisplaySeedHash.Apply(gmData, decompileContext, randomizerConfig.LevelData.Room, randomizerConfig.GameConfig?.SeedIdentifier?.WordHash ?? string.Empty);
+        Patches.DisplaySeedHash.Apply(gmData, decompileContext, randomizerConfig.LevelData.Room, randomizerConfig.GameConfig.SeedIdentifier.WordHash);
         Patches.EditMenu.Apply(gmData, decompileContext, randomizerConfig.LevelData.Room);
-        Patches.MoveSavesToRandovaniaFolder.Apply(gmData, decompileContext, randomizerConfig.LevelData.Room, randomizerConfig.GameConfig?.SeedIdentifier?.WordHash ?? string.Empty);
+        Patches.MoveSavesToRandovaniaFolder.Apply(gmData, decompileContext, randomizerConfig.LevelData.Room, randomizerConfig.GameConfig.SeedIdentifier.WordHash);
         Patches.CustomMessageBox.Apply(gmData, decompileContext);
         Patches.CustomPickupHandling.Apply(gmData, decompileContext);
         Patches.Fixes.AddTourianKeysToHUD.Apply(gmData, decompileContext);
         Patches.Fixes.AddTourianKeysToSaveSlot.Apply(gmData, decompileContext);
         Patches.CustomPickups.Replay.CustomItemsReplaySupport.Apply(gmData, decompileContext, randomizerConfig.LevelData.Room);
         Patches.Fixes.FixRipperDamageVulnerabilities.Apply(gmData, decompileContext);
-        Patches.AddCreditsScreen.Apply(gmData, decompileContext, randomizerConfig.LevelData.Room, randomizerConfig.GameConfig?.CreditsString);
+        Patches.AddCreditsScreen.Apply(gmData, decompileContext, randomizerConfig.LevelData.Room, randomizerConfig.GameConfig.CreditsString);
         Patches.Fixes.RequiredLauncherChange.Apply(gmData, decompileContext);
 #if DEBUG
         Patches.Debug.AddSavingGameSaveAsJSON.Apply(gmData, decompileContext);
@@ -100,7 +98,9 @@ public class Patcher
             // Fixes the bad RNG
             Patches.Fixes.FixBadRNG.Apply(gmData, decompileContext);
 
-            var keyCount = randomizerConfig.LevelData.Pickups is not null ? (randomizerConfig.LevelData.Pickups.Count > 40 ? randomizerConfig.LevelData.Pickups.Count(kvp => kvp.Value.Type is null ? false : kvp.Value.Type.DisplayName == "Tourian Key") : 2) : 2;
+            var keyCount = 2;
+            if (randomizerConfig.LevelData.Pickups.Count > 40)
+                keyCount = randomizerConfig.LevelData.Pickups.Count(kvp => kvp.Value.Type.DisplayName == "Tourian Key");
 
             // Switch to key locked bridge
             Patches.Fixes.CheckForZebethTourianKeys.Apply(gmData, decompileContext, keyCount);
@@ -127,13 +127,13 @@ public class Patcher
             {
                 if (gmData.Rooms[(int)randomizerConfig.LevelData.Room].GameObjects.Any(obj => obj.InstanceID == pickup_obj_id))
                 {
-                    model = pickup.Model is null ? "Nothing" : pickup.Model.DisplayName;
+                    model = pickup.Model.DisplayName;
 
-                    if (randomizerConfig.GameConfig?.RequiredMessages is not null && randomizerConfig.GameConfig.RequiredMessages.ContainsKey(model))
+                    if (randomizerConfig.GameConfig.RequiredMessages is not null && randomizerConfig.GameConfig.RequiredMessages.ContainsKey(model))
                     {
                         lockedText.Header = randomizerConfig.GameConfig.RequiredMessages[model].Header;
                         lockedText.Description.Clear();
-                        foreach(var desc in randomizerConfig.GameConfig.RequiredMessages[model].Description ?? new List<String>())
+                        foreach(var desc in randomizerConfig.GameConfig.RequiredMessages[model].Description)
                             lockedText.Description.Add(desc);
                     }
                     else
@@ -152,27 +152,30 @@ public class Patcher
         }
 
         // QoL patches
-        if (randomizerConfig.GameConfig?.WarpToStart ?? false)
+        if (randomizerConfig.GameConfig.WarpToStart)
             Patches.QoL.WarpToStart.Apply(gmData, decompileContext);
 
-        if (randomizerConfig.GameConfig?.OpenMissileDoorsWithOneMissile ?? false)
+        if (randomizerConfig.GameConfig.OpenMissileDoorsWithOneMissile)
             Patches.QoL.OpenMissileDoorsWithOneMissile.Apply(gmData, decompileContext);
 
-        if (randomizerConfig.GameConfig?.AllowDownwardShots ?? false)
+        if (randomizerConfig.GameConfig.AllowDownwardShots)
             Patches.QoL.AllowDownwardShots.Apply(gmData, decompileContext);
 
         /*if (randomizerConfig.GameConfig.AllowWallJump)
             Patches.QoL.AllowWallJump.Apply(gmData, decompileContext);*/
 
-        Patches.QoL.DisableLowHealthBeeping.Apply(gmData, decompileContext, !randomizerConfig.Preferences?.DisableLowHealthBeeping ?? false);
-        Patches.QoL.UseSMBossTheme.Apply(gmData, decompileContext, randomizerConfig.Preferences?.UseSMBossTheme ?? false);
-        Patches.QoL.UseAlternativeEscapeTheme.Apply(gmData, decompileContext, randomizerConfig.Preferences?.UseAlternativeMusicTheme ?? false);
-        Patches.QoL.ShowUnexploredMap.Apply(gmData, decompileContext, randomizerConfig.Preferences?.ShowUnexploredMap ?? false);
-        Patches.QoL.RoomNameOnHUD.Apply(gmData, decompileContext, randomizerConfig.Preferences?.RoomNameOnHUD ?? RoomGuiType.NONE);
+        if (randomizerConfig.Preferences is not null)
+        {
+            Patches.QoL.DisableLowHealthBeeping.Apply(gmData, decompileContext, !randomizerConfig.Preferences.DisableLowHealthBeeping);
+            Patches.QoL.UseSMBossTheme.Apply(gmData, decompileContext, randomizerConfig.Preferences.UseSMBossTheme);
+            Patches.QoL.UseAlternativeEscapeTheme.Apply(gmData, decompileContext, randomizerConfig.Preferences.UseAlternativeMusicTheme);
+            Patches.QoL.ShowUnexploredMap.Apply(gmData, decompileContext, randomizerConfig.Preferences.ShowUnexploredMap);
+            Patches.QoL.RoomNameOnHUD.Apply(gmData, decompileContext, randomizerConfig.Preferences.RoomNameOnHUD);
+        }
 
         // Starting condition patches
-        Patches.EditStartingArea.Apply(gmData, decompileContext, randomizerConfig.LevelData.Room, randomizerConfig.GameConfig?.StartingRoom ?? new StartingLocation() { X = 648, Y = 3296 });
-        Patches.EditStartingItems.Apply(gmData, decompileContext, randomizerConfig.LevelData.Room, randomizerConfig.GameConfig?.StartingItems, randomizerConfig.GameConfig?.StartingMemo);
+        Patches.EditStartingArea.Apply(gmData, decompileContext, randomizerConfig.LevelData.Room, randomizerConfig.GameConfig.StartingRoom);
+        Patches.EditStartingItems.Apply(gmData, decompileContext, randomizerConfig.LevelData.Room, randomizerConfig.GameConfig.StartingItems, randomizerConfig.GameConfig.StartingMemo);
 
         if (!Directory.Exists(outputDir.FullName))
             Directory.CreateDirectory(outputDir.FullName);

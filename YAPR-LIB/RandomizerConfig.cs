@@ -4,189 +4,144 @@ using YAPR_LIB.Utils;
 namespace YAPR_LIB
 {
     #region Structs
-    public class RandomizerConfig : IJsonOnDeserialized
+    public class RandomizerConfig
     {
-        [JsonInclude]
         [JsonPropertyName("seed")]
-        public int Seed;
+        public int Seed { get; set; } = 0;
 
-        [JsonInclude]
         [JsonPropertyName("game_config")]
-        public GameConfig? GameConfig;
+        public GameConfig GameConfig { get; set; } = new();
 
-        [JsonInclude]
         [JsonPropertyName("preferences")]
-        public Preferences? Preferences;
+        public Preferences Preferences { get; set; } = new();
 
-        [JsonInclude]
         [JsonPropertyName("level_data")]
-        public LevelData? LevelData;
-
-        public void OnDeserialized()
-        {
-            if (GameConfig is null)
-                throw new Exception("game_config is missing!");
-            if (LevelData is null)
-                throw new Exception("level_data is missing!");
-        }
+        public LevelData LevelData { get; set; } = new();
     }
 
     public class GameConfig
     {
-        [JsonInclude]
         [JsonPropertyName("starting_room")]
-        public StartingLocation? StartingRoom;
+        public StartingLocation StartingRoom { get; set; } = new();
 
-        [JsonInclude]
         [JsonPropertyName("seed_identifier")]
-        public SeedIdentifier? SeedIdentifier;
+        public SeedIdentifier SeedIdentifier { get; set; } = new();
 
-        [JsonInclude]
         [JsonPropertyName("required_messages")]
-        public Dictionary<String, Text>? RequiredMessages;
+        public Dictionary<String, Text> RequiredMessages { get; set; } = new();
 
-        [JsonInclude]
         [JsonPropertyName("starting_items")]
-        public Dictionary<string, int>? StartingItems;
+        public Dictionary<string, int> StartingItems { get; set; } = new();
 
-        [JsonInclude]
         [JsonPropertyName("starting_memo")]
-        public Text? StartingMemo;
+        public Text? StartingMemo { get; set; } = null;
 
-        [JsonInclude]
         [JsonPropertyName("warp_to_start")]
-        public bool WarpToStart;
+        public bool WarpToStart { get; set; } = false;
 
-        [JsonInclude]
         [JsonPropertyName("open_missile_doors_with_one_missile")]
-        public bool OpenMissileDoorsWithOneMissile;
+        public bool OpenMissileDoorsWithOneMissile { get; set; } = false;
 
-        [JsonInclude]
         [JsonPropertyName("allow_downward_shots")]
-        public bool AllowDownwardShots;
+        public bool AllowDownwardShots { get; set; } = false;
 
-        [JsonInclude]
         [JsonPropertyName("credits_string")]
-        public List<Text>? CreditsString;
+        public List<Text> CreditsString { get; set; } = new();
     }
 
     public class StartingLocation
     {
-        [JsonInclude]
         [JsonPropertyName("x")]
-        public int X;
+        public int X { get; set; } = 648;
 
-        [JsonInclude]
         [JsonPropertyName("y")]
-        public int Y;
+        public int Y { get; set; } = 3296;
     }
 
     public class SeedIdentifier
     {
-        [JsonInclude]
         [JsonPropertyName("word_hash")]
-        public string? WordHash;
+        public string WordHash { get; set; } = string.Empty;
 
-        [JsonInclude]
         [JsonPropertyName("hash")]
-        public string? Hash;
+        public string Hash { get; set; } = string.Empty;
 
-        [JsonInclude]
         [JsonPropertyName("session_uuid")]
-        public string? SessionUUID;
+        public string SessionUUID { get; set; } = string.Empty;
     }
 
     public class Preferences
     {
-        [JsonInclude]
         [JsonPropertyName("show_unexplored_map")]
-        public bool ShowUnexploredMap;
+        public bool ShowUnexploredMap { get; set; } = false;
 
-        [JsonInclude]
         [JsonPropertyName("room_names_on_hud")]
-        public RoomGuiType RoomNameOnHUD;
+        public RoomGuiType RoomNameOnHUD { get; set; } = RoomGuiType.NONE;
 
-        [JsonInclude]
         [JsonPropertyName("disable_low_health_beeping")]
-        public bool DisableLowHealthBeeping;
+        public bool DisableLowHealthBeeping { get; set; } = false;
 
-        [JsonInclude]
         [JsonPropertyName("use_sm_boss_theme")]
-        public bool UseSMBossTheme;
+        public bool UseSMBossTheme { get; set; } = false;
 
-        [JsonInclude]
         [JsonPropertyName("use_alternative_escape_theme")]
-        public bool UseAlternativeMusicTheme;
+        public bool UseAlternativeMusicTheme { get; set; } = false;
     }
 
     public class LevelData
     {
-        [JsonInclude]
         [JsonPropertyName("room")]
-        public Room Room;
+        public Room Room { get; set; } = Room.rm_Invalid;
 
-        [JsonInclude]
         [JsonPropertyName("pickups")]
-        public Dictionary<int, Pickup>? Pickups;
+        public Dictionary<int, Pickup> Pickups { get; set; } = new();
 
-        [JsonInclude]
         [JsonPropertyName("doors")]
-        public Dictionary<string, DoorType>? Doors;
+        public Dictionary<string, DoorType> Doors { get; set; } = new();
 
-        [JsonInclude]
         [JsonPropertyName("elevators")]
-        public Dictionary<int, Elevator>? Elevators;
+        public Dictionary<int, Elevator> Elevators { get; set; } = new();
     }
 
     public class Pickup
     {
-        [JsonInclude]
         [JsonPropertyName("index")]
-        public int? Index;
+        public int? Index { get; set; } = null;
 
-        [JsonInclude]
         [JsonPropertyName("model")]
         [JsonConverter(typeof(PickupType.Converter))]
-        public PickupType? Model;
+        public PickupType Model { get; set; } = PickupType.Nothing;
 
-        [JsonInclude]
         [JsonPropertyName("type")]
         [JsonConverter(typeof(PickupType.Converter))]
-        public PickupType? Type;
+        public PickupType Type { get; set; } = PickupType.Nothing;
 
-        [JsonInclude]
         [JsonPropertyName("quantity")]
-        public int Quantity;
+        public int Quantity { get; set; } = 0;
 
-        [JsonInclude]
         [JsonPropertyName("text")]
-        public Text? Text;
+        public Text Text { get; set; } = new();
     }
 
     public class Elevator
     {
-        [JsonInclude]
         [JsonPropertyName("destination_x")]
-        public int DestinationX;
+        public int DestinationX { get; set; } = 0;
 
-        [JsonInclude]
         [JsonPropertyName("destination_y")]
-        public int DestinationY;
+        public int DestinationY { get; set; } = 0;
 
-        [JsonInclude]
         [JsonPropertyName("end_game")]
-        public bool EndGame;
+        public bool EndGame { get; set; } = false;
     }
 
     public class Text
     {
-        [JsonInclude]
         [JsonPropertyName("header")]
-        public string? Header;
+        public string Header { get; set; } = string.Empty;
 
-        [JsonInclude]
         [JsonPropertyName("description")]
-        public List<string>? Description;
+        public List<string> Description { get; set; } = new();
     }
     #endregion
 }

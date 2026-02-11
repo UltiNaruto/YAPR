@@ -10,7 +10,8 @@ namespace YAPR_LIB.Utils
     public enum Room
     {
         rm_Zebeth = 5,
-        rm_Novus
+        rm_Novus,
+        rm_Invalid = int.MaxValue
     }
 
     [JsonConverter(typeof(JsonStringEnumConverter))]
