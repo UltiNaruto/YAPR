@@ -122,18 +122,18 @@ public class Patcher
                 Header = String.Empty,
                 Description = new List<String>()
             };
-            var model = "Nothing";
+            var type_ = "Nothing";
             foreach ((int pickup_obj_id, Pickup pickup) in pickups)
             {
                 if (gmData.Rooms[(int)randomizerConfig.LevelData.Room].GameObjects.Any(obj => obj.InstanceID == pickup_obj_id))
                 {
-                    model = pickup.Model.DisplayName;
+                    type_ = pickup.Type.DisplayName;
 
-                    if (randomizerConfig.GameConfig.RequiredMessages is not null && randomizerConfig.GameConfig.RequiredMessages.ContainsKey(model))
+                    if (randomizerConfig.GameConfig.RequiredMessages.ContainsKey(type_))
                     {
-                        lockedText.Header = randomizerConfig.GameConfig.RequiredMessages[model].Header;
+                        lockedText.Header = randomizerConfig.GameConfig.RequiredMessages[type_].Header;
                         lockedText.Description.Clear();
-                        foreach(var desc in randomizerConfig.GameConfig.RequiredMessages[model].Description)
+                        foreach(var desc in randomizerConfig.GameConfig.RequiredMessages[type_].Description)
                             lockedText.Description.Add(desc);
                     }
                     else
