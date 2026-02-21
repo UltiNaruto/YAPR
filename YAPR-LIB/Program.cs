@@ -98,12 +98,8 @@ public class Patcher
             // Fixes the bad RNG
             Patches.Fixes.FixBadRNG.Apply(gmData, decompileContext);
 
-            var keyCount = 2;
-            if (randomizerConfig.LevelData.Pickups.Count > 40)
-                keyCount = randomizerConfig.LevelData.Pickups.Count(kvp => kvp.Value.Type.DisplayName == "Tourian Key");
-
             // Switch to key locked bridge
-            Patches.Fixes.CheckForZebethTourianKeys.Apply(gmData, decompileContext, keyCount);
+            Patches.Fixes.CheckForZebethTourianKeys.Apply(gmData, decompileContext, randomizerConfig.GameConfig.RequiredKeyAmount);
 
             // Make the boss death items appear instead of giving them directly
             // Separate the pickups from Kraid's death

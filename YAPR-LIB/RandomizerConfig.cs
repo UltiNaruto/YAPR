@@ -47,6 +47,9 @@ namespace YAPR_LIB
 
         [JsonPropertyName("credits_string")]
         public List<Text> CreditsString { get; set; } = new();
+
+        [JsonPropertyName("required_amount_of_keys")]
+        public int RequiredKeyAmount { get; set; } = 2;
     }
 
     public class StartingLocation
