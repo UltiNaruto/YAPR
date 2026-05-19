@@ -157,6 +157,20 @@ namespace YAPR_LIB.Utils
             return Values[name].AcquiredSoundName;
         }
 
+        public static String GetSpriteNameFromName(String? name)
+        {
+            if (name == null)
+                return Values["Nothing"].SpriteName;
+
+            try {
+                CheckIfItemIsValid(name);
+            } catch (Exception ex) {
+                throw new Exception($"Cannot get acquired sfx from {name}. {ex.Message}");
+            }
+
+            return Values[name].SpriteName;
+        }
+
         public override string ToString()
         {
             return DisplayName;

@@ -31,7 +31,7 @@ namespace YAPR_LIB.Patches
             var display_name = pickup.Type is null ? "Nothing" : pickup.Type.DisplayName;
             var item_type = pickup.Type is null ? 20 : pickup.Type.Type;
             var acquired_message = pickup.Type is null ? PickupType.GetAcquiredSfxFromName("Nothing") : pickup.Type.AcquiredSoundName;
-            var sprite = pickup.Model is null ? "Nothing" : pickup.Model.SpriteName;
+            var sprite = pickup.Model is null ? PickupType.GetSpriteNameFromName("Nothing") : pickup.Model.SpriteName;
 
             var idx = pickup.Index is not null ? pickup.Index : GetIndexFromObjectIndex(room, obj_id);
             var pickup_obj = gmData.Rooms[(int)room]
