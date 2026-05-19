@@ -157,6 +157,9 @@ public class Patcher
         if (randomizerConfig.GameConfig.AllowDownwardShots)
             Patches.QoL.AllowDownwardShots.Apply(gmData, decompileContext);
 
+        if (randomizerConfig.GameConfig.AllowScrewAttackToBreakBlocks)
+            Patches.QoL.AllowScrewAttackToBreakBlocks.Apply(gmData, decompileContext);
+
         /*if (randomizerConfig.GameConfig.AllowWallJump)
             Patches.QoL.AllowWallJump.Apply(gmData, decompileContext);*/
 

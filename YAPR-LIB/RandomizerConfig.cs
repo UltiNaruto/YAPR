@@ -45,6 +45,9 @@ namespace YAPR_LIB
         [JsonPropertyName("allow_downward_shots")]
         public bool AllowDownwardShots { get; set; } = false;
 
+        [JsonPropertyName("allow_screw_attack_to_break_blocks")]
+        public bool AllowScrewAttackToBreakBlocks { get; set; } = false;
+
         [JsonPropertyName("credits_string")]
         public List<Text> CreditsString { get; set; } = new();
 
