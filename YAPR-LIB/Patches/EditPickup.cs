@@ -103,7 +103,7 @@ namespace YAPR_LIB.Patches
             obj_randomizerItem__Step_0_code.ReplaceGML(
               $$"""
                 Item_ID = {{idx}}
-                sprite_index = {{pickup.Model}}
+                sprite_index = {{sprite}}
                 event_inherited()
 
                 """,
