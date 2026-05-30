@@ -7,38 +7,49 @@ namespace YAPR_LIB.Utils
 {
     public static class CodeUtils
     {
+        public static void AddVariables(UndertaleData gmData, params string[] varNames)
+        {
+            void AddVariable(UndertaleData gmData, string varName)
+            {
+                var varStr = new UndertaleString(varName);
+
+                gmData.Strings.Add(varStr);
+                gmData.Variables.Add(new UndertaleVariable()
+                {
+                    NameStringID = gmData.Strings.IndexOf(varStr),
+                    Name = varStr,
+                    InstanceType = UndertaleInstruction.InstanceType.Global,
+                    VarID = gmData.Variables.Count + 1
+                });
+            }
+
+            foreach (var varName in varNames)
+                AddVariable(gmData, varName);
+        }
+
         public static void AddGlobalVariables(UndertaleData gmData, GlobalDecompileContext decompileContext, Dictionary<string, object> variablesToAdd)
         {
-            var variableStrings = variablesToAdd.Keys.Select(v => new UndertaleString(v)).ToArray();
-            var varID = gmData.Variables.Count;
             var title_screen_other_4_code = gmData.Code.ByName("gml_Object_obj_Title_Screen_Other_4");
             var title_screen_other_4 = Decompiler.Decompile(title_screen_other_4_code, decompileContext);
             var default_value = string.Empty;
 
-            foreach (var variableString in variableStrings)
-            {
-                gmData.Strings.Add(variableString);
-                gmData.Variables.Add(new UndertaleVariable()
-                {
-                    NameStringID = gmData.Strings.IndexOf(variableString),
-                    Name = variableString,
-                    InstanceType = UndertaleInstruction.InstanceType.Global,
-                    VarID = varID++
-                });
+            AddVariables(gmData, variablesToAdd.Keys.ToArray());
 
-                if (variablesToAdd[variableString.Content] is bool)
+            foreach (var variableString in variablesToAdd.Keys)
+            {
+                if (variablesToAdd[variableString] is bool)
                     title_screen_other_4 = title_screen_other_4.Replace(
                         "    global.MOBILE = 0",
                       $$"""
-                            global.{{variableString.Content}} = {{((bool)variablesToAdd[variableString.Content] ? 1 : 0)}}
+                            global.{{variableString}} = {{((bool)variablesToAdd[variableString] ? 1 : 0)}}
                             global.MOBILE = 0
                         """
                     );
-                else if (variablesToAdd[variableString.Content] is string)
+                else if (variablesToAdd[variableString] is string)
                     title_screen_other_4 = title_screen_other_4.Replace(
                         "    global.MOBILE = 0",
                       $$"""
-                            global.{{variableString.Content}} = "{{variablesToAdd[variableString.Content]}}"
+                            global.{{variableString}} = "{{variablesToAdd[variableString]}}"
                             global.MOBILE = 0
                         """
                     );
@@ -46,7 +57,7 @@ namespace YAPR_LIB.Utils
                     title_screen_other_4 = title_screen_other_4.Replace(
                         "    global.MOBILE = 0",
                       $$"""
-                            global.{{variableString.Content}} = {{variablesToAdd[variableString.Content]}}
+                            global.{{variableString}} = {{variablesToAdd[variableString]}}
                             global.MOBILE = 0
                         """
                     );
